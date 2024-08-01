@@ -1,4 +1,4 @@
-package com.check.configs;
+package com.connect.configs;
 
 import org.springframework.context.annotation.Configuration;
 

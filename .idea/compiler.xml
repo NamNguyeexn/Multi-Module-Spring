@@ -9,6 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="checkwork" />
         <module name="common" />
+        <module name="connect" />
+        <module name="logger" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,7 +24,9 @@
       <module name="authentication" options="-parameters" />
       <module name="checkwork" options="-parameters" />
       <module name="common" options="-parameters" />
+      <module name="connect" options="-parameters" />
       <module name="demo" options="" />
+      <module name="logger" options="-parameters" />
       <module name="user" options="-parameters" />
       <module name="workhour" options="-parameters" />
     </option>

@@ -1,7 +1,6 @@
 package com.check.controllers;
 
-import com.check.DTO.UserInput;
-import com.check.DTO.UserOutput;
+import com.check.DTO.*;
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
@@ -9,13 +8,14 @@ import com.check.services.UserService;
 import com.check.services.WorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.check.services.TestService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +28,8 @@ public class TestController {
     private WorkHourService workHourService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TestService testService;
     @GetMapping()
     public ResponseEntity<?> localhost(HttpServletRequest request){
         String username = jwtTokenService.getUsername(
@@ -59,6 +61,16 @@ public class TestController {
                 return ResponseEntity.ok().body(workHour.get());
             }
         }
+    }
+    @GetMapping("/getSum")
+    public ResponseEntity<String> getHello(){
+        List<User> users = UsersCheckedIn.getInstance().getUsers();
+        return ResponseEntity.ok().body(
+                testService.getHelloService()
+                        + " : "
+                + " \n USERS CHECKED IN "
+                + users.size()
+        );
     }
 
 }

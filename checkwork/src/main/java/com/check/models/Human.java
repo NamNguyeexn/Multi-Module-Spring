@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Scope;
 
 import java.sql.Date;
 
@@ -14,6 +15,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Scope
 public class Human {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -2,6 +2,7 @@ package com.check.controllers;
 
 import com.check.DTO.CheckInOutput;
 import com.check.DTO.CheckOutOutput;
+import com.check.DTO.UsersCheckedIn;
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
@@ -9,6 +10,7 @@ import com.check.services.UserService;
 import com.check.services.WorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/workhour")
@@ -96,6 +96,8 @@ public class WorkHourAPIController {
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
                 message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
                 response.put(message.toString(), checkIn);
+                // tao moi instance class
+                UsersCheckedIn.addUser(user.get());
 //                response.put()
                 return ResponseEntity.ok().body(response);
             }

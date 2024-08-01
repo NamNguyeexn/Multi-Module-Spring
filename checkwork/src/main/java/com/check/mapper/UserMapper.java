@@ -3,7 +3,6 @@ package com.check.mapper;
 import com.check.DTO.RegisterFormInput;
 import com.check.models.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface UserMapper {

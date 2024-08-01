@@ -23,11 +23,16 @@ import static java.util.Optional.ofNullable;
 import static org.aspectj.util.LangUtil.isEmpty;
 @Component
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
     private final JwtTokenService jwtTokenService;
 
     private final CustomUserRepository customUserRepository;
+
+    public JwtTokenFilter(JwtTokenService jwtTokenService, CustomUserRepository customUserRepository) {
+        this.jwtTokenService = jwtTokenService;
+        this.customUserRepository = customUserRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -37,6 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
         log.info("JWT TOKEN FILTER - DO FILTER INTERNAL");
         // Get authorization header and validate
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        System.out.println(header);
         if (isEmpty(header) || !header.startsWith("Bearer ")) {
             log.info("-----------------------------------------------");
             log.info("JWT TOKEN FILTER - DO FILTER INTERNAL - WRONG HEADER");
