@@ -13,7 +13,9 @@ public class ValidUsernameCharacterVld implements ConstraintValidator<ValidUsern
     }
     @Override
     public boolean isValid(String str, ConstraintValidatorContext constraintValidatorContext) {
-        String character = "^[a-zA-Z0-9]$";
-        return Pattern.compile(character).matcher(str).matches();
+        for (Character c : str.toCharArray()){
+            if(!Character.isLetterOrDigit(c)) return false;
+        }
+        return true;
     }
 }

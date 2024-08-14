@@ -1,8 +1,11 @@
 package com.common.exceptions;
 
+import com.common.validations.ValidPhoneNumberLength;
+import com.common.validations.validator.ValidPhoneNumberLengthVld;
 import jakarta.servlet.ServletException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,6 +30,10 @@ public class ExceptionHandlers {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e){
         return ResponseEntity.status(500).body("GOT ILLEGAL ARGUMENT EXCEPTION :" + e.getMessage());
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> validPhoneNumberLength (MethodArgumentNotValidException e){
+        return ResponseEntity.status(500).body("GOT EXCEPTION : " + e.getFieldError().getDefaultMessage());
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException (Exception e) {

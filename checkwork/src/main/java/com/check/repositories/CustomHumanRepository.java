@@ -4,6 +4,7 @@ import com.check.mapper.HumanMapper;
 import com.check.models.Human;
 import com.check.repositories.JPARepository.HumanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

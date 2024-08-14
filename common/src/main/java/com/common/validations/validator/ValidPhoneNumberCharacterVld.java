@@ -17,7 +17,7 @@ public class ValidPhoneNumberCharacterVld implements ConstraintValidator<ValidPh
 //            }
 //        }
 //        return false;
-        String regex = "^[0-9]$";
+        String regex = "^[0-9]+$";
         return str.matches(regex);
     }
 }
