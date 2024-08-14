@@ -4,19 +4,22 @@ import com.check.DTO.*;
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
+import com.check.services.TestService;
 import com.check.services.UserService;
 import com.check.services.WorkHourService;
+import com.check.services.impl.TestServiceImpl1;
+import com.check.services.impl.TestServiceImpl2;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.check.services.TestService;
+//import com.check.services.TestService;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 @RestController
 @RequestMapping("/api/test")
@@ -29,7 +32,11 @@ public class TestController {
     @Autowired
     private UserService userService;
     @Autowired
-    private TestService testService;
+    @Qualifier("Service1")
+    private TestService testService1;
+    @Autowired
+    @Qualifier("Service2")
+    private TestService testService2;
     @GetMapping()
     public ResponseEntity<?> localhost(HttpServletRequest request){
         String username = jwtTokenService.getUsername(
@@ -62,15 +69,24 @@ public class TestController {
             }
         }
     }
-    @GetMapping("/getSum")
-    public ResponseEntity<String> getHello(){
-        List<User> users = UsersCheckedIn.getInstance().getUsers();
+    @GetMapping("/show1")
+    public ResponseEntity<String> getShow(){
         return ResponseEntity.ok().body(
-                testService.getHelloService()
-                        + " : "
-                + " \n USERS CHECKED IN "
-                + users.size()
+                testService1.getHello() +
+                        "\n" +
+                        testService1.getData() +
+                        "\n" +
+                        testService2.getHello() +
+                        "\n" +
+                        testService2.getData()
         );
     }
+    @GetMapping("/init1")
+    public ResponseEntity<String> getInit1(){
+        testService1.addData();
+        testService2.addData();
+        return ResponseEntity.ok().body("ADDED DATA TO TEST SERVICE 1, 2");
+    }
+
 
 }

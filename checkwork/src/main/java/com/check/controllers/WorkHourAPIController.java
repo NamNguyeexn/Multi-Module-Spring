@@ -2,7 +2,7 @@ package com.check.controllers;
 
 import com.check.DTO.CheckInOutput;
 import com.check.DTO.CheckOutOutput;
-import com.check.DTO.UsersCheckedIn;
+//import com.check.DTO.UsersCheckedIn;
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
@@ -97,7 +97,7 @@ public class WorkHourAPIController {
                 message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
                 response.put(message.toString(), checkIn);
                 // tao moi instance class
-                UsersCheckedIn.addUser(user.get());
+//                UsersCheckedIn.addUser(user.get());
 //                response.put()
                 return ResponseEntity.ok().body(response);
             }

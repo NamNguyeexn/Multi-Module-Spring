@@ -1,0 +1,3 @@
+com\connect\ConnectApplication.class
+com\connect\configs\DatabaseConfig.class
+com\connect\controllers\TestController.class

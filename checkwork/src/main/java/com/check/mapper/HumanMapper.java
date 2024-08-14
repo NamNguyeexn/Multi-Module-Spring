@@ -23,5 +23,5 @@ public interface HumanMapper {
 //    @Mapping(source = "humanInput.address", target = "address")
 //    @Mapping(source = "humanInput.phone", target = "phone")
     Human registerFormInputToHuman(RegisterFormInput humanInput, Date dob);
-    User registerFormInputToUser(RegisterFormInput registerFormInput);
+//    User registerFormInputToUser(RegisterFormInput registerFormInput);
 }

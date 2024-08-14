@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-01T16:33:01+0700",
+    date = "2024-08-14T15:59:38+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -36,16 +36,5 @@ public class HumanMapperImpl implements HumanMapper {
         Human human = new Human();
 
         return human;
-    }
-
-    @Override
-    public User registerFormInputToUser(RegisterFormInput registerFormInput) {
-        if ( registerFormInput == null ) {
-            return null;
-        }
-
-        User user = new User();
-
-        return user;
     }
 }
