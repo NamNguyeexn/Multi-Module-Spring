@@ -1,0 +1,9 @@
+RegisterForm =
+{
+    "name" : "Nguyen A",
+    "dob" : "2024-08-15",
+    "address" : "4A Street",
+    "phone" : "0321654987",
+    "username" : "aba",
+    "password" : "121"
+}
