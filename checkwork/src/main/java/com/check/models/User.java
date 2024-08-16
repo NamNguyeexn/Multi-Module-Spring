@@ -28,7 +28,7 @@ public class User implements UserDetails {
 //    @NotBlank(message = "USER - HUMAN ID CANT BE NULL")
     @Column(name = "humanid")
     private int humanid;
-    @Column(name = "employee_code")
+    @Column(name = "employeeCode")
     private String employeeCode;
     @NotBlank(message = "USER - USERNAME CANT BE NULL")
     @Column(name = "username")
