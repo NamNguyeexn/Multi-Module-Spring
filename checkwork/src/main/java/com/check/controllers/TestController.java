@@ -5,10 +5,8 @@ import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
 import com.check.services.TestService;
-import com.check.services.UserService;
-import com.check.services.WorkHourService;
-import com.check.services.impl.TestServiceImpl1;
-import com.check.services.impl.TestServiceImpl2;
+import com.check.services.IUserService;
+import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 //import com.check.services.TestService;
 
 import java.util.Optional;
-import java.util.Stack;
 
 @RestController
 @RequestMapping("/api/test")
@@ -28,9 +25,9 @@ public class TestController {
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
-    private WorkHourService workHourService;
+    private IWorkHourService IWorkHourService;
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
     @Autowired
     @Qualifier("Service1")
     private TestService testService1;
@@ -55,12 +52,12 @@ public class TestController {
                         .getHeader(HttpHeaders.AUTHORIZATION)
                         .split(" ")[1].trim()
         );
-        Optional<User> user = userService.getUserByUsername(username);
+        Optional<User> user = IUserService.getUserByUsername(username);
         if(user.isEmpty()) {
             log.info("TEST CONTROLLER - GET LAST WORK HOUR - NULL USER");
             return ResponseEntity.badRequest().body(null);
         } else {
-            Optional<WorkHour> workHour = workHourService.testGetLastWorkHour(user.get());
+            Optional<WorkHour> workHour = IWorkHourService.testGetLastWorkHour(user.get());
             if(workHour.isEmpty()){
                 log.info("TEST CONTROLLER - GET LAST WORK HOUR - NULL USER");
                 return ResponseEntity.badRequest().body(null);
