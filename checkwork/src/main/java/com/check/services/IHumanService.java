@@ -1,12 +1,11 @@
 package com.check.services;
 
 import com.check.models.Human;
-import com.check.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public interface HumanService {
+public interface IHumanService {
     Optional<Human> getHumanById(int id);
-    Optional<Human> saveNewHuman(Human human);
+    void saveNewHuman(Human human);
 }

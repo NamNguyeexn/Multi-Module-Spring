@@ -3,11 +3,11 @@ package com.check.services.impl;
 import com.check.DTO.RegisterFormInput;
 import com.check.mapper.UserMapper;
 import com.check.models.Human;
-import com.check.models.Role;
+import com.check.models.ENUM.Role;
 import com.check.models.User;
 import com.check.repositories.CustomHumanRepository;
 import com.check.repositories.CustomUserRepository;
-import com.check.services.UserService;
+import com.check.services.IUserService;
 import com.common.utils.ConvertData;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class IUserServiceImpl implements IUserService {
     @Autowired
     private CustomHumanRepository customHumanRepository;
     @Autowired

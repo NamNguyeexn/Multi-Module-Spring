@@ -1,15 +1,14 @@
 package com.check.services.impl;
 
 import com.check.models.Human;
-import com.check.models.User;
 import com.check.repositories.CustomHumanRepository;
-import com.check.services.HumanService;
+import com.check.services.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class HumanServiceImpl implements HumanService {
+public class IHumanServiceImpl implements IHumanService {
     @Autowired
     private CustomHumanRepository customHumanRepository;
     @Override
@@ -18,8 +17,7 @@ public class HumanServiceImpl implements HumanService {
     }
 
     @Override
-    public Optional<Human> saveNewHuman(Human human) {
+    public void saveNewHuman(Human human) {
         customHumanRepository.saveHuman(human);
-        return Optional.empty();
     }
 }

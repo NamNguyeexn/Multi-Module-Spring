@@ -3,11 +3,11 @@ package com.check.services.impl;
 import com.check.DTO.CheckInOutput;
 import com.check.DTO.CheckOutOutput;
 import com.check.mapper.WorkHourMapper;
-import com.check.models.Status;
+import com.check.models.ENUM.Status;
 import com.check.models.User;
 import com.check.models.WorkHour;
 import com.check.repositories.CustomWorkHourRepository;
-import com.check.services.WorkHourService;
+import com.check.services.IWorkHourService;
 import com.common.utils.GenerateWorkHourCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 @Slf4j
 @Service
-public class WorkHourServiceImpl implements WorkHourService {
+public class IWorkHourServiceImpl implements IWorkHourService {
     @Autowired
     private WorkHourMapper workHourMapper;
     @Autowired

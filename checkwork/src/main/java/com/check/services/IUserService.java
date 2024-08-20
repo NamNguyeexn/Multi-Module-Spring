@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public interface UserService {
+public interface IUserService {
     Optional<Human> getHumanByUsername(String username);
     Optional<User> getUserByUsername(String username);
     Optional<User> saveNewUser(RegisterFormInput registerFormInput);
