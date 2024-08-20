@@ -8,8 +8,8 @@ import com.check.JWT.JwtTokenService;
 import com.check.mapper.HumanMapper;
 import com.check.models.Human;
 import com.check.models.User;
-import com.check.services.HumanService;
-import com.check.services.UserService;
+import com.check.services.IHumanService;
+import com.check.services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +32,9 @@ import java.util.Optional;
 @Slf4j
 public class LoginAPIController {
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
     @Autowired
-    private HumanService humanService;
+    private IHumanService IHumanService;
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
@@ -50,7 +50,7 @@ public class LoginAPIController {
     public ResponseEntity<?> login(@Valid @RequestBody UserInput userInput){
         Map<String, User> response = new HashMap<>();
         try {
-            Optional<User> user = userService.getUserByUsername(userInput.getUsername());
+            Optional<User> user = IUserService.getUserByUsername(userInput.getUsername());
             if(user.isEmpty()) {
                 log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND USER");
@@ -59,7 +59,7 @@ public class LoginAPIController {
             else if (passwordEncoder.matches(userInput.getPassword(), user.get().getPassword())){
                 log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - LOGIN - FOUND USER");
-                Optional<Human> human = humanService.getHumanById(user.get().getHumanid());
+                Optional<Human> human = IHumanService.getHumanById(user.get().getHumanid());
                 if(human.isEmpty()){
                     log.info("-----------------------------------");
                     log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN");
@@ -88,8 +88,8 @@ public class LoginAPIController {
     public ResponseEntity<Map<String, RegisterFormOutput>> register(@Valid @RequestBody RegisterFormInput registerFormInput){
         Map<String, RegisterFormOutput> response = new HashMap<>();
         try {
-            Optional<Human> human = userService.getHumanByPhone(registerFormInput.getPhone());
-            Optional<User> userCheck = userService.getUserByUsername(registerFormInput.getUsername());
+            Optional<Human> human = IUserService.getHumanByPhone(registerFormInput.getPhone());
+            Optional<User> userCheck = IUserService.getUserByUsername(registerFormInput.getUsername());
             if(human.isPresent()){
                 log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - REGISTER - USE PHONE NUMBER EXITS");
@@ -104,8 +104,8 @@ public class LoginAPIController {
                 String password = registerFormInput.getPassword();
                 log.info("PASSWORD BEFORE ENCODE : " + password);
                 registerFormInput.setPassword(passwordEncoder.encode(registerFormInput.getPassword()));
-                humanService.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
-                Optional<User> user = userService.saveNewUser(registerFormInput);
+                IHumanService.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
+                Optional<User> user = IUserService.saveNewUser(registerFormInput);
                 if (user.isEmpty()){
                     log.info("----------------------------------");
                     log.info("LOGIN API CONTROLLER - REGISTER - CANT REGISTER");

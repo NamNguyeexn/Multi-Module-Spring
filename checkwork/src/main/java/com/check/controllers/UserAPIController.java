@@ -5,7 +5,7 @@ package com.check.controllers;
 
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
-import com.check.services.UserService;
+import com.check.services.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserAPIController {
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
     @Autowired
     private JwtTokenService jwtTokenService;
     @GetMapping("/user/home")
@@ -38,7 +38,7 @@ public class UserAPIController {
                         .split(" ")[1].trim()
         );
         try {
-            Optional<User> user = userService.getUserByUsername(username);
+            Optional<User> user = IUserService.getUserByUsername(username);
             if(user.isPresent()) {
                 log.info("--------------------------------------------");
                 log.info("USER API CONTROLLER - GET HOMEPAGE - FOUND USER");

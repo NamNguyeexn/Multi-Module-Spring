@@ -1,5 +1,6 @@
 package com.check.models;
 
+import com.check.models.ENUM.Status;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.check.DTO;
 
-import com.check.models.Status;
+import com.check.models.ENUM.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

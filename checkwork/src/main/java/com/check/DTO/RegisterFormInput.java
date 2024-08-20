@@ -2,6 +2,7 @@ package com.check.DTO;
 
 import com.common.validations.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +22,14 @@ public class RegisterFormInput {
     private String address;
     @NotBlank(message = "Phone cant be null")
     @ValidPhoneNumberCharacter
-    @ValidPhoneNumberLength
+    @Size(max = 10, min = 10, message = "Length is not valid")
     private String phone;
     @NotBlank(message = "Username cant be null")
     @ValidUsernameCharacter
-    @ValidUsernameLength
+    @Size(max = 5, min = 3, message = "Username is 3 - 5 characters")
     private String username;
     @NotBlank(message = "Password cant be null")
     @ValidPasswordCharacter
-    @ValidPasswordLength
+    @Size(max = 5, min = 3, message = "Password is 3 - 5 characters")
     private String password;
 }

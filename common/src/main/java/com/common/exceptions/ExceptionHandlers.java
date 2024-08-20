@@ -1,10 +1,9 @@
 package com.common.exceptions;
 
-import com.common.validations.ValidPhoneNumberLength;
-import com.common.validations.validator.ValidPhoneNumberLengthVld;
 import jakarta.servlet.ServletException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,14 +28,19 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e){
-        return ResponseEntity.status(500).body("GOT ILLEGAL ARGUMENT EXCEPTION :" + e.getMessage());
+        return ResponseEntity.status(500).body("Data type not available :" + e.getMessage());
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> validPhoneNumberLength (MethodArgumentNotValidException e){
         return ResponseEntity.status(500).body("GOT EXCEPTION : " + e.getFieldError().getDefaultMessage());
     }
+    @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
+    public ResponseEntity<String> validArrayIndexOutOfBoundsException (ArrayIndexOutOfBoundsException e){
+        return ResponseEntity.status(500).body("Data not available " + e.getMessage());
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException (Exception e) {
         return ResponseEntity.status(500).body("GOT GLOBAL EXCEPTION :" + e.getMessage());
     }
+
 }

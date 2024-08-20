@@ -1,7 +1,7 @@
 package com.check.JWT;
 
 import com.check.models.User;
-import com.check.services.UserService;
+import com.check.services.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,7 +20,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider, Ser
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         try {
@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider, Ser
             log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE");
             String name = authentication.getName();
             String password = authentication.getCredentials().toString();
-            Optional<User> user = userService.getUserByUsername(name);
+            Optional<User> user = IUserService.getUserByUsername(name);
             if(user.isEmpty()){
                 log.info("------------------------------------------------");
                 log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE - NULL USER");

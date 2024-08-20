@@ -2,8 +2,8 @@ package com.check.controllers;
 
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
-import com.check.services.UserService;
-import com.check.services.WorkHourService;
+import com.check.services.IUserService;
+import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class RollbackController {
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
-    private WorkHourService workHourService;
+    private IWorkHourService IWorkHourService;
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
     @DeleteMapping("/deleteWorkHourById/{id}")
     public ResponseEntity<String> deleteWorkHourById(@RequestParam int id, HttpServletRequest request){
-        return ResponseEntity.ok().body(workHourService.deleteWorkHourById(id));
+        return ResponseEntity.ok().body(IWorkHourService.deleteWorkHourById(id));
     }
     @DeleteMapping("/deleteAllWorkHour")
     public ResponseEntity<String> deleteAllWorkHour(HttpServletRequest request){
@@ -38,13 +38,13 @@ public class RollbackController {
                         .getHeader(HttpHeaders.AUTHORIZATION)
                         .split(" ")[1].trim()
         );
-        Optional<User> user = userService.getUserByUsername(username);
+        Optional<User> user = IUserService.getUserByUsername(username);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT FOUND USER");
         }
-        workHourService.getAllWorkHourByUsername(user.get()).ifPresent(
+        IWorkHourService.getAllWorkHourByUsername(user.get()).ifPresent(
                 workHours -> workHours.forEach(
-                        workHour -> workHourService.deleteWorkHourById(workHour.getId())
+                        workHour -> IWorkHourService.deleteWorkHourById(workHour.getId())
                 )
         );
         return ResponseEntity.ok().body("Success");

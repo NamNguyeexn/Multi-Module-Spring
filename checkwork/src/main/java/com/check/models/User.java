@@ -1,6 +1,10 @@
 package com.check.models;
 
+import com.check.models.ENUM.Department;
+import com.check.models.ENUM.Role;
+import com.common.validations.ValidEmailCharacter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,25 +29,26 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
-//    @NotBlank(message = "USER - HUMAN ID CANT BE NULL")
     @Column(name = "humanid")
     private int humanid;
     @Column(name = "employeeCode")
     private String employeeCode;
-    @NotBlank(message = "USER - USERNAME CANT BE NULL")
+    @Column(name = "email", unique = true)
+    @NotBlank(message = "Email cant be null")
+    @Email(message = "Not available email type")
+    private String email;
+    @NotBlank(message = "Username cant be null")
     @Column(name = "username")
-//    @ValidUsernameCharacter
-//    @ValidUsernameLength
     private String username;
-    @NotBlank(message = "USER - PASSWORD CANT BE NULL")
+    @NotBlank(message = "Password cant be null")
     @Column(name = "password")
-//    @ValidPasswordCharacter
-//    @ValidPasswordLength
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-//    @NotBlank(message = "Role cant be null")
     private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "department")
+    private Department department;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

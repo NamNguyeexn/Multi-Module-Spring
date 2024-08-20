@@ -29,7 +29,7 @@ import java.util.Set;
                 "com.common.*","com.logger.*","com.check.*"
 })
 public class CheckWorkApplication {
-    private static final DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+//    private static final DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
     public static void main(String[] args) {
 //        UsersCheckedIn.getInstance();
         SpringApplication.run(CheckWorkApplication.class, args);

@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDateOfBirth {
-    String message() default "Date ob birth not available";
+    String message() default "User cant under 18 years old";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
