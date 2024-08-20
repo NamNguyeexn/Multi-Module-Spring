@@ -6,10 +6,7 @@ bin-release/
 
 # Other files and folders
 .settings/
-checkwork/target
-common/target
-connect/target
-logger/target
+**/src/**/target
 # Executables
 *.swf
 *.air
