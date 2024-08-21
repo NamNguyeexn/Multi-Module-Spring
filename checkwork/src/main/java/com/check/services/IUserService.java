@@ -13,4 +13,5 @@ public interface IUserService {
     Optional<User> getUserByUsername(String username);
     Optional<User> saveNewUser(RegisterFormInput registerFormInput);
     Optional<Human> getHumanByPhone(String phone);
+    Optional<User> getUserByEmail(String email);
 }

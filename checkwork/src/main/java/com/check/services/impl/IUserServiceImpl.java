@@ -1,12 +1,14 @@
 package com.check.services.impl;
 
 import com.check.DTO.RegisterFormInput;
+import com.check.mapper.HumanMapper;
 import com.check.mapper.UserMapper;
 import com.check.models.Human;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
 import com.check.repositories.CustomHumanRepository;
 import com.check.repositories.CustomUserRepository;
+import com.check.services.IHumanService;
 import com.check.services.IUserService;
 import com.common.utils.ConvertData;
 import jakarta.persistence.NoResultException;
@@ -26,6 +28,10 @@ public class IUserServiceImpl implements IUserService {
     private CustomUserRepository customUserRepository;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private IHumanService humanService;
+    @Autowired
+    private HumanMapper humanMapper;
     @Override
     public Optional<Human> getHumanByUsername(String username) {
         Optional<User> user = customUserRepository.getUserByUsername(username);
@@ -47,9 +53,10 @@ public class IUserServiceImpl implements IUserService {
     public Optional<User> getUserByUsername(String username) {
         return customUserRepository.getUserByUsername(username);
     }
-    @Transactional
+    @Transactional(rollbackFor = NoResultException.class)
     @Override
     public Optional<User> saveNewUser(RegisterFormInput registerFormInput) {
+        humanService.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
         Optional<Human> human = customHumanRepository.getHumanByPhone(registerFormInput.getPhone());
         try {
             if(human.isEmpty()){
@@ -64,7 +71,7 @@ public class IUserServiceImpl implements IUserService {
             log.info("USER SERVICE - SAVE NEW USER - SUCCESS");
             return customUserRepository.getUserByUsername(registerFormInput.getUsername());
         } catch (NoResultException n){
-            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : " + n.getMessage());
+            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : " + n.getMessage() + " \n " + n.getCause());
             customHumanRepository.deleteHumanById(human.get().getId());
             return Optional.empty();
         } catch (Exception e) {
@@ -76,6 +83,11 @@ public class IUserServiceImpl implements IUserService {
     @Override
     public Optional<Human> getHumanByPhone(String phone) {
         return customHumanRepository.getHumanByPhone(phone);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return customUserRepository.getUserByEmail(email);
     }
 }
 
