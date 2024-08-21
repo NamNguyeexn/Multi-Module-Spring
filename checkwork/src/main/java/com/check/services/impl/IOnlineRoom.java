@@ -1,9 +1,11 @@
-package com.check.DTO;
+package com.check.services.impl;
 
+import com.check.DTO.Meeting;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,9 @@ import java.util.Random;
 @Getter
 @Setter
 @Slf4j
-@Component
-public class OnlineRoom implements Meeting {
+@Service
+//@Qualifier("online")
+public class IOnlineRoom implements Meeting {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final String SYMBOLS = "?&=";
     private String url;

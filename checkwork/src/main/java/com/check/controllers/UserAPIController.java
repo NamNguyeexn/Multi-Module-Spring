@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserAPIController {
     @Autowired
-    private IUserService IUserService;
+    private IUserService userService;
     @Autowired
     private JwtTokenService jwtTokenService;
     @GetMapping("/user/home")
@@ -38,7 +38,7 @@ public class UserAPIController {
                         .split(" ")[1].trim()
         );
         try {
-            Optional<User> user = IUserService.getUserByUsername(username);
+            Optional<User> user = userService.getUserByUsername(username);
             if(user.isPresent()) {
                 log.info("--------------------------------------------");
                 log.info("USER API CONTROLLER - GET HOMEPAGE - FOUND USER");

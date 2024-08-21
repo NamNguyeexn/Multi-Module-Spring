@@ -89,7 +89,8 @@ public class IAppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public Optional<Appointment> getAppointmentByHostAndStart(int hostid, LocalDateTime start) {
+    public Optional<Appointment> getAppointmentByHostAndStart(int hostid, String time) {
+        LocalDateTime start = LocalDateTime.parse(time);
         Optional<List<Appointment>> appByStart = appointmentRepository.getAppointmentsByStart(start);
         if (appByStart.isPresent()) {
             for (Appointment a : appByStart.get()) {

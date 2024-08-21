@@ -19,13 +19,13 @@ public class ValidEmailCharacterVld implements ConstraintValidator<ValidEmailCha
         } else {
             String[] datas = s.split("@");
             for (String data : datas) {
+                if(data.isEmpty()){
+                    return false;
+                }
                 for (Character character : data.toCharArray()) {
                     if (!Character.isLetterOrDigit(character)) {
                         return false;
                     }
-                }
-                if(data.isEmpty()){
-                    return false;
                 }
             }
             return true;

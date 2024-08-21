@@ -11,6 +11,7 @@ import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ import java.util.*;
 @RequestMapping("/api/workhour")
 public class WorkHourAPIController {
     @Autowired
-    private IUserService IUserService;
+    private IUserService userService;
     @Autowired
-    private IWorkHourService IWorkHourService;
+    private IWorkHourService workHourService;
     @Autowired
     private JwtTokenService jwtTokenService;
 
@@ -42,13 +43,13 @@ public class WorkHourAPIController {
                         .split(" ")[1].trim()
         );
         try {
-            Optional<User> user = IUserService.getUserByUsername(username);
+            Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
                 log.info("-----------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
-            Optional<List<WorkHour>>workHours = IWorkHourService.getAllWorkHourByUsername(user.get());
+            Optional<List<WorkHour>>workHours = workHourService.getAllWorkHourByUsername(user.get());
             log.info("---------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - FOUND USER, WORKHOUR");
             return workHours.map(hours -> ResponseEntity.ok().body(hours)).orElseGet(() ->{
@@ -74,7 +75,7 @@ public class WorkHourAPIController {
         StringBuilder message = new StringBuilder();
         Map<String, Optional<CheckInOutput>> response = new HashMap<>();
         try {
-            Optional<User> user = IUserService.getUserByUsername(username);
+            Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
                 log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - NULL USER");
@@ -82,7 +83,7 @@ public class WorkHourAPIController {
                 response.put(message.toString(), Optional.empty());
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            Optional<CheckInOutput> checkIn = IWorkHourService.checkin(user.get());
+            Optional<CheckInOutput> checkIn = workHourService.checkin(user.get());
             if(checkIn.isEmpty()){
                 log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CANT CHECK IN");
@@ -120,14 +121,14 @@ public class WorkHourAPIController {
         StringBuilder message = new StringBuilder();
         Map<String, Optional<CheckOutOutput>> response = new HashMap<>();
         try {
-            Optional<User> user = IUserService.getUserByUsername(username);
+            Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
                 log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             LocalDateTime end = LocalDateTime.now();
-            Optional<CheckOutOutput> checkOut = IWorkHourService.checkout(end, user.get());
+            Optional<CheckOutOutput> checkOut = workHourService.checkout(end, user.get());
             log.info("------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - CHECKED IN");
             if (checkOut.isEmpty()) {

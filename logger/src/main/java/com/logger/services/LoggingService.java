@@ -18,13 +18,14 @@ public class LoggingService {
         }
         Object requestId = httpServletRequest.getAttribute(REQUEST_ID);
         StringBuilder data = new StringBuilder();
-        data.append("\nLOGGING REQUEST BODY-----------------------------------\n")
-                .append("[REQUEST-ID]: ").append(requestId).append("\n")
-                .append("[BODY REQUEST]: ").append("\n\n")
+        data
+//                .append("\nLOGGING REQUEST BODY-----------------------------------\n")
+//                .append("[REQUEST-ID]: ").append(requestId).append("\n")
+                .append("[BODY REQUEST]: ").append("\n")
                 .append(GsonParserUtils.parseObjectToString(body))
-                .append("\n\n")
-                .append("LOGGING REQUEST BODY-----------------------------------\n");
-
+                .append("\n")
+//                .append("LOGGING REQUEST BODY-----------------------------------\n");
+        ;
         log.info(data.toString());
     }
 
@@ -34,13 +35,14 @@ public class LoggingService {
         }
         Object requestId = httpServletRequest.getAttribute(REQUEST_ID);
         StringBuilder data = new StringBuilder();
-        data.append("\nLOGGING RESPONSE-----------------------------------\n")
-                .append("[REQUEST-ID]: ").append(requestId).append("\n")
-                .append("[BODY RESPONSE]: ").append("\n\n")
+        data
+//                .append("\nLOGGING RESPONSE-----------------------------------\n")
+//                .append("[REQUEST-ID]: ").append(requestId).append("\n")
+                .append("[BODY RESPONSE]: ").append("\n")
                 .append(GsonParserUtils.parseObjectToString(body))
-                .append("\n\n")
-                .append("LOGGING RESPONSE-----------------------------------\n");
-
+                .append("\n")
+//                .append("LOGGING RESPONSE-----------------------------------\n");
+        ;
         log.info(data.toString());
     }
 }

@@ -1,5 +1,6 @@
 package com.common.exceptions;
 
+import jakarta.persistence.NoResultException;
 import jakarta.servlet.ServletException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,10 @@ public class ExceptionHandlers {
     @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
     public ResponseEntity<String> validArrayIndexOutOfBoundsException (ArrayIndexOutOfBoundsException e){
         return ResponseEntity.status(500).body("Data not available " + e.getMessage());
+    }
+    @ExceptionHandler(NoResultException.class)
+    public ResponseEntity<String> noResultException (NoResultException e){
+        return ResponseEntity.status(500).body("No result found " + e.getMessage());
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException (Exception e) {

@@ -1,10 +1,10 @@
 package com.check.DTO;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public interface Meeting {
     String getMeetingType();
     String prepareRoom(List<String> datas);

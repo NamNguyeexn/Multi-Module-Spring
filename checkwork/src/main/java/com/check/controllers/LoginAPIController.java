@@ -32,9 +32,9 @@ import java.util.Optional;
 @Slf4j
 public class LoginAPIController {
     @Autowired
-    private IUserService IUserService;
+    private IUserService userService;
     @Autowired
-    private IHumanService IHumanService;
+    private IHumanService humanService;
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
@@ -47,21 +47,18 @@ public class LoginAPIController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UserInput userInput){
+    public ResponseEntity<?> login(@RequestBody UserInput userInput){
         Map<String, User> response = new HashMap<>();
         try {
-            Optional<User> user = IUserService.getUserByUsername(userInput.getUsername());
+            Optional<User> user = userService.getUserByUsername(userInput.getUsername());
             if(user.isEmpty()) {
-                log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             else if (passwordEncoder.matches(userInput.getPassword(), user.get().getPassword())){
-                log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - LOGIN - FOUND USER");
-                Optional<Human> human = IHumanService.getHumanById(user.get().getHumanid());
+                Optional<Human> human = humanService.getHumanById(user.get().getHumanid());
                 if(human.isEmpty()){
-                    log.info("-----------------------------------");
                     log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN");
                     response.put("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN", null);
                     return ResponseEntity.badRequest().body(response);
@@ -73,7 +70,6 @@ public class LoginAPIController {
                     return ResponseEntity.status(HttpStatus.OK).body(JWT);
                 }
             } else {
-                log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - LOGIN - WRONG PASSWORD");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
@@ -85,34 +81,31 @@ public class LoginAPIController {
 
     }
     @PostMapping("/register")
-    public ResponseEntity<Map<String, RegisterFormOutput>> register(@Valid @RequestBody RegisterFormInput registerFormInput){
+    public ResponseEntity<Map<String, RegisterFormOutput>> register(@RequestBody RegisterFormInput registerFormInput){
         Map<String, RegisterFormOutput> response = new HashMap<>();
         try {
-            Optional<Human> human = IUserService.getHumanByPhone(registerFormInput.getPhone());
-            Optional<User> userCheck = IUserService.getUserByUsername(registerFormInput.getUsername());
+            Optional<Human> human = userService.getHumanByPhone(registerFormInput.getPhone());
+            Optional<User> userCheck = userService.getUserByUsername(registerFormInput.getUsername());
+            Optional<User> mailCheck = userService.getUserByEmail(registerFormInput.getEmail());
             if(human.isPresent()){
-                log.info("-----------------------------------");
-                log.info("LOGIN API CONTROLLER - REGISTER - USE PHONE NUMBER EXITS");
                 response.put("LOGIN API CONTROLLER - REGISTER - USE PHONE NUMBER EXITS", null);
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
-            } else if(userCheck.isPresent()){
-                log.info("-----------------------------------");
-                log.info("LOGIN API CONTROLLER - REGISTER - USERNAME EXITS");
+            } else if(userCheck.isPresent()) {
                 response.put("LOGIN API CONTROLLER - REGISTER - USERNAME EXITS", null);
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
+            } else if (mailCheck.isPresent()) {
+                response.put("LOGIN API CONTROLLER - REGISTER - EMAIL EXITS", null);
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
             } else {
                 String password = registerFormInput.getPassword();
                 log.info("PASSWORD BEFORE ENCODE : " + password);
                 registerFormInput.setPassword(passwordEncoder.encode(registerFormInput.getPassword()));
-                IHumanService.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
-                Optional<User> user = IUserService.saveNewUser(registerFormInput);
+                Optional<User> user = userService.saveNewUser(registerFormInput);
                 if (user.isEmpty()){
-                    log.info("----------------------------------");
                     log.info("LOGIN API CONTROLLER - REGISTER - CANT REGISTER");
                     response.put("LOGIN API CONTROLLER - REGISTER - CANT REGISTER", null);
                     return ResponseEntity.badRequest().body(response);
                 }
-                log.info("-----------------------------------");
                 log.info("LOGIN API CONTROLLER - REGISTER - SUCCESS");
                 RegisterFormOutput registerFormOutput = humanMapper.userToRegisterFormOutput(user.get(), registerFormInput, password);
                 //

@@ -1,8 +1,9 @@
-package com.check.DTO;
+package com.check.services.impl;
 
+import com.check.DTO.Meeting;
 import com.check.models.Appointment;
 import com.check.models.Room;
-import com.check.repositories.JPARepository.RoomRepository;
+import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,27 +20,36 @@ import java.util.Optional;
 @Getter
 @Setter
 @Slf4j
-@Component
-public class OfflineRoom implements Meeting {
-    @Qualifier("IRoomService")
+@Service
+//@Qualifier("offline")
+public class IOfflineRoom implements Meeting {
+//    @Qualifier("IRoomService")
+//    @Autowired
+    private final IRoomService roomService;
+//    @Autowired
+    private final IAppointmentService appointmentService;
     @Autowired
-    private IRoomService roomService;
-    @Qualifier("IAppointmentService")
-    @Autowired
-    private IAppointmentService appointmentService;
+    private AppointmentRepository appointmentRepository;
     private String name;
     private Room room;
+
+    public IOfflineRoom(IAppointmentService appointmentService, IRoomService roomService) {
+        this.appointmentService = appointmentService;
+        this.roomService = roomService;
+    }
+//    public IOfflineRoom() {}
 
     @Override
     public String getMeetingType() {
         return "OFFLINE";
     }
-
     @Override
     public String prepareRoom(List<String> data) {
         // don phong
         Optional<List<Appointment>> appointmentList = appointmentService.getAppointments();
-        if (appointmentList.isPresent()) {
+        if (appointmentList.isEmpty()) {
+            log.info("No appointments found");
+        } else {
             for(Appointment appointment : appointmentList.get()) {
                 if (appointment.getEnd().isBefore(LocalDateTime.now())) {
                     Optional<Room> room1 = roomService.getRoomByName(name);
@@ -82,4 +92,7 @@ public class OfflineRoom implements Meeting {
     public String getRoomName() {
         return room.getName();
     }
+//    private Optional<List<Appointment>> getAppointments(){
+//        return Optional.of(appointmentRepository.findAll());
+//    }
 }

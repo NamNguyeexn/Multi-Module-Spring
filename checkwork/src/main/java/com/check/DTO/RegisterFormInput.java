@@ -1,6 +1,8 @@
 package com.check.DTO;
 
 import com.common.validations.*;
+import jakarta.persistence.Column;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,9 @@ public class RegisterFormInput {
     private String dob;
     @NotBlank(message = "Address cant be null")
     private String address;
+    @NotBlank(message = "Email cant be null")
+    @ValidEmailCharacter
+    private String email;
     @NotBlank(message = "Phone cant be null")
     @ValidPhoneNumberCharacter
     @Size(max = 10, min = 10, message = "Length is not valid")
@@ -32,4 +37,7 @@ public class RegisterFormInput {
     @ValidPasswordCharacter
     @Size(max = 5, min = 3, message = "Password is 3 - 5 characters")
     private String password;
+    @NotBlank(message = "Department cant be null")
+    @ValidDepartment
+    private String department;
 }

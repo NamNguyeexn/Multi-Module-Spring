@@ -5,8 +5,8 @@ import com.check.DTO.Meeting;
 import com.check.factory.MeetingFactory;
 import com.check.models.Appointment;
 import com.check.models.ENUM.Type;
-import com.check.DTO.OfflineRoom;
-import com.check.DTO.OnlineRoom;
+import com.check.services.impl.IOfflineRoom;
+import com.check.services.impl.IOnlineRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,8 @@ public class IMeetingService {
     @Autowired
     private MeetingFactory meetingFactory;
     public String createMeeting(AppointmentFormInput appointmentFormInput){
-        Meeting meeting = meetingFactory.createMeeting(String.valueOf(appointmentFormInput.getType()));
+        Meeting meeting = null;
+        meeting = meetingFactory.createMeeting(String.valueOf(appointmentFormInput.getType()));
         if(meeting.getMeetingType().compareTo("ONLINE") == 0) {
             String send = "ONLINE";
             List<String> sendList = new ArrayList<>();
@@ -29,12 +30,10 @@ public class IMeetingService {
             List<String> sendList = new ArrayList<>();
             String send = "OFFLINE";
             String[] nums = appointmentFormInput.getJoinid().split(",");
-            LocalDateTime start = appointmentFormInput.getStart();
-            LocalDateTime end = appointmentFormInput.getEnd();
             sendList.add(send);
             sendList.add(String.valueOf(nums.length));
-            sendList.add(start.toString());
-            sendList.add(end.toString());
+            sendList.add(appointmentFormInput.getStart());
+            sendList.add(appointmentFormInput.getEnd());
             return meeting.prepareRoom(sendList);
         }
     }
@@ -46,4 +45,5 @@ public class IMeetingService {
             return meeting.getRoomName();
         }
     }
+
 }

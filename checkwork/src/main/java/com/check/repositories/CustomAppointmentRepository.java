@@ -38,9 +38,6 @@ public class CustomAppointmentRepository {
     public void save(Appointment appointment) {
         appointmentRepository.save(appointment);
     }
-    public void updateAppointment(Appointment appointment) {
-        appointmentRepository.save(appointment);
-    }
     public Optional<List<Appointment>> getAppointmentsByRoom(String room) {
         return Optional.of(appointmentRepository.findAll(
                 (root, query, criteriaBuilder)

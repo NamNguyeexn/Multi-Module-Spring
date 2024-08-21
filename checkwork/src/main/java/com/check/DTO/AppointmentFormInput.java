@@ -1,6 +1,9 @@
 package com.check.DTO;
 
+import com.common.validations.ValidMeetingType;
+import com.common.validations.ValidTimeCharacter;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,20 +16,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppointmentFormInput {
-    @NotBlank(message = "Name of appointment cant be null")
+    @NotNull(message = "Name of appointment cant be null")
     private String name;
-    @NotBlank(message = "Joins number cant be null")
+    @NotNull(message = "Joins number cant be null")
     //// check ki
     private String joinid;
-    @NotBlank(message = "Start cant be null")
+    @ValidTimeCharacter
     //valid thoi gian
-    private LocalDateTime start;
-    @NotBlank(message = "End cant be null")
+    private String start;
+    @ValidTimeCharacter
     // valid thoi gian
-    private LocalDateTime end;
-    @NotBlank(message = "Detail cant be null")
+    private String end;
+    @NotNull(message = "Detail cant be null")
     private String detail;
-    @NotBlank(message = "Type of appointment cant be null")
-    //valid kieu cuoc hop
+    @ValidMeetingType
+    @NotNull(message = "Type of appointment cant be null")
     private String type;
 }

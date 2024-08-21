@@ -17,4 +17,6 @@ public class RegisterFormOutput {
     //    @ValidPasswordCharacter
 //    @ValidPasswordLength
     private String password;
+    private String email;
+    private String department;
 }

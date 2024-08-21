@@ -16,5 +16,5 @@ public interface IAppointmentService {
     Optional<List<Appointment>> getAppointmentsByJoinId(int joinid);
     Optional<List<Appointment>> getAppointmentsByRoomName(String name);
     Optional<List<Appointment>> getAppointments();
-    Optional<Appointment> getAppointmentByHostAndStart(int hostid, LocalDateTime start);
+    Optional<Appointment> getAppointmentByHostAndStart(int hostid, String start);
 }

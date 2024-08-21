@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String employeeCode;
     @Column(name = "email", unique = true)
     @NotBlank(message = "Email cant be null")
-    @Email(message = "Not available email type")
+    @ValidEmailCharacter
     private String email;
     @NotBlank(message = "Username cant be null")
     @Column(name = "username")

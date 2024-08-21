@@ -5,6 +5,7 @@ import com.check.repositories.JPARepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 public class CustomUserRepository {
@@ -19,5 +20,17 @@ public class CustomUserRepository {
     }
     public void saveUser(User user){
         userRepository.save(user);
+    }
+    public Optional<List<User>> getUsersByDepartment(String department){
+        return Optional.of(userRepository.findAll(
+                (root, query, criteriaBuilder)
+                        -> criteriaBuilder.equal(root.get("department"), Optional.of(department.toUpperCase()))
+        ));
+    }
+    public Optional<User> getUserByEmail(String email){
+        return userRepository.findOne(
+                (root, query, criteriaBuilder)
+                        -> criteriaBuilder.equal(root.get("email"), email)
+        );
     }
 }
