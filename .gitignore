@@ -22,3 +22,4 @@ common/target/**
 # information for Eclipse / Flash Builder.
 /checkwork/target
 /common/target
+/logger/target
