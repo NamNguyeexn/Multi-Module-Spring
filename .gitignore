@@ -4,10 +4,10 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 **/target
-checkwork/target/**
-connect/target/**
-logger/target/**
-common/target/**
+/checkwork/target/**
+/connect/target/**
+/logger/target/**
+/common/target/**
 # Other files and folders
 .settings/
 
@@ -20,6 +20,4 @@ common/target/**
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
-/checkwork/target
-/common/target
-/logger/target
+
