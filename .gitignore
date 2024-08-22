@@ -3,10 +3,14 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
-
+**/target
+checkwork/target/**
+connect/target/**
+logger/target/**
+common/target/**
 # Other files and folders
 .settings/
-**/src/**/target
+
 # Executables
 *.swf
 *.air
