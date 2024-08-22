@@ -21,3 +21,4 @@ common/target/**
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
 /checkwork/target
+/common/target
