@@ -17,9 +17,7 @@ public class ValidTimeCharacterVld implements ConstraintValidator<ValidTimeChara
         if(localDateTime == null || localDateTime.trim().isEmpty()) {
             return false;
         }
-        String[] data = localDateTime.trim().split("&");
-        ////////////
-        System.out.println("CHAR AT 10 " + localDateTime.charAt(10));
+        String[] data = localDateTime.trim().replace('T', ' ').split(" ");
         return validDate(data[0]) && validTime(data[1]) ;
     }
     private boolean validDate(String data){

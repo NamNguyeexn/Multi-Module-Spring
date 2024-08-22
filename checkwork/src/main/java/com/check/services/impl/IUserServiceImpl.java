@@ -75,7 +75,7 @@ public class IUserServiceImpl implements IUserService {
             customHumanRepository.deleteHumanById(human.get().getId());
             return Optional.empty();
         } catch (Exception e) {
-            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : " + e.getMessage());
+            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : {}", e.getMessage());
             return Optional.empty();
         }
     }

@@ -4,6 +4,7 @@ import com.check.models.Appointment;
 import com.check.repositories.JPARepository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class CustomAppointmentRepository {
     public Optional<List<Appointment>> getAppointments (){
         return Optional.of(appointmentRepository.findAll());
     }
+    @Transactional
     public void save(Appointment appointment) {
         appointmentRepository.save(appointment);
     }

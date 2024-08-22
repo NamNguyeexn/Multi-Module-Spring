@@ -17,6 +17,7 @@ public interface WorkHourMapper {
     @Mapping(source = "user.employeeCode", target = "employeeCode")
     @Mapping(source = "workHour.status", target = "status")
     CheckInOutput workHourToCheckInOutPut(WorkHour workHour, User user);
+
     @Mapping(source = "workHour.start", target = "start")
     @Mapping(source = "workHour.end", target = "end")
     @Mapping(source = "user.employeeCode", target = "employeeCode")

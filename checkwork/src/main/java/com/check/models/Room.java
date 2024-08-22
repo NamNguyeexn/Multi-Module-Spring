@@ -17,6 +17,6 @@ public class Room {
     private String name;
     @Column(name = "capacity")
     private int capacity;
-    @Column(name = "status")
-    private boolean status;
+    @Column(name = "open")
+    private boolean open;
 }

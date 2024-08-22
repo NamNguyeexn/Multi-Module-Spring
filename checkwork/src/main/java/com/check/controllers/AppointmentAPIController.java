@@ -3,7 +3,6 @@ package com.check.controllers;
 import com.check.DTO.AppointmentFormInput;
 import com.check.JWT.JwtTokenService;
 import com.check.mapper.AppointmentMapper;
-import com.check.models.Appointment;
 import com.check.models.User;
 import com.check.services.IAppointmentService;
 import com.check.services.IMeetingService;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +26,7 @@ import java.util.Optional;
 @RequestMapping("/api/appointment")
 public class AppointmentAPIController {
 //    @Qualifier("IAppointmentService")
-@Autowired
+    @Autowired
     private IAppointmentService appointmentService;
     @Autowired
     private IMeetingService meetingService;
@@ -49,15 +47,13 @@ public class AppointmentAPIController {
         Optional<User> user = userService.getUserByUsername(username);
         if (user.isPresent()) {
             User u = user.get();
-            String info = meetingService.createMeeting(appointmentFormInput);
-            String name = meetingService.getRoomName(appointmentFormInput);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd&HH:mm");
-            log.info(appointmentFormInput.getStart() + " " + appointmentFormInput.getEnd());
+            String[] info = meetingService.createMeeting(appointmentFormInput).split("@");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             appointmentService.saveAppointment(appointmentMapper.toAppointment(
                     appointmentFormInput,
                     String.valueOf(u.getId()),
-                    info,
-                    name,
+                    info[1],
+                    info[0],
                     LocalDateTime.parse(appointmentFormInput.getStart(), formatter),
                     LocalDateTime.parse(appointmentFormInput.getEnd(), formatter)
             ));

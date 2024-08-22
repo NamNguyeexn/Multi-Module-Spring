@@ -5,6 +5,7 @@ import com.check.repositories.JPARepository.WorkHourRepository;
 import com.common.utils.GenerateWorkHourCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +49,7 @@ public class CustomWorkHourRepository {
             return Optional.of(workHours.get().get(workHours.get().size() - 1));
         }
     }
+    @Transactional
     public void saveCheckIn(WorkHour workHour) {
         workHourRepository.save(workHour);
     }

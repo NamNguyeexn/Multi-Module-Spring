@@ -4,6 +4,7 @@ import com.check.models.User;
 import com.check.repositories.JPARepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public class CustomUserRepository {
                     -> criteriaBuilder.equal(root.get("username"), username)
         );
     }
+    @Transactional
     public void saveUser(User user){
         userRepository.save(user);
     }

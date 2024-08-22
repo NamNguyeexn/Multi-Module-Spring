@@ -10,4 +10,5 @@ public interface IRoomService {
     Optional<Room> getRoomByName(String name);
     Optional<List<Room>> getRooms();
     void saveRoom(Room room);
+    void cleanRoom();
 }

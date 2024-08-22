@@ -1,27 +1,35 @@
 package com.check.factory.impl;
 
-import com.check.DTO.Meeting;
-import com.check.services.IAppointmentService;
-import com.check.services.IRoomService;
-import com.check.services.impl.IOfflineRoom;
-import com.check.services.impl.IOnlineRoom;
 import com.check.factory.MeetingFactory;
-import com.check.models.ENUM.Type;
+import com.check.services.impl.IOfflineRoomService;
+import com.check.services.impl.IOnlineRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class MeetingFactoryImpl implements MeetingFactory {
     @Autowired
-    private IAppointmentService appointmentService;
+    private IOnlineRoomService onlineRoomService;
     @Autowired
-    private IRoomService roomService;
+    private IOfflineRoomService offlineRoomService;
     @Override
-    public Meeting createMeeting(String meetingType) {
-        return switch (meetingType) {
-            case "ONLINE" -> new IOnlineRoom();
-            case "OFFLINE" -> new IOfflineRoom(appointmentService, roomService);
-            default -> throw new IllegalArgumentException("Invalid meeting type");
+    public String createMeeting(List<String> meetingType) {
+        return switch (meetingType.get(0)) {
+            case "ONLINE" :
+                 yield onlineRoomService.prepareMeeting(meetingType);
+            case "OFFLINE" :
+                yield offlineRoomService.prepareMeeting(meetingType);
+            default :
+                throw new IllegalArgumentException("Invalid meeting type");
         };
     }
+
+//    @Override
+//    public String prepareMeeting(List<String> data) {
+//        Meeting meeting = createMeeting(data.get(0));
+//        switch ()
+//        return "";
+//    }
 }

@@ -1,4 +1,4 @@
-package com.check.DTO;
+package com.check.JWT;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,11 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Token {
+public class TokenJWT {
     private String token;
     private Date end;
     private String employeeCode;
-    public Token (String JWT, Date end, String employeeCode){
+    public TokenJWT(String JWT, Date end, String employeeCode){
         this.end = end;
         this.token = JWT;
         this.employeeCode = employeeCode;

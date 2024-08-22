@@ -2,7 +2,7 @@ package com.check.controllers;
 
 import com.check.DTO.RegisterFormInput;
 import com.check.DTO.RegisterFormOutput;
-import com.check.DTO.Token;
+import com.check.JWT.TokenJWT;
 import com.check.DTO.UserInput;
 import com.check.JWT.JwtTokenService;
 import com.check.mapper.HumanMapper;
@@ -11,7 +11,6 @@ import com.check.models.User;
 import com.check.services.IHumanService;
 import com.check.services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,8 +63,8 @@ public class LoginAPIController {
                     return ResponseEntity.badRequest().body(response);
                 } else {
                     String JWT = this.jwtTokenService.generateAccessToken(user.get());
-                    Token token = new Token(JWT, new Date(System.currentTimeMillis() + (1000*60*8)), human.get().getName());
-                    log.info("OUTPUT TOKEN : " + token + " USER : " + user.get().getEmployeeCode());
+                    TokenJWT token = new TokenJWT(JWT, new Date(System.currentTimeMillis() + (1000*60*8)), human.get().getName());
+                    log.info("OUTPUT TOKEN : {} USER : {}", token, user.get().getEmployeeCode());
                     response.put(JWT, user.get());
                     return ResponseEntity.status(HttpStatus.OK).body(JWT);
                 }
@@ -75,7 +74,7 @@ public class LoginAPIController {
             }
         } catch (Exception e) {
             log.info("-----------------------------------");
-            log.info("LOGIN API CONTROLLER - LOGIN - EXCEPTION " + e.getMessage());
+            log.info("LOGIN API CONTROLLER - LOGIN - EXCEPTION {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 

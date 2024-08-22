@@ -13,6 +13,7 @@ import java.sql.Date;
 @Mapper(componentModel = "spring")
 public interface HumanMapper {
     HumanMapper INSTANCE = Mappers.getMapper(HumanMapper.class);
+
     @Mapping(source = "user.employeeCode", target = "employeeCode")
     @Mapping(source = "humanInput.name", target = "name")
     @Mapping(source = "user.username", target = "username")
@@ -20,6 +21,7 @@ public interface HumanMapper {
     @Mapping(source = "user.email", target = "email")
     @Mapping(source = "user.department", target = "department")
     RegisterFormOutput userToRegisterFormOutput(User user, RegisterFormInput humanInput, String password);
+
     @Mapping(source = "humanInput.name", target = "name")
     @Mapping(source = "dob", target = "dob")
     @Mapping(source = "humanInput.address", target = "address")

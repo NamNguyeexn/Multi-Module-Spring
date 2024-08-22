@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
     @Mapping(source = "idHuman", target = "humanid")
     @Mapping(source = "registerFormInput.username", target = "username")
     @Mapping(source = "registerFormInput.password", target = "password")

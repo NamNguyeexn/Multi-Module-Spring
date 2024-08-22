@@ -3,8 +3,10 @@ package com.check.services.impl;
 import com.check.models.Appointment;
 import com.check.repositories.CustomAppointmentRepository;
 import com.check.services.IAppointmentService;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,17 +25,9 @@ public class IAppointmentServiceImpl implements IAppointmentService {
     public Optional<List<Appointment>> getAppointmentsByHostId(int hostid) {
         return appointmentRepository.getAppointmentsByHostId(hostid);
     }
-
+    @Transactional(rollbackFor = NoResultException.class)
     @Override
     public void saveAppointment(Appointment appointment) {
-//        StringBuilder joinidStr = new StringBuilder();
-//        for (int i = 0; i < joinid.length; i++) {
-//            joinidStr.append(i);
-//            if (i != joinid.length - 1) {
-//                joinidStr.append(",");
-//            }
-//        }
-//        appointment.setJoinid(joinidStr.toString());
         appointmentRepository.save(appointment);
     }
 

@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidTimeCharacter {
-    String message() default "Time must be 'yyyy-MM-dd HH:mm'";
+    String message() default "Time must be 'yyyy-MM-dd'T'HH:mm'";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -26,11 +26,9 @@ public class Appointment{
     @Column(name = "joinid")
     @NotBlank(message = "Join id cant be null")
     private String joinid;
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "start")
     @NotNull(message = "Check in cant be null")
     private LocalDateTime start;
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @NotNull(message = "Check out cant be null")
     @Column(name = "end")
     private LocalDateTime end;
