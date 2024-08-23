@@ -38,5 +38,5 @@ public interface AppointmentMapper {
     @Mapping(source = "appointmentFormInput.type", target = "type")
     @Mapping(source = "room", target = "room")
     @Mapping(source = "info", target = "info")
-    Appointment toAppointment(AppointmentFormInput appointmentFormInput, String hostid, String info, String room, LocalDateTime start, LocalDateTime end);
+    Appointment toAppointment(AppointmentFormInput appointmentFormInput, int hostid, String info, String room, LocalDateTime start, LocalDateTime end);
 }

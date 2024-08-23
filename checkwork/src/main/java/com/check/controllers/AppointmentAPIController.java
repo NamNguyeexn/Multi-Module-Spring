@@ -1,8 +1,10 @@
 package com.check.controllers;
 
 import com.check.DTO.AppointmentFormInput;
+import com.check.DTO.AppointmentFormOutput;
 import com.check.JWT.JwtTokenService;
 import com.check.mapper.AppointmentMapper;
+import com.check.models.Appointment;
 import com.check.models.User;
 import com.check.services.IAppointmentService;
 import com.check.services.IMeetingService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,7 +42,7 @@ public class AppointmentAPIController {
     @Autowired
     private IUserService userService;
     @RequestMapping("/create")
-    ResponseEntity<?> createAppointment(HttpServletRequest request, @Valid @RequestBody AppointmentFormInput appointmentFormInput) {
+    ResponseEntity<AppointmentFormOutput> createAppointment(HttpServletRequest request, @Valid @RequestBody AppointmentFormInput appointmentFormInput) {
         String username = jwtTokenService.getUsername(
                 request
                         .getHeader(HttpHeaders.AUTHORIZATION)
@@ -47,17 +51,26 @@ public class AppointmentAPIController {
         Optional<User> user = userService.getUserByUsername(username);
         if (user.isPresent()) {
             User u = user.get();
-            String[] info = meetingService.createMeeting(appointmentFormInput).split("@");
+            String meetingInfo = meetingService.createMeeting(appointmentFormInput);
+            String[] info = meetingInfo.split("@");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            appointmentService.saveAppointment(appointmentMapper.toAppointment(
+            Appointment appointment = appointmentMapper.toAppointment(
                     appointmentFormInput,
-                    String.valueOf(u.getId()),
+                    u.getId(),
                     info[1],
                     info[0],
                     LocalDateTime.parse(appointmentFormInput.getStart(), formatter),
                     LocalDateTime.parse(appointmentFormInput.getEnd(), formatter)
-            ));
-            return ResponseEntity.ok().body(appointmentService.getAppointmentByHostAndStart(u.getId(),appointmentFormInput.getStart()));
+            );
+            appointmentService.saveAppointment(appointment);
+            Optional<Appointment> res = appointmentService.getAppointmentByHostAndStart(u.getId(),appointmentFormInput.getStart());
+            if(res.isEmpty()){
+                return ResponseEntity.badRequest().body(null);
+            }
+            String[] joinsname = new String("Default,Joins,Name").split(",");
+            AppointmentFormOutput appointmentFormOutput = appointmentMapper.toAppointmentFormOutput(
+                    appointmentFormInput, u.getEmployeeCode(), joinsname, info[1]);
+            return ResponseEntity.ok().body(appointmentFormOutput);
         }
         return ResponseEntity.status(401).body(null);
     }

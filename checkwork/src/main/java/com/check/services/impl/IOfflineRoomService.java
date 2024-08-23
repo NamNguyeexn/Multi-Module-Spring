@@ -27,8 +27,7 @@ public class IOfflineRoomService{
     @Autowired
     private AppointmentRepository appointmentRepository;
     public String prepareMeeting(List<String> data) {
-        String name = "";
-        int capacity = 0;
+        String res = "";
         // don phong
         roomService.cleanRoom();
         // chuan bi phong hop
@@ -39,25 +38,30 @@ public class IOfflineRoomService{
             for(Room r : rooms.get()){
                 if (r.isOpen()){
                     if(r.getCapacity() >= Integer.parseInt(data.get(1))){
-                        name = r.getName();
-                        Optional<List<Appointment>> appointments = appointmentService.getAppointmentsByRoomName(r.getName());
-                        if(appointments.isPresent()){
-                            for(Appointment a : appointments.get()){
+                        res += r.getName();
+                        List<Appointment> appointments = appointmentService.getAppointmentsByRoomName(r.getName());
+                        if(!appointments.isEmpty()){
+                            for(Appointment a : appointments){
                                 if(
                                         (startR.isBefore(a.getStart()) && endR.isBefore(a.getStart())) ||
                                                 (startR.isAfter(a.getEnd()) && endR.isAfter(a.getEnd()))){
                                     r.setOpen(false);
-                                    capacity = r.getCapacity();
+                                    res += "@" + r.getCapacity();
                                     roomService.saveRoom(r);
                                     break;
                                 }
                             }
+                        } else {
+                            r.setOpen(false);
+                            res += "@" + r.getCapacity();
+                            roomService.saveRoom(r);
+                            break;
                         }
                         break;
                     }
                 }
             }
         }
-        return name + "@" + capacity;
+        return res;
     }
 }

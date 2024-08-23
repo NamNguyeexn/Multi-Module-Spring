@@ -23,6 +23,7 @@ public class ValidEmailCharacterVld implements ConstraintValidator<ValidEmailCha
                     return false;
                 }
                 for (Character character : data.toCharArray()) {
+                    if(character.compareTo('.') == 0) continue;
                     if (!Character.isLetterOrDigit(character)) {
                         return false;
                     }

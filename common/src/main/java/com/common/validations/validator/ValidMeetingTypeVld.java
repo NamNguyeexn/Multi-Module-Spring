@@ -17,6 +17,9 @@ public class ValidMeetingTypeVld implements ConstraintValidator<ValidMeetingType
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        if(s.isEmpty()) {
+            return false;
+        }
         return list.contains(s);
     }
 }

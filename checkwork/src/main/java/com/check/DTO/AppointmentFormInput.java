@@ -30,6 +30,6 @@ public class AppointmentFormInput {
     @NotNull(message = "Detail cant be null")
     private String detail;
     @ValidMeetingType
-    @NotNull(message = "Type of appointment cant be null")
+//    @NotNull(message = "Type of appointment cant be null")
     private String type;
 }

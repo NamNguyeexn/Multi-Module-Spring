@@ -3,12 +3,13 @@ package com.check.services.impl;
 import com.check.models.Appointment;
 import com.check.repositories.CustomAppointmentRepository;
 import com.check.services.IAppointmentService;
-import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class IAppointmentServiceImpl implements IAppointmentService {
     public Optional<List<Appointment>> getAppointmentsByHostId(int hostid) {
         return appointmentRepository.getAppointmentsByHostId(hostid);
     }
-    @Transactional(rollbackFor = NoResultException.class)
+    @Transactional
     @Override
     public void saveAppointment(Appointment appointment) {
         appointmentRepository.save(appointment);
@@ -64,7 +65,7 @@ public class IAppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public Optional<List<Appointment>> getAppointmentsByRoomName(String name) {
+    public List<Appointment> getAppointmentsByRoomName(String name) {
         List<Appointment> res = new ArrayList<>();
         Optional<List<Appointment>> appointments = appointmentRepository.getAppointments();
         if (appointments.isPresent()) {
@@ -74,7 +75,7 @@ public class IAppointmentServiceImpl implements IAppointmentService {
                 }
             }
         }
-        return Optional.of(res);
+        return res;
     }
 
     @Override
@@ -84,7 +85,8 @@ public class IAppointmentServiceImpl implements IAppointmentService {
 
     @Override
     public Optional<Appointment> getAppointmentByHostAndStart(int hostid, String time) {
-        LocalDateTime start = LocalDateTime.parse(time);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime start = LocalDateTime.parse(time, format);
         Optional<List<Appointment>> appByStart = appointmentRepository.getAppointmentsByStart(start);
         if (appByStart.isPresent()) {
             for (Appointment a : appByStart.get()) {

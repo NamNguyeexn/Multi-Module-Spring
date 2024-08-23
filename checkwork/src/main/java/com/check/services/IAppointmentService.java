@@ -1,5 +1,6 @@
 package com.check.services;
 
+import com.check.DTO.AppointmentFormInput;
 import com.check.models.Appointment;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public interface IAppointmentService {
     void saveAppointment(Appointment appointment);
     Optional<List<Integer>> getJoinIdsByAppointmentId(int id);
     Optional<List<Appointment>> getAppointmentsByJoinId(int joinid);
-    Optional<List<Appointment>> getAppointmentsByRoomName(String name);
+    List<Appointment> getAppointmentsByRoomName(String name);
     Optional<List<Appointment>> getAppointments();
     Optional<Appointment> getAppointmentByHostAndStart(int hostid, String start);
 }

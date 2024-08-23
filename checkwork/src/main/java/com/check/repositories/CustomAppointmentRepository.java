@@ -21,12 +21,6 @@ public class CustomAppointmentRepository {
                         -> criteriaBuilder.equal(root.get("hostid"), hostid)
         ));
     }
-//    public Optional<List<Appointment>> getAppointmentsByJoinId(int joinid) {
-//        return Optional.of(appointmentRepository.findAll(
-//                (root, query, criteriaBuilder)
-//                        -> criteriaBuilder.equal(root.get("joinid"), joinid)
-//        ));
-//    }
     public Optional<Appointment> getAppointmentByAppointmentId(int id) {
         return appointmentRepository.findOne(
                 (root, query, criteriaBuilder)
@@ -36,6 +30,7 @@ public class CustomAppointmentRepository {
     public Optional<List<Appointment>> getAppointments (){
         return Optional.of(appointmentRepository.findAll());
     }
+
     @Transactional
     public void save(Appointment appointment) {
         appointmentRepository.save(appointment);
