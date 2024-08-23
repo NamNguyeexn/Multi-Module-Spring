@@ -1,8 +1,6 @@
-package com.check.factory;
+package com.check.factory_methods;
 
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface Meeting {

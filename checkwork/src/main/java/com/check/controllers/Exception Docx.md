@@ -10,3 +10,4 @@ write a custom TypeAdapter for its declaring type :
 - Vào tới hàm invokeAndHandle dòng 55 của lớp /org/springframework/web/servlet/mvc/method/annotation
 /ServletInvocableHandlerMethod.class
 - Thường xảy ra khi các field có kiểu dữ liệu time in ra dạng string hoặc parse sang String
+            

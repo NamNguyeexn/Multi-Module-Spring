@@ -1,4 +1,4 @@
-package com.check.factory;
+package com.check.factory_methods;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,18 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Online implements Meeting {
+public class Offline implements Meeting{
     private String name;
-    private String platform;
-    private String url;
+    private int capacity;
 
     @Override
     public String getMeetingType() {
-        return "ONLINE";
+        return "OFFLINE";
     }
+
     @Override
     public String getRoomName() {
         return this.name;
     }
-
 }

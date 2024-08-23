@@ -1,4 +1,4 @@
-package com.check.factory;
+package com.check.factory_methods;
 
 import org.springframework.stereotype.Service;
 

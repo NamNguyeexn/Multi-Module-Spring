@@ -1,6 +1,6 @@
-package com.check.factory.impl;
+package com.check.factory_methods.impl;
 
-import com.check.factory.MeetingFactory;
+import com.check.factory_methods.MeetingFactory;
 import com.check.services.impl.IOfflineRoomService;
 import com.check.services.impl.IOnlineRoomService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.check.services.impl;
 
 import com.check.DTO.AppointmentFormInput;
-import com.check.factory.MeetingFactory;
+import com.check.factory_methods.MeetingFactory;
 import com.check.services.IMeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
