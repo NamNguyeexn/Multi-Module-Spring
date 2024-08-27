@@ -25,11 +25,4 @@ public class MeetingFactoryImpl implements MeetingFactory {
                 throw new IllegalArgumentException("Invalid meeting type");
         };
     }
-
-//    @Override
-//    public String prepareMeeting(List<String> data) {
-//        Meeting meeting = createMeeting(data.get(0));
-//        switch ()
-//        return "";
-//    }
 }

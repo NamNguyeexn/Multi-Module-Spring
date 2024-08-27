@@ -3,11 +3,14 @@ package com.check.repositories;
 import com.check.models.Human;
 import com.check.repositories.JPARepository.HumanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-@Repository
+@Component
+//@EnableJpaRepositories(basePackages = {"com.check.repositories.JPARepository.HumanRepository"})
 public class CustomHumanRepository {
     @Autowired
     private HumanRepository humanRepository;

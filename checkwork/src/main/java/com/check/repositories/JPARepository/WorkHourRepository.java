@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@EnableJpaRepositories
+//@EnableJpaRepositories
 public interface WorkHourRepository extends JpaRepository<WorkHour, Integer>, JpaSpecificationExecutor<WorkHour> {
 }

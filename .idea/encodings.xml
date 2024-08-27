@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Abstract_Factory/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/adapter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/afDesign/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/afactory/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/builder/src/main/java" charset="UTF-8" />

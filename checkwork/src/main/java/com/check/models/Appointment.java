@@ -22,7 +22,6 @@ public class Appointment{
     @NotBlank(message = "Appointment name cant be null")
     private String name;
     @Column(name = "hostid")
-//    @NotBlank(message = "Host id cant be null")
     private int hostid;
     @Column(name = "joinid")
     @NotBlank(message = "Join id cant be null")
@@ -36,7 +35,6 @@ public class Appointment{
     @NotBlank(message = "Detail appointment cant be null")
     @Column(name = "detail")
     private String detail;
-//    @NotBlank(message = "Type appointment cant be null")
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private Type type;

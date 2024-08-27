@@ -13,7 +13,7 @@ import java.util.Random;
 @Setter
 @Slf4j
 @Service
-public class IOnlineRoomService{
+public class IOnlineRoomService {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final String SYMBOLS = "?&=";
     private String randomString(int n){

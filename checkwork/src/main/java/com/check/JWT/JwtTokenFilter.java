@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,12 +27,14 @@ import static org.aspectj.util.LangUtil.isEmpty;
 //@RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
     private final JwtTokenService jwtTokenService;
+    @Autowired
+    private CustomUserRepository customUserRepository;
 
-    private final CustomUserRepository customUserRepository;
-
-    public JwtTokenFilter(JwtTokenService jwtTokenService, CustomUserRepository customUserRepository) {
+    public JwtTokenFilter(JwtTokenService jwtTokenService
+//            , CustomUserRepository customUserRepository
+    ) {
         this.jwtTokenService = jwtTokenService;
-        this.customUserRepository = customUserRepository;
+//        this.customUserRepository = customUserRepository;
     }
 
     @Override

@@ -64,6 +64,7 @@ public class AppointmentAPIController {
                     LocalDateTime.parse(appointmentFormInput.getStart(), formatter),
                     LocalDateTime.parse(appointmentFormInput.getEnd(), formatter)
             );
+            //
             appointmentService.saveAppointment(appointment);
             Optional<Appointment> res = appointmentService.getAppointmentByHostAndStart(u.getId(),appointmentFormInput.getStart());
             if(res.isEmpty()){

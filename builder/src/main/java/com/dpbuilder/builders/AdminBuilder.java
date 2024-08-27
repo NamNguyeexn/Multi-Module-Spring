@@ -42,11 +42,4 @@ public class AdminBuilder implements Builder{
     public User builder(){
         return new User(name, phone, address, department, email, role);
     }
-//    public boolean isActive() {
-//        return isActive;
-//    }
-//
-//    public void setActive(boolean active) {
-//        isActive = active;
-//    }
 }

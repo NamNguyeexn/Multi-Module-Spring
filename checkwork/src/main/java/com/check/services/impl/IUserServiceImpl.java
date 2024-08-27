@@ -1,14 +1,13 @@
 package com.check.services.impl;
 
 import com.check.DTO.RegisterFormInput;
+import com.check.adapters.HumanAdapter;
 import com.check.mapper.HumanMapper;
 import com.check.mapper.UserMapper;
 import com.check.models.Human;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
-import com.check.repositories.CustomHumanRepository;
 import com.check.repositories.CustomUserRepository;
-import com.check.services.IHumanService;
 import com.check.services.IUserService;
 import com.common.utils.ConvertData;
 import jakarta.persistence.NoResultException;
@@ -23,13 +22,13 @@ import java.util.Optional;
 @Slf4j
 public class IUserServiceImpl implements IUserService {
     @Autowired
-    private CustomHumanRepository customHumanRepository;
-    @Autowired
     private CustomUserRepository customUserRepository;
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private IHumanService humanService;
+    private final HumanAdapter humanAdapter;
+    public IUserServiceImpl(){
+        this.humanAdapter = new HumanAdapter();
+    }
     @Autowired
     private HumanMapper humanMapper;
     @Override
@@ -39,7 +38,7 @@ public class IUserServiceImpl implements IUserService {
             log.info("USER DAO - GET HUMAN BY USERNAME - NULL USER");
             return Optional.empty();
         } else {
-            Optional<Human> human = customHumanRepository.getHumanById(user.get().getHumanid());
+            Optional<Human> human = humanAdapter.getHumanById(user.get().getHumanid());
             if (human.isEmpty()){
                 log.info("USER DAO - GET HUMAN BY USERNAME - NULL HUMAN");
                 return Optional.empty();
@@ -56,8 +55,8 @@ public class IUserServiceImpl implements IUserService {
     @Transactional(rollbackFor = NoResultException.class)
     @Override
     public Optional<User> saveNewUser(RegisterFormInput registerFormInput) {
-        humanService.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
-        Optional<Human> human = customHumanRepository.getHumanByPhone(registerFormInput.getPhone());
+        humanAdapter.saveNewHuman(humanMapper.registerFormInputToHuman(registerFormInput, java.sql.Date.valueOf(registerFormInput.getDob())));
+        Optional<Human> human = humanAdapter.getHumanByPhone(registerFormInput.getPhone());
         try {
             if(human.isEmpty()){
                 log.info("========================================");
@@ -71,8 +70,8 @@ public class IUserServiceImpl implements IUserService {
             log.info("USER SERVICE - SAVE NEW USER - SUCCESS");
             return customUserRepository.getUserByUsername(registerFormInput.getUsername());
         } catch (NoResultException n){
-            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : " + n.getMessage() + " \n " + n.getCause());
-            customHumanRepository.deleteHumanById(human.get().getId());
+            log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : {}", n.getMessage());
+            humanAdapter.deleteHumanById(human.get().getId());
             return Optional.empty();
         } catch (Exception e) {
             log.info("USER SERVICE - SAVE NEW USER - EXCEPTION : {}", e.getMessage());
@@ -82,7 +81,7 @@ public class IUserServiceImpl implements IUserService {
 
     @Override
     public Optional<Human> getHumanByPhone(String phone) {
-        return customHumanRepository.getHumanByPhone(phone);
+        return humanAdapter.getHumanByPhone(phone);
     }
 
     @Override

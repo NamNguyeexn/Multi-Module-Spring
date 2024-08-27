@@ -29,14 +29,14 @@ public interface AppointmentMapper {
 //    @Mapping(source = "info", target = "info")
     AppointmentFormOutput toAppointmentFormOutput(AppointmentFormInput appointmentFormInput, String hostName, String[] joinsName, String info);
 
-    @Mapping(source = "appointmentFormInput.name", target = "name")
-    @Mapping(source = "hostid", target = "hostid")
-    @Mapping(source = "appointmentFormInput.joinid", target = "joinid")
-    @Mapping(source = "start", target = "start")
-    @Mapping(source = "end", target = "end")
-    @Mapping(source = "appointmentFormInput.detail", target = "detail")
-    @Mapping(source = "appointmentFormInput.type", target = "type")
-    @Mapping(source = "room", target = "room")
-    @Mapping(source = "info", target = "info")
+//    @Mapping(source = "appointmentFormInput.name", target = "name")
+//    @Mapping(source = "hostid", target = "hostid")
+//    @Mapping(source = "appointmentFormInput.joinid", target = "joinid")
+//    @Mapping(source = "start", target = "start")
+//    @Mapping(source = "end", target = "end")
+//    @Mapping(source = "appointmentFormInput.detail", target = "detail")
+//    @Mapping(source = "appointmentFormInput.type", target = "type")
+//    @Mapping(source = "room", target = "room")
+//    @Mapping(source = "info", target = "info")
     Appointment toAppointment(AppointmentFormInput appointmentFormInput, int hostid, String info, String room, LocalDateTime start, LocalDateTime end);
 }

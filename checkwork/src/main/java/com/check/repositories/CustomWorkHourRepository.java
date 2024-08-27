@@ -4,6 +4,8 @@ import com.check.models.WorkHour;
 import com.check.repositories.JPARepository.WorkHourRepository;
 import com.common.utils.GenerateWorkHourCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
+//@EnableJpaRepositories(basePackages = {"com.check.repositories.JPARepository.WorkHourRepository"})
 public class CustomWorkHourRepository {
     @Autowired
     private WorkHourRepository workHourRepository;
