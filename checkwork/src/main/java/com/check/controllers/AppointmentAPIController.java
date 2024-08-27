@@ -54,6 +54,8 @@ public class AppointmentAPIController {
             String meetingInfo = meetingService.createMeeting(appointmentFormInput);
             String[] info = meetingInfo.split("@");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+            //Tao builder
             Appointment appointment = appointmentMapper.toAppointment(
                     appointmentFormInput,
                     u.getId(),

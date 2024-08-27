@@ -4,6 +4,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,5 +22,9 @@ public class ExceptionHandles {
     @ExceptionHandler(UnsupportedJwtException.class)
     public ResponseEntity<String> handleUnsupportedJwtException(UnsupportedJwtException e){
         return ResponseEntity.status(500).body("GOT UNSUPPORTED JWT EXCEPTION :" + e.getMessage());
+    }
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<String> handleEmptyResultDataAccessException (EmptyResultDataAccessException e) {
+        return ResponseEntity.status(500).body("GOT EmptyResultDataAccessException : " + e.getMessage());
     }
 }

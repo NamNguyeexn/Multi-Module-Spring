@@ -2,35 +2,34 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true">
-        <outputRelativeToContentRoot value="true" />
-      </profile>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="checkwork" />
+        <module name="builder" />
         <module name="common" />
+        <module name="afactory" />
         <module name="connect" />
         <module name="logger" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="authentication" target="17" />
-      <module name="user" target="17" />
-      <module name="workhour" target="17" />
+      <module name="Abstract_Factory" target="17" />
+      <module name="afDesign" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="authentication" options="-parameters" />
+      <module name="Abstract_Factory" options="-parameters" />
+      <module name="afDesign" options="-parameters" />
+      <module name="afactory" options="-parameters" />
+      <module name="builder" options="-parameters" />
       <module name="checkwork" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="connect" options="-parameters" />
-      <module name="demo" options="" />
       <module name="logger" options="-parameters" />
-      <module name="user" options="-parameters" />
-      <module name="workhour" options="-parameters" />
     </option>
   </component>
 </project>

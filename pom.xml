@@ -26,6 +26,8 @@
 		<module>checkwork</module>
         <module>connect</module>
         <module>logger</module>
+		<module>afactory</module>
+        <module>builder</module>
     </modules>
 	<scm>
 		<connection/>
@@ -39,16 +41,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

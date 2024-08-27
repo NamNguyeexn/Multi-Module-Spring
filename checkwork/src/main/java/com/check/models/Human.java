@@ -21,10 +21,7 @@ public class Human {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-//    @ValidDateOfBirth
     private Date dob;
     private String address;
-//    @ValidPhoneNumberCharacter
-//    @ValidPhoneNumberLength
     private String phone;
 }
