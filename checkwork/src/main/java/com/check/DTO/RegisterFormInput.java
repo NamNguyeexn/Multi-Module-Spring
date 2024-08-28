@@ -1,8 +1,6 @@
 package com.check.DTO;
 
 import com.common.validations.*;
-import jakarta.persistence.Column;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -40,4 +38,8 @@ public class RegisterFormInput {
     @NotBlank(message = "Department cant be null")
     @ValidDepartment
     private String department;
+
+    public @NotBlank(message = "Email cant be null") String getEmail() {
+        return email;
+    }
 }
