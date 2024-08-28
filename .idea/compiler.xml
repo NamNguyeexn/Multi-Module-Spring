@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="adapter" />
         <module name="common" />
         <module name="afactory" />
         <module name="logger" />
@@ -18,6 +17,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Abstract_Factory" target="17" />
+      <module name="adapter" target="17" />
       <module name="afDesign" target="17" />
     </bytecodeTargetLevel>
   </component>

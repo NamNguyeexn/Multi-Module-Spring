@@ -10,14 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class IMeetingServiceImpl implements IMeetingService {
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     @Autowired
     private MeetingFactory meetingFactory;
     @Override
     public String createMeeting(AppointmentFormInput appointmentFormInput) {
         List<String> data = new ArrayList<>();
         data.add(appointmentFormInput.getType());
-        data.add(String.valueOf(appointmentFormInput.getJoinid().split(",").length));
+        data.add(String.valueOf(appointmentFormInput.getJoinid().length));
         data.add(appointmentFormInput.getStart());
         data.add(appointmentFormInput.getEnd());
         return meetingFactory.createMeeting(data);

@@ -28,7 +28,6 @@
         <module>logger</module>
 		<module>afactory</module>
         <module>builder</module>
-        <module>adapter</module>
     </modules>
 	<scm>
 		<connection/>

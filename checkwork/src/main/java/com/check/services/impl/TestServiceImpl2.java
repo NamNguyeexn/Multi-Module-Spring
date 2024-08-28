@@ -1,8 +1,6 @@
 package com.check.services.impl;
 
-import com.check.services.TestService;
-import lombok.Getter;
-import lombok.Setter;
+import com.check.services.ITestService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +10,7 @@ import static java.lang.Thread.currentThread;
 
 @Service
 @Qualifier("Service2")
-public class TestServiceImpl2 implements TestService {
+public class TestServiceImpl2 implements ITestService {
     private static final String hello = "HELLO FROM TEST SERVICE 2 - STRING ";
     private static final Stack<String> st = new Stack<>();
     public String getHello(){

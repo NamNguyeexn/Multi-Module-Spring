@@ -35,7 +35,6 @@ public class WorkHourAPIController {
 
     @RequestMapping()
     public ResponseEntity<List<WorkHour>> getListWorkHourByUsername(HttpServletRequest request) {
-        log.info("=========================================");
         log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME");
         String username = jwtTokenService.getUsername(
                 request
@@ -45,27 +44,22 @@ public class WorkHourAPIController {
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("-----------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             Optional<List<WorkHour>>workHours = workHourService.getAllWorkHourByUsername(user.get());
-            log.info("---------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - FOUND USER, WORKHOUR");
             return workHours.map(hours -> ResponseEntity.ok().body(hours)).orElseGet(() ->{
-                log.info("---------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - NULL WORK HOURS");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             });
         } catch (Exception e) {
-            log.info("---------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - GOT EXCEPTION " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
         }
     }
     @GetMapping("/checkin")
     public ResponseEntity<Map<String, Optional<CheckInOutput>>> getCheckIn(HttpServletRequest request) {
-        log.info("=========================================");
         log.info("WORK HOUR API CONTROLLER - GET CHECK IN");
         String username = jwtTokenService.getUsername(
                 request
@@ -77,7 +71,6 @@ public class WorkHourAPIController {
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - NULL USER");
                 message.append("WORK HOUR API CONTROLLER - GET CHECK IN - NULL USER");
                 response.put(message.toString(), Optional.empty());
@@ -85,14 +78,12 @@ public class WorkHourAPIController {
             }
             Optional<CheckInOutput> checkIn = workHourService.checkin(user.get());
             if(checkIn.isEmpty()){
-                log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CANT CHECK IN");
                 message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CANT CHECK IN");
 //                response.put(message.toString(), checkIn.get().values().stream().findFirst());
                 response.put(message.toString(), Optional.empty());
                 return ResponseEntity.badRequest().body(response);
             } else {
-                log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
                 message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
                 response.put(message.toString(), checkIn);
@@ -102,7 +93,6 @@ public class WorkHourAPIController {
                 return ResponseEntity.ok().body(response);
             }
         } catch (Exception e) {
-            log.info("------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET CHECK IN - GOT EXCEPTION " + e.getMessage());
             message.append("WORK HOUR API CONTROLLER - GET CHECK IN - GOT EXCEPTION ").append(e.getMessage());
             response.put(message.toString(), Optional.empty());
@@ -111,7 +101,6 @@ public class WorkHourAPIController {
     }
     @GetMapping("/checkout")
     public ResponseEntity<Map<String, Optional<CheckOutOutput>>> getCheckOut(HttpServletRequest request) {
-        log.info("=========================================");
         log.info("WORK HOUR API CONTROLLER - GET CHECK OUT");
         String username = jwtTokenService.getUsername(
                 request
@@ -123,13 +112,11 @@ public class WorkHourAPIController {
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("------------------------------------------------");
                 log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             LocalDateTime end = LocalDateTime.now();
             Optional<CheckOutOutput> checkOut = workHourService.checkout(end, user.get());
-            log.info("------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - CHECKED IN");
             if (checkOut.isEmpty()) {
                 log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - CHECK OUT EMPTY");
@@ -149,7 +136,6 @@ public class WorkHourAPIController {
 //                return null;
             }
         } catch (Exception e) {
-            log.info("------------------------------------------------");
             log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - SERVER ERROR : " + e.getMessage());
             message.append("WORK HOUR API CONTROLLER - GET CHECK OUT - SERVER ERROR : ").append(e.getMessage());
             response.put(message.toString(), Optional.empty());

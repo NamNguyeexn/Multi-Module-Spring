@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private int id;
     @Column(name = "humanid")
     private int humanid;
-    @Column(name = "employeeCode")
+    @Column(name = "employee_code")
     private String employeeCode;
     @Column(name = "email", unique = true)
     @NotBlank(message = "Email cant be null")

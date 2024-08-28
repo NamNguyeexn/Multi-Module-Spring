@@ -10,6 +10,7 @@ import java.util.Optional;
 @Service
 public interface IUserService {
     Optional<Human> getHumanByUsername(String username);
+    Optional<User> getUserById(int id);
     Optional<User> getUserByUsername(String username);
     Optional<User> saveNewUser(RegisterFormInput registerFormInput);
     Optional<Human> getHumanByPhone(String phone);

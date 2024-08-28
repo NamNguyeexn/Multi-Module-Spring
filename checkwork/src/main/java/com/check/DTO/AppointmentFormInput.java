@@ -18,9 +18,11 @@ import java.time.LocalDateTime;
 public class AppointmentFormInput {
     @NotNull(message = "Name of appointment cant be null")
     private String name;
+//    @NotNull(message = "Host cant be null")
+    private String hostMail;
     @NotNull(message = "Joins number cant be null")
     //// check ki
-    private String joinid;
+    private String[] joinid;
     @ValidTimeCharacter
     //valid thoi gian
     private String start;
@@ -30,6 +32,5 @@ public class AppointmentFormInput {
     @NotNull(message = "Detail cant be null")
     private String detail;
     @ValidMeetingType
-//    @NotNull(message = "Type of appointment cant be null")
     private String type;
 }

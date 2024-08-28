@@ -4,7 +4,7 @@ import com.check.DTO.*;
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.models.WorkHour;
-import com.check.services.TestService;
+import com.check.services.ITestService;
 import com.check.services.IUserService;
 import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,10 +30,10 @@ public class TestController {
     private IUserService IUserService;
     @Autowired
     @Qualifier("Service1")
-    private TestService testService1;
+    private ITestService testService1;
     @Autowired
     @Qualifier("Service2")
-    private TestService testService2;
+    private ITestService testService2;
     @GetMapping()
     public ResponseEntity<?> localhost(HttpServletRequest request){
         String username = jwtTokenService.getUsername(

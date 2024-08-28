@@ -1,6 +1,6 @@
 package com.check.repositories.JPARepository;
 
-import com.check.models.Human;
+import com.check.models.Schedule;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -9,15 +9,19 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @EnableJpaRepositories
-public interface HumanRepository extends JpaRepository<Human, Integer>, JpaSpecificationExecutor<Human> {
+public interface ScheduleRepository extends JpaRepository<Schedule, Integer>, JpaSpecificationExecutor<Schedule> {
     interface Specs{
-        static Specification<Human> byId(int id){
+        static Specification<Schedule> byId(int id){
             return (root, query, criteriaBuilder) ->
                     criteriaBuilder.equal(root.get("id"), id);
         }
-        static Specification<Human> byPhone(String phone){
+        static Specification<Schedule> byHostname(String hostname){
             return (root, query, criteriaBuilder) ->
-                    criteriaBuilder.equal(root.get("phone"), phone);
+                    criteriaBuilder.equal(root.get("hostname"), hostname);
         }
+//        static Specification<Schedule> byJoinname(String joinname){
+//            return (root, query, criteriaBuilder) ->
+//                    criteriaBuilder.;
+//        }
     }
 }

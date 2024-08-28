@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-15T00:04:12+0700",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
+    date = "2024-08-28T16:24:19+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
 )
 @Component
 public class WorkHourMapperImpl implements WorkHourMapper {
@@ -23,6 +23,14 @@ public class WorkHourMapperImpl implements WorkHourMapper {
 
         CheckInOutput checkInOutput = new CheckInOutput();
 
+        if ( workHour != null ) {
+            checkInOutput.setStart( workHour.getStart() );
+            checkInOutput.setStatus( workHour.getStatus() );
+        }
+        if ( user != null ) {
+            checkInOutput.setEmployeeCode( user.getEmployeeCode() );
+        }
+
         return checkInOutput;
     }
 
@@ -33,6 +41,16 @@ public class WorkHourMapperImpl implements WorkHourMapper {
         }
 
         CheckOutOutput checkOutOutput = new CheckOutOutput();
+
+        if ( workHour != null ) {
+            checkOutOutput.setStart( workHour.getStart() );
+            checkOutOutput.setEnd( workHour.getEnd() );
+            checkOutOutput.setStatus( workHour.getStatus() );
+            checkOutOutput.setNote( workHour.getNote() );
+        }
+        if ( user != null ) {
+            checkOutOutput.setEmployeeCode( user.getEmployeeCode() );
+        }
 
         return checkOutOutput;
     }

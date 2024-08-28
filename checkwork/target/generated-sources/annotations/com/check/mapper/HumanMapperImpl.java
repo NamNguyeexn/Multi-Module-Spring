@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-15T00:05:04+0700",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
+    date = "2024-08-28T16:24:19+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
 )
 @Component
 public class HumanMapperImpl implements HumanMapper {
@@ -27,11 +27,17 @@ public class HumanMapperImpl implements HumanMapper {
         if ( user != null ) {
             registerFormOutput.setEmployeeCode( user.getEmployeeCode() );
             registerFormOutput.setUsername( user.getUsername() );
+            registerFormOutput.setEmail( user.getEmail() );
+            if ( user.getDepartment() != null ) {
+                registerFormOutput.setDepartment( user.getDepartment().name() );
+            }
         }
         if ( humanInput != null ) {
             registerFormOutput.setName( humanInput.getName() );
         }
-        registerFormOutput.setPassword( password );
+        if ( password != null ) {
+            registerFormOutput.setPassword( password );
+        }
 
         return registerFormOutput;
     }
@@ -49,7 +55,9 @@ public class HumanMapperImpl implements HumanMapper {
             human.setAddress( humanInput.getAddress() );
             human.setPhone( humanInput.getPhone() );
         }
-        human.setDob( dob );
+        if ( dob != null ) {
+            human.setDob( dob );
+        }
 
         return human;
     }

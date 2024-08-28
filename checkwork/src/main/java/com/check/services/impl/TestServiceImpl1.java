@@ -1,7 +1,7 @@
 package com.check.services.impl;
 
 //import com.check.services.TestService;
-import com.check.services.TestService;
+import com.check.services.ITestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import static java.lang.Thread.currentThread;
 @Service
 @Slf4j
 @Qualifier("Service1")
-public class TestServiceImpl1 implements TestService {
+public class TestServiceImpl1 implements ITestService {
     private static final String hello = "HELLO FROM TEST SERVICE 1 - INTEGER ";
     private static final Stack<Integer> st = new Stack<Integer>();
     public String getHello(){

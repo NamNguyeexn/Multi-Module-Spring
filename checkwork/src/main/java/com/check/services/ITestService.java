@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public interface TestService {
+public interface ITestService {
     String getHello();
     String getData();
     void addData();

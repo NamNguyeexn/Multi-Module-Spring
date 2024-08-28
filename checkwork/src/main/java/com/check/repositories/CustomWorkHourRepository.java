@@ -4,8 +4,6 @@ import com.check.models.WorkHour;
 import com.check.repositories.JPARepository.WorkHourRepository;
 import com.common.utils.GenerateWorkHourCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 //@EnableJpaRepositories(basePackages = {"com.check.repositories.JPARepository.WorkHourRepository"})
 public class CustomWorkHourRepository {
     @Autowired
@@ -38,13 +36,6 @@ public class CustomWorkHourRepository {
         );
     }
     public Optional<WorkHour> getLastWorkHour(int userId) {
-//        return workHourRepository.findOne(
-//                (root, query, criteriaBuilder) -> {
-//                    Predicate condition = criteriaBuilder.equal(root.get("userid"), userId);
-//                    query.orderBy(criteriaBuilder.desc(root.get("id")));
-//                    return condition;
-//                }
-//        );
         Optional<List<WorkHour>> workHours = getListWorkHourByUserId(userId);
         if (workHours.get().isEmpty()){
             return Optional.empty();

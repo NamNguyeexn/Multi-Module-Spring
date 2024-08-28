@@ -3,7 +3,6 @@ package com.check.services.impl;
 import com.check.models.Appointment;
 import com.check.models.Room;
 import com.check.repositories.CustomRoomRepository;
-import com.check.repositories.JPARepository.RoomRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.check.services.impl;
 
 import com.check.models.Appointment;
 import com.check.models.Room;
-import com.check.repositories.JPARepository.AppointmentRepository;
+//import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import lombok.Getter;
@@ -24,8 +24,9 @@ public class IOfflineRoomService{
     private IRoomService roomService;
     @Autowired
     private IAppointmentService appointmentService;
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+//    @Autowired
+//    private AppointmentRepository appointmentRepository;
+
     public String prepareMeeting(List<String> data) {
         String res = "";
         // don phong
