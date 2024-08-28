@@ -4,12 +4,11 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 
-
-
-checkwork/target
-connect/target
-logger/target
-common/target
+**/target/**
+#checkwork/target
+#connect/target
+#logger/target
+#common/target
 # Other files and folders
 .settings/
 
