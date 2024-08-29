@@ -5,8 +5,8 @@
 - Khi cần mở rộng 1 service có sẵn từ trước đó 
 
 **Tại sao không viết 1 class mới implement class trước đó để mở rộng các service ?**
-- Bằng cách implement service cũ, ta sẽ truyền tham số của service cũ vào trong adapter mới, kèm theo 1 service mới.
-
+- Bằng cách implement service cũ, ta sẽ truyền tham số của service cũ vào trong adapter mới, kèm theo 1 service mới. Ta 
+có thể thực hiện xử lý dữ liệu trước khi truyền vào trong class mới.
 - Ưu điểm đầu tiên của adapter đó là *không gây ra conflict khi cùng mở rộng từ 1 interface*.
 
 **Tại sao không tạo 1 service riêng biệt và truyền tham số kết quả từ service cũ ?**

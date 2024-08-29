@@ -11,7 +11,6 @@ import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,6 @@ public class WorkHourAPIController {
 
     @RequestMapping()
     public ResponseEntity<List<WorkHour>> getListWorkHourByUsername(HttpServletRequest request) {
-        log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME");
         String username = jwtTokenService.getUsername(
                 request
                         .getHeader(HttpHeaders.AUTHORIZATION)
@@ -44,103 +42,77 @@ public class WorkHourAPIController {
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             Optional<List<WorkHour>>workHours = workHourService.getAllWorkHourByUsername(user.get());
-            log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - FOUND USER, WORKHOUR");
             return workHours.map(hours -> ResponseEntity.ok().body(hours)).orElseGet(() ->{
-                log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - NULL WORK HOURS");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             });
         } catch (Exception e) {
-            log.info("WORK HOUR API CONTROLLER - GET WORK HOUR BY USERNAME - GOT EXCEPTION " + e.getMessage());
+            log.info("EXCEPTION " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
         }
     }
     @GetMapping("/checkin")
-    public ResponseEntity<Map<String, Optional<CheckInOutput>>> getCheckIn(HttpServletRequest request) {
-        log.info("WORK HOUR API CONTROLLER - GET CHECK IN");
+    public ResponseEntity<Map<String, CheckInOutput>> getCheckIn(HttpServletRequest request) {
         String username = jwtTokenService.getUsername(
                 request
                         .getHeader(HttpHeaders.AUTHORIZATION)
                         .split(" ")[1].trim()
         );
         StringBuilder message = new StringBuilder();
-        Map<String, Optional<CheckInOutput>> response = new HashMap<>();
+        Map<String, CheckInOutput> response = new HashMap<>();
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("WORK HOUR API CONTROLLER - GET CHECK IN - NULL USER");
-                message.append("WORK HOUR API CONTROLLER - GET CHECK IN - NULL USER");
-                response.put(message.toString(), Optional.empty());
+                message.append("NULL USER");
+                response.put(message.toString(), null);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             Optional<CheckInOutput> checkIn = workHourService.checkin(user.get());
             if(checkIn.isEmpty()){
-                log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CANT CHECK IN");
-                message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CANT CHECK IN");
-//                response.put(message.toString(), checkIn.get().values().stream().findFirst());
-                response.put(message.toString(), Optional.empty());
+                message.append("CANT CHECK IN");
+                response.put(message.toString(), null);
                 return ResponseEntity.badRequest().body(response);
             } else {
-                log.info("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
-                message.append("WORK HOUR API CONTROLLER - GET CHECK IN - CHECKED IN");
-                response.put(message.toString(), checkIn);
-                // tao moi instance class
-//                UsersCheckedIn.addUser(user.get());
-//                response.put()
+                message.append("CHECKED IN");
+                response.put(message.toString(), checkIn.get());
                 return ResponseEntity.ok().body(response);
             }
         } catch (Exception e) {
-            log.info("WORK HOUR API CONTROLLER - GET CHECK IN - GOT EXCEPTION " + e.getMessage());
-            message.append("WORK HOUR API CONTROLLER - GET CHECK IN - GOT EXCEPTION ").append(e.getMessage());
-            response.put(message.toString(), Optional.empty());
-            return ResponseEntity.badRequest().body(response);
+            log.info("EXCEPTION " + e.getMessage());
+            return ResponseEntity.badRequest().body(null);
         }
     }
     @GetMapping("/checkout")
-    public ResponseEntity<Map<String, Optional<CheckOutOutput>>> getCheckOut(HttpServletRequest request) {
-        log.info("WORK HOUR API CONTROLLER - GET CHECK OUT");
+    public ResponseEntity<Map<String, CheckOutOutput>> getCheckOut(HttpServletRequest request) {
         String username = jwtTokenService.getUsername(
                 request
                         .getHeader(HttpHeaders.AUTHORIZATION)
                         .split(" ")[1].trim()
         );
         StringBuilder message = new StringBuilder();
-        Map<String, Optional<CheckOutOutput>> response = new HashMap<>();
+        Map<String, CheckOutOutput> response = new HashMap<>();
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
-                log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - NULL USER");
+                log.info("NULL USER");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             LocalDateTime end = LocalDateTime.now();
             Optional<CheckOutOutput> checkOut = workHourService.checkout(end, user.get());
-            log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - CHECKED IN");
+            log.info("CHECKED IN");
             if (checkOut.isEmpty()) {
-                log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - CHECK OUT EMPTY");
+                log.info("CHECK OUT EMPTY");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             } else {
-                log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - SUCCESS CHECK OUT");
-                message.append("WORK HOUR API CONTROLLER - GET CHECK OUT - SUCCESS CHECK OUT");
-                response.put(message.toString(), checkOut);
-//                return ResponseEntity.ok().body(
-//                        new CheckOutOutput(
-//                                checkOut.get().getStart(),
-//                                checkOut.get().getEnd(),
-//                                user.get().getEmployeeCode(),
-//                                checkOut.get().getStatus(),
-//                                "done")
-//                );
-//                return null;
+                message.append("SUCCESS CHECK OUT");
+                response.put(message.toString(), checkOut.get());
+                return ResponseEntity.status(HttpStatus.OK).body(response);
             }
         } catch (Exception e) {
-            log.info("WORK HOUR API CONTROLLER - GET CHECK OUT - SERVER ERROR : " + e.getMessage());
-            message.append("WORK HOUR API CONTROLLER - GET CHECK OUT - SERVER ERROR : ").append(e.getMessage());
-            response.put(message.toString(), Optional.empty());
-            return ResponseEntity.badRequest().body(response);
+            log.info("EXCEPTION : " + e.getMessage());
+            return ResponseEntity.badRequest().body(null);
         }
-        return null;
     }
 }

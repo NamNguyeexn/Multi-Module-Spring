@@ -24,8 +24,6 @@ public class IOfflineRoomService{
     private IRoomService roomService;
     @Autowired
     private IAppointmentService appointmentService;
-//    @Autowired
-//    private AppointmentRepository appointmentRepository;
 
     public String prepareMeeting(List<String> data) {
         String res = "";

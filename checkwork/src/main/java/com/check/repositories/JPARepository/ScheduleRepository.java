@@ -19,9 +19,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer>, Jp
             return (root, query, criteriaBuilder) ->
                     criteriaBuilder.equal(root.get("hostname"), hostname);
         }
-//        static Specification<Schedule> byJoinname(String joinname){
-//            return (root, query, criteriaBuilder) ->
-//                    criteriaBuilder.;
-//        }
     }
 }

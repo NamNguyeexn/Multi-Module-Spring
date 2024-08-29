@@ -1,6 +1,6 @@
 package com.check.DTO;
 
-import com.check.models.ENUM.Status;
+import com.check.models.ENUM.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckOutOutput {
+public class ScheduleOutput {
     private String start;
-//    @ValidCheckOutTime
     private String end;
-    private String employeeCode;
-    private Status status;
-    private String note;
+    private Type type;
+    private String detail;
+    private String hostname;
+    private String[] joinname;
+
 }

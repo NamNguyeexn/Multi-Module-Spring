@@ -34,7 +34,7 @@ public class CustomURLFilter implements Filter {
     private void logRequest(HttpServletRequest request, String requestId) {
         if (request != null) {
             StringBuilder data = new StringBuilder();
-            data.append("\nLOGGING REQUEST-----------------------------------\n")
+            data.append("\nLOGGING REQUEST\n")
                     .append("[REQUEST-ID]: ").append(requestId).append("\n")
                     .append("[PATH]: ").append(request.getRequestURI()).append("\n")
                     .append("[QUERIES]: ").append(request.getQueryString()).append("\n")
@@ -46,7 +46,7 @@ public class CustomURLFilter implements Filter {
                 String value = request.getHeader(key);
                 data.append("---").append(key).append(" : ").append(value).append("\n");
             }
-            data.append("LOGGING REQUEST-----------------------------------\n");
+            data.append("\nLOGGING REQUEST\n");
 
             log.info(data.toString());
         }

@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "calendar")
-@Builder
+@Table(name = "schedule")
+//@Builder
 public class Schedule {
     //Lớp tạo ra với mục đích sử dụng adapter
     @Id
@@ -31,6 +31,6 @@ public class Schedule {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private Type type;
-    @Column(name = "info")
-    private String info;
+    @Column(name = "detail")
+    private String detail;
 }

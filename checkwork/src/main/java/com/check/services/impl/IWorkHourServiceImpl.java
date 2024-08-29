@@ -25,8 +25,6 @@ import static com.check.repositories.JPARepository.WorkHourRepository.Specs.*;
 public class IWorkHourServiceImpl implements IWorkHourService {
     @Autowired
     private WorkHourMapper workHourMapper;
-//    @Autowired
-//    private CustomWorkHourRepository customWorkHourRepository;
     @Autowired
     private WorkHourRepository workHourRepository;
     @Override
@@ -41,19 +39,20 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         Optional<WorkHour> workHour = workHourRepository.findOne(byUserId(user.getId()));
         LocalDateTime start = LocalDateTime.now();
         if(workHour.isEmpty()){
-            log.info("WORK HOUR SERVICE - CHECK IN - NULL WORK HOUR");
-//            return Optional.empty();
+            log.info("NULL WORK HOUR");
         } else if(workHour.get().getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
-            log.info("WORK HOUR SERVICE - CHECK IN - CANT CHECK IN IN SAME DAY");
+            log.info("CANT CHECK IN IN SAME DAY");
             return Optional.empty();
         }
         Optional<WorkHour> workHourOut = updateCheckIn(start, user);
         if (workHourOut.isEmpty()){
-            log.info("WORK HOUR SERVICE - CHECK IN - WORK HOUR UPDATE NULL");
+            log.info("WORK HOUR UPDATE NULL");
             return Optional.empty();
         }
-        CheckInOutput checkInOutput = workHourMapper.workHourToCheckInOutPut(workHour.get(), user);
+        String employeeCode = user.getEmployeeCode();
+        Status status = Status.NOTDONE;
 
+        CheckInOutput checkInOutput = new CheckInOutput(start.toString(), employeeCode, status);
         return Optional.of(checkInOutput);
     }
     @Override
@@ -61,27 +60,27 @@ public class IWorkHourServiceImpl implements IWorkHourService {
 //        Optional<WorkHour> workHour = customWorkHourRepository.getLastWorkHour(user.getId());
         List<WorkHour> workHours = workHourRepository.findAll(byUserId(user.getId()));
         if(workHours.isEmpty()){
-            log.info("WORK HOUR SERVICE - CHECK OUT - NULL WORK HOUR");
+            log.info("NULL WORK HOUR");
             return Optional.empty();
         } else {
             WorkHour workHour = workHours.get(workHours.size() - 1);
             if (!workHour.getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
-                log.info("WORK HOUR SERVICE - CHECK OUT - WRONG DATE");
+                log.info("WRONG DATE");
                 return Optional.empty();
             } else if (Duration.between(workHour.getStart(), LocalDateTime.now()).toHours() < 8) {
-                log.info("WORK HOUR SERVICE - CHECK OUT - NOT ENOUGH HOUR");
+                log.info("NOT ENOUGH HOUR");
                 return Optional.empty();
             } else {
-                log.info("WORK HOUR SERVICE - CHECK OUT - GOT CHECKED IN");
+                log.info("GOT CHECKED IN");
                 int id = workHour.getId();
                 workHour.setId(id);
                 workHour.setStatus(Status.DONE);
                 workHour.setNote("done");
                 workHour.setEnd(LocalDateTime.now());
                 workHourRepository.save(workHour);
-//                customWorkHourRepository.updateWorkHourCheckout(workHour.get());
-//                Optional<WorkHour> workHourOut = customWorkHourRepository.getWorkHourById(id);
-                CheckOutOutput checkOutOutput = workHourMapper.workHourToCheckOutOutput(workHour, user);
+                String start = workHour.getStart().toString();
+                String end = workHour.getEnd().toString();
+                CheckOutOutput checkOutOutput = workHourMapper.toCheckOutOutput(workHour, user, start, end);
                 return Optional.of(checkOutOutput);
             }
         }
@@ -92,7 +91,7 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         List<WorkHour> workHours = workHourRepository.findAll(byUserId(user.getId()));
         WorkHour workHour = workHours.get(workHours.size() - 1);
         if (workHour == null){
-            log.info("WORK HOUR DAO - GET LAST WORK HOUR - NULL CHECKED IN");
+            log.info("NULL CHECKED IN");
             return Optional.empty();
         } else return Optional.of(workHour);
     }

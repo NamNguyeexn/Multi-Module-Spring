@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-//import com.check.services.TestService;
 
 import java.util.Optional;
 
@@ -54,12 +53,12 @@ public class TestController {
         );
         Optional<User> user = IUserService.getUserByUsername(username);
         if(user.isEmpty()) {
-            log.info("TEST CONTROLLER - GET LAST WORK HOUR - NULL USER");
+            log.info("NULL USER");
             return ResponseEntity.badRequest().body(null);
         } else {
             Optional<WorkHour> workHour = IWorkHourService.testGetLastWorkHour(user.get());
             if(workHour.isEmpty()){
-                log.info("TEST CONTROLLER - GET LAST WORK HOUR - NULL USER");
+                log.info("NULL USER");
                 return ResponseEntity.badRequest().body(null);
             } else {
                 return ResponseEntity.ok().body(workHour.get());

@@ -1,8 +1,5 @@
 package com.check.controllers;
 
-//import com.check.DTO.ResponseObject;
-//import com.check.DTO.UserInput;
-
 import com.check.JWT.JwtTokenService;
 import com.check.models.User;
 import com.check.services.IUserService;
@@ -29,8 +26,6 @@ public class UserAPIController {
     private JwtTokenService jwtTokenService;
     @GetMapping("/user/home")
     public ResponseEntity<Map<String, User>> getHomepage(HttpServletRequest request) {
-        log.info("=============================");
-        log.info("USER API CONTROLLER - GET HOMEPAGE");
         Map<String, User> response = new HashMap<>();
         String username = jwtTokenService.getUsername(
                 request
@@ -40,14 +35,11 @@ public class UserAPIController {
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isPresent()) {
-                log.info("--------------------------------------------");
-                log.info("USER API CONTROLLER - GET HOMEPAGE - FOUND USER");
-                response.put("USER API CONTROLLER - GET HOMEPAGE - FOUND USER", user.get());
+                response.put("FOUND USER", user.get());
                 return ResponseEntity.ok().body(response);
             }
             else {
-                log.info("--------------------------------------------");
-                String message = "USER API CONTROLLER - GET HOMEPAGE - NULL USER \n "
+                String message = "NULL USER \n "
                         + "USERNAME : "
                         + username;
                 log.info(message);
@@ -55,9 +47,7 @@ public class UserAPIController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
         } catch (Exception e) {
-            log.info("----------------------------------------------");
-            log.info("USER API CONTROLLER - GET HOMEPAGE - SERVER ERROR");
-            response.put("USER API CONTROLLER - GET HOMEPAGE - SERVER ERROR", null);
+            response.put("SERVER ERROR", null);
             return ResponseEntity.badRequest().body(response);
         }
     }

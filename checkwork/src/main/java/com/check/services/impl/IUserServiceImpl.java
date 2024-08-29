@@ -7,7 +7,6 @@ import com.check.models.Human;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
 import com.check.repositories.CustomHumanRepository;
-//import com.check.repositories.CustomUserRepository;
 import com.check.repositories.JPARepository.UserRepository;
 import com.check.services.IUserService;
 import com.common.utils.ConvertData;
@@ -23,8 +22,6 @@ import static com.check.repositories.JPARepository.UserRepository.Specs.*;
 @Service
 @Slf4j
 public class IUserServiceImpl implements IUserService {
-//    @Autowired
-//    private CustomUserRepository customUserRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
