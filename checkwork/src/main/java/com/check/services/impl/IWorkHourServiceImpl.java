@@ -50,9 +50,10 @@ public class IWorkHourServiceImpl implements IWorkHourService {
             return Optional.empty();
         }
         String employeeCode = user.getEmployeeCode();
-        Status status = Status.NOTDONE;
-
-        CheckInOutput checkInOutput = new CheckInOutput(start.toString(), employeeCode, status);
+        CheckInOutput checkInOutput = CheckInOutput.builder()
+                .start(start.toString())
+                .employeeCode(employeeCode)
+                .build();
         return Optional.of(checkInOutput);
     }
     @Override
@@ -109,13 +110,11 @@ public class IWorkHourServiceImpl implements IWorkHourService {
 
     private Optional<WorkHour> updateCheckIn(LocalDateTime start, User user){
         LocalDateTime end = LocalDateTime.now();
-        String status = String.valueOf(Status.NOTDONE);
         String note = GenerateWorkHourCode.generateWorkHourCode(start, user.getId());
         WorkHour workHour = new WorkHour();
         workHour.setUserid(user.getId());
         workHour.setStart(start);
         workHour.setEnd(end);
-        workHour.setStatus(Status.valueOf(status));
         workHour.setNote(note);
         workHourRepository.save(workHour);
 //        customWorkHourRepository.saveCheckIn(workHour);

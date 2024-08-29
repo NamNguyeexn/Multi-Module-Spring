@@ -11,6 +11,8 @@
       <set>
         <option value="$PROJECT_DIR$/Abstract_Factory/pom.xml" />
         <option value="$PROJECT_DIR$/adapter/pom.xml" />
+        <option value="$PROJECT_DIR$/builder/pom.xml" />
+        <option value="$PROJECT_DIR$/sync/pom.xml" />
       </set>
     </option>
   </component>

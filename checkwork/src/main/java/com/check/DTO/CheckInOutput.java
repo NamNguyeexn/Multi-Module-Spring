@@ -1,17 +1,16 @@
 package com.check.DTO;
 
 import com.check.models.ENUM.Status;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CheckInOutput {
     private String start;
     private String employeeCode;
-    private Status status;
+    @Builder.Default
+    private Status status = Status.NOTDONE;
 }

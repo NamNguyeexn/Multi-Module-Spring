@@ -1,5 +1,4 @@
-***Adapter Docx***
--
+# Adapter Docx
 
 **Khi nào thì sử dụng adapter ?**
 - Khi cần mở rộng 1 service có sẵn từ trước đó 

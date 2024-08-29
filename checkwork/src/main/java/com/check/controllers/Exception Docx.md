@@ -1,5 +1,4 @@
-***Các lỗi và cách xử lý***
--
+# Các lỗi và cách xử lý
 **Lỗi Cannot commit JPA Exception :**
 - Đặt debug ở hàm save của service và repository
 - Vào tới hàm proceed dòng 696 của lớp /org/springframework/aop/framework/CglibAopProxy.class

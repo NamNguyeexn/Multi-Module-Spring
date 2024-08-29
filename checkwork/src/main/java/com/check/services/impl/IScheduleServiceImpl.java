@@ -37,7 +37,14 @@ public class IScheduleServiceImpl implements IScheduleService {
                 String joinnames = scheduleAdapter.toJoinsname(a.getJoinid());
                 String start = a.getStart().toString();
                 String end = a.getEnd().toString();
-                Schedule schedule = scheduleMapper.toSchedule(a, hostname, joinnames, start, end);
+                Schedule schedule = Schedule.builder()
+                        .hostname(hostname)
+                        .joinname(joinnames)
+                        .start(a.getStart())
+                        .end(a.getEnd())
+                        .type(a.getType())
+                        .detail(a.getDetail())
+                        .build();
                 scheduleOutputs.add(scheduleMapper.toScheduleOutput(schedule, joinnames.split(","), start, end));
             }
             return scheduleOutputs;

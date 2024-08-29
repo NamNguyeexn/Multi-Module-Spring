@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "schedule")
-//@Builder
+@Builder
 public class Schedule {
-    //Lớp tạo ra với mục đích sử dụng adapter
+    //Lớp tạo ra với mục đích sử dụng adapter và builder
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -33,4 +33,13 @@ public class Schedule {
     private Type type;
     @Column(name = "detail")
     private String detail;
+
+    public Schedule(String hostname, String joinname, LocalDateTime start, LocalDateTime end, Type type, String detail) {
+        this.hostname = hostname;
+        this.joinname = joinname;
+        this.start = start;
+        this.end = end;
+        this.type = type;
+        this.detail = detail;
+    }
 }

@@ -4,10 +4,7 @@ import com.check.models.ENUM.Status;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class WorkHour {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,8 +34,10 @@ public class WorkHour {
     private int userid;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    @Builder.Default
+    private Status status = Status.NOTDONE;
     @Nullable
     @Column(name = "note")
     private String note;
+
 }
