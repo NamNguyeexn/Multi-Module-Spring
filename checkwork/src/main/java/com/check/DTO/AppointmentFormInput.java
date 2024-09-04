@@ -1,30 +1,29 @@
 package com.check.DTO;
 
-import com.common.validations.ValidMeetingType;
-import com.common.validations.ValidTimeCharacter;
-import jakarta.validation.constraints.NotBlank;
+import com.check.validations.ValidStartAndEnd;
+import com.common.validations.appointment.ValidMeetingType;
+import com.common.validations.appointment.ValidTimeCharacter;
+import com.common.validations.appointment.ValidStartValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ValidStartAndEnd
 public class AppointmentFormInput {
     @NotNull(message = "Name of appointment cant be null")
     private String name;
-//    @NotNull(message = "Host cant be null")
     private String hostMail;
     @NotNull(message = "Joins number cant be null")
     //// check ki
     private String[] joinid;
     @ValidTimeCharacter
-    //valid thoi gian
+    @ValidStartValue
     private String start;
     @ValidTimeCharacter
     // valid thoi gian
@@ -33,4 +32,5 @@ public class AppointmentFormInput {
     private String detail;
     @ValidMeetingType
     private String type;
+
 }

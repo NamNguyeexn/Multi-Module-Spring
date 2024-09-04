@@ -37,6 +37,7 @@ CREATE TABLE appointment (
         room VARCHAR(255),
          info TEXT NOT NULL
 );
+ALTER
 CREATE TABLE room (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,

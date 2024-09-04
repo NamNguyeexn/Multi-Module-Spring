@@ -2,8 +2,11 @@ package com.check.controllers;
 
 import com.check.DTO.*;
 import com.check.JWT.JwtTokenService;
+import com.check.abstract_factories.RewardAbstractFactory;
+import com.check.abstract_factories.models.*;
 import com.check.models.User;
 import com.check.models.WorkHour;
+import com.check.services.IHumanService;
 import com.check.services.ITestService;
 import com.check.services.IUserService;
 import com.check.services.IWorkHourService;
@@ -15,7 +18,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
+
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 
 @RestController
 @RequestMapping("/api/test")
@@ -26,7 +34,11 @@ public class TestController {
     @Autowired
     private IWorkHourService IWorkHourService;
     @Autowired
+    private RewardAbstractFactory rewardAbstractFactory;
+    @Autowired
     private IUserService IUserService;
+    @Autowired
+    private IHumanService humanService;
     @Autowired
     @Qualifier("Service1")
     private ITestService testService1;
@@ -83,6 +95,71 @@ public class TestController {
         testService2.addData();
         return ResponseEntity.ok().body("ADDED DATA TO TEST SERVICE 1, 2");
     }
-
-
+    @GetMapping("/minus")
+    public ResponseEntity<String> getMinus(HttpServletRequest request){
+        String alert = "";
+        String username = jwtTokenService.getUsername(
+                request
+                        .getHeader(HttpHeaders.AUTHORIZATION)
+                        .split(" ")[1].trim()
+        );
+        Optional<User> user = IUserService.getUserByUsername(username);
+        if(LocalTime.now().isAfter(LocalTime.of(8, 0))){
+            MinusLate iMinus = rewardAbstractFactory.newChange(MinusLate.class, user.get().getUsername(), 5000);
+            alert = "Dear "
+                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+                    + " "
+                    + iMinus.getReason()
+                    +  " -"
+                    + iMinus.getValue(iMinus.getMinus());
+            return ResponseEntity.ok().body(alert);
+        } else {
+            MinusPunish iMinus = rewardAbstractFactory.newChange(MinusPunish.class, user.get().getUsername(), 5000);
+            alert = "Dear "
+                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+                    + ", "
+                    + iMinus.getReason()
+                    + " -"
+                    + iMinus.getValue(iMinus.getMinus());
+            return ResponseEntity.ok().body(alert);
+        }
+    }
+    @GetMapping("/bonus")
+    public ResponseEntity<String> getBonus(HttpServletRequest request){
+        String alert = "";
+        String username = jwtTokenService.getUsername(
+                request
+                        .getHeader(HttpHeaders.AUTHORIZATION)
+                        .split(" ")[1].trim()
+        );
+        Optional<User> user = IUserService.getUserByUsername(username);
+        if(LocalDate.now().isEqual(humanService.getHumanById(user.get().getHumanid()).get().getDob().toLocalDate())){
+            BonusBirthday iBonus = rewardAbstractFactory.newChange(BonusBirthday.class, user.get().getUsername(), 5000);
+            alert = "Dear "
+                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+                    + " "
+                    + iBonus.getReason()
+                    +  " +"
+                    + iBonus.getBonus(iBonus.getBonus());
+            return ResponseEntity.ok().body(alert);
+        } else if(LocalDate.now().isEqual(LocalDate.now().with(firstDayOfYear()))){
+            BonusHoliday iBonus = rewardAbstractFactory.newChange(BonusHoliday.class, user.get().getUsername(), 5000);
+            alert = "Dear "
+                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+                    + ", "
+                    + iBonus.getReason()
+                    + " +"
+                    + iBonus.getBonus(iBonus.getBonus());
+            return ResponseEntity.ok().body(alert);
+        } else {
+            BonusReward iBonus = rewardAbstractFactory.newChange(BonusReward.class, user.get().getUsername(), 5000);
+            alert = "Dear "
+                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+                    + ", "
+                    + iBonus.getReason()
+                    + " +"
+                    + iBonus.getBonus(iBonus.getBonus());
+            return ResponseEntity.ok().body(alert);
+        }
+    }
 }

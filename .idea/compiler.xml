@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
-        <module name="afactory" />
         <module name="logger" />
         <module name="checkwork" />
         <module name="connect" />
@@ -27,11 +26,12 @@
       <module name="Abstract_Factory" options="-parameters" />
       <module name="adapter" options="-parameters" />
       <module name="afDesign" options="-parameters" />
-      <module name="afactory" options="-parameters" />
+      <module name="afactory" options="" />
       <module name="builder" options="-parameters" />
       <module name="checkwork" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="connect" options="-parameters" />
+      <module name="demo" options="" />
       <module name="logger" options="-parameters" />
       <module name="sync" options="-parameters" />
     </option>

@@ -15,15 +15,15 @@ import org.mapstruct.factory.Mappers;
 public interface WorkHourMapper {
     WorkHourMapper INSTANCE = Mappers.getMapper(WorkHourMapper.class);
 
-    @Mapping(source = "start", target = "start")
-    @Mapping(source = "employeeCode", target = "employeeCode")
-    @Mapping(source = "status", target = "status")
+//    @Mapping(source = "start", target = "start")
+//    @Mapping(source = "employeeCode", target = "employeeCode")
+//    @Mapping(source = "status", target = "status")
     CheckInOutput toCheckInOutPut(String start, String employeeCode, Status status);
 
-    @Mapping(source = "start", target = "start")
-    @Mapping(source = "end", target = "end")
-    @Mapping(source = "user.employeeCode", target = "employeeCode")
-    @Mapping(source = "workHour.status", target = "status")
-    @Mapping(source = "workHour.note", target = "note")
+//    @Mapping(source = "start", target = "start")
+//    @Mapping(source = "end", target = "end")
+//    @Mapping(source = "user.employeeCode", target = "employeeCode")
+//    @Mapping(source = "workHour.status", target = "status")
+//    @Mapping(source = "workHour.note", target = "note")
     CheckOutOutput toCheckOutOutput(WorkHour workHour, User user, String start, String end);
 }

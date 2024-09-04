@@ -1,84 +1,103 @@
-//package com.check.configs;
-//
-//import com.check.adapters.ScheduleAdapter;
-//import com.check.listeners.JobCompletionNotificationListener;
-//import com.check.models.Appointment;
-//import com.check.models.Schedule;
-//import com.check.processors.ScheduleItemProcessor;
-//import org.springframework.batch.core.Job;
-//import org.springframework.batch.core.Step;
-//import org.springframework.batch.core.job.builder.JobBuilder;
-//import org.springframework.batch.core.repository.JobRepository;
-//import org.springframework.batch.core.step.builder.StepBuilder;
-//import org.springframework.batch.item.database.JdbcBatchItemWriter;
-//import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
-//import org.springframework.batch.item.file.FlatFileItemReader;
-//import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.core.io.ClassPathResource;
-//import org.springframework.core.io.Resource;
-//import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-//
-//import javax.sql.DataSource;
-//
-//import java.nio.charset.StandardCharsets;
-//
-//import static java.nio.file.Files.lines;
-//
-//@Configuration
-//public class BatchConfiguration {
-//    @Autowired
-//    private ScheduleAdapter scheduleAdapter;
-//    @Bean
-//    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
-//        return new DataSourceTransactionManager(dataSource);
-//    }
-//    @Bean
-//    public FlatFileItemReader<Schedule> reader() {
-//        return new FlatFileItemReaderBuilder<Schedule>()
-//                .name("scheduleItemReader")
-//                .resource(resource)
-//                .delimited()
-//                .names("name", "hostid", "joinid", "start", "end", "detail", "type", "room", "info")
-//                .targetType(Schedule.class)
-//                .build();
-//    }
-//
-//    @Bean
-//    public ScheduleItemProcessor processor() {
-//        return new ScheduleItemProcessor();
-//    }
-//
-//    @Bean
-//    public JdbcBatchItemWriter<Schedule> writer(DataSource dataSource) {
-//        return new JdbcBatchItemWriterBuilder<Schedule>()
-//                .sql("INSERT INTO schedule (hostname, joinname, start, end, type, detail) " +
-//                        "VALUES (:hostname, :joinname, :start, :end, :type, :detail)")
-//                .dataSource(dataSource)
-//                .beanMapped()
-//                .build();
-//    }
-//
-//    @Bean
-//    public Job importUserJob(JobRepository jobRepository, Step step1, JobCompletionNotificationListener listener) {
-//        return new JobBuilder("importScheduleJob", jobRepository)
-//                .listener(listener)
-//                .start(step1)
-//                .build();
-//    }
-//    @Bean
-//    public Step step1(JobRepository jobRepository,
-//                      DataSourceTransactionManager transactionManager,
-//                      FlatFileItemReader<Appointment> reader,
-//                      ScheduleItemProcessor processor,
-//                      JdbcBatchItemWriter<Schedule> writer) {
-//        return new StepBuilder("step1", jobRepository)
-//                .<Appointment, Schedule> chunk(3, transactionManager)
-//                .reader(reader)
-//                .processor(processor)
-//                .writer(writer)
-//                .build();
-//    }
-//}
+package com.check.configs;
+
+import com.check.batch.AppointmentBatch;
+import com.check.batch.ScheduleProcessor;
+import com.check.models.Appointment;
+import com.check.models.Schedule;
+import com.check.repositories.JPARepository.ScheduleRepository;
+import com.common.configs.DatabaseConfig;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.data.RepositoryItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.transaction.PlatformTransactionManager;
+
+
+@Configuration
+@Import({DatabaseConfig.class})
+public class BatchConfiguration {
+    @Autowired
+    private JobRepository jobRepository;
+    @Autowired
+    private PlatformTransactionManager platformTransactionManager;
+    @Autowired
+    private ScheduleRepository repository;
+
+    @Bean
+    public FlatFileItemReader<AppointmentBatch> reader() {
+        FlatFileItemReader<AppointmentBatch> itemReader = new FlatFileItemReader<>();
+        itemReader.setResource(new FileSystemResource("checkwork/src/main/resources/appointments.csv"));
+        itemReader.setName("CSV-Reader");
+        itemReader.setLinesToSkip(1);
+        itemReader.setLineMapper(lineMapper());
+        return itemReader;
+    }
+
+    @Bean
+    public ScheduleProcessor processor() {
+        return new ScheduleProcessor();
+    }
+
+    @Bean
+    public RepositoryItemWriter<Schedule> writer() {
+        RepositoryItemWriter<Schedule> writer = new RepositoryItemWriter<>();
+        writer.setRepository(repository);
+        writer.setMethodName("save");
+        return writer;
+    }
+
+    @Bean
+    public Step step1() {
+        return new StepBuilder("appointments.csv", jobRepository)
+                .<AppointmentBatch, Schedule>chunk(1000, platformTransactionManager)
+                .reader(reader())
+                .processor(processor())
+                .writer(writer())
+                .taskExecutor(taskExecutor())
+                .build();
+    }
+
+    @Bean
+    public Job runJob() {
+        return new JobBuilder("importSchedules", jobRepository)
+                .incrementer(new RunIdIncrementer())
+                .start(step1())
+                .build();
+
+    }
+
+    @Bean
+    public TaskExecutor taskExecutor() {
+        SimpleAsyncTaskExecutor asyncTaskExecutor = new SimpleAsyncTaskExecutor();
+        asyncTaskExecutor.setConcurrencyLimit(10);
+        return asyncTaskExecutor;
+    }
+
+    private DefaultLineMapper<AppointmentBatch> lineMapper() {
+        DefaultLineMapper<AppointmentBatch> lineMapper = new DefaultLineMapper<>();
+        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+        lineTokenizer.setDelimiter(",");
+        lineTokenizer.setStrict(false);
+        lineTokenizer.setNames("id", "name", "hostid", "joinid", "start", "end", "detail", "type", "room", "info");
+        BeanWrapperFieldSetMapper<AppointmentBatch> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(AppointmentBatch.class);
+        lineMapper.setLineTokenizer(lineTokenizer);
+        lineMapper.setFieldSetMapper(fieldSetMapper);
+        return lineMapper;
+    }
+}

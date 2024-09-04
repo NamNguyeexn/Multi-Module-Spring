@@ -106,7 +106,9 @@ public class LoginAPIController {
                     return ResponseEntity.badRequest().body(response);
                 }
                 log.info("LOGIN API CONTROLLER - REGISTER - SUCCESS");
-                RegisterFormOutput registerFormOutput = humanMapper.userToRegisterFormOutput(user.get(), registerFormInput, password);
+                User u = user.get();
+                RegisterFormOutput registerFormOutput =
+                        HumanMapper.INSTANCE.userToRegisterFormOutput(u, registerFormInput, password);
                 //
                 response.put("LOGIN API CONTROLLER - REGISTER - SUCCESS ", registerFormOutput);
                 return ResponseEntity.ok().body(response);

@@ -11,6 +11,7 @@
 
     <groupId>com.logger</groupId>
     <artifactId>logger</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

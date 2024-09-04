@@ -2,6 +2,7 @@ package com.check.models;
 
 
 import com.check.models.ENUM.Type;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Schedule {
     @Column(name = "id")
     private int id;
     @Column(name = "hostname")
+    @JsonProperty(namespace = "hostname")
     private String hostname;
     @Column(name = "joinname")
     private String joinname;
@@ -30,16 +32,10 @@ public class Schedule {
     private LocalDateTime end;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
+    @JsonProperty(namespace = "type")
     private Type type;
     @Column(name = "detail")
+    @JsonProperty(namespace = "detail")
     private String detail;
 
-    public Schedule(String hostname, String joinname, LocalDateTime start, LocalDateTime end, Type type, String detail) {
-        this.hostname = hostname;
-        this.joinname = joinname;
-        this.start = start;
-        this.end = end;
-        this.type = type;
-        this.detail = detail;
-    }
 }

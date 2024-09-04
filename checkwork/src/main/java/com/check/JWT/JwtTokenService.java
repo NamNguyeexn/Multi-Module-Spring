@@ -17,8 +17,6 @@ public class JwtTokenService {
     private final String ISSUER = "20240719";
 
     public String generateAccessToken(User user) {
-        log.info("=============================");
-        log.info("JWT TOKEN SERVICE - GENERATE ACCESS TOKEN");
         Map<String,String> claims = new HashMap<>();
         claims.put("userId", String.valueOf(user.getId()));
         claims.put("userName", user.getUsername());
@@ -31,32 +29,24 @@ public class JwtTokenService {
                 .compact();
     }
     public Integer getUserId(String token) {
-        log.info("=============================");
-        log.info("JWT TOKEN SERVICE - GET USER ID");
         Claims claims = getClaims(token);
         int userId = (int) claims.get("userId");
         ThreadContext.put("userId", "userId");
         return userId;
     }
     public Claims getClaims(String token) {
-        log.info("=============================");
-        log.info("JWT TOKEN SERVICE - GET CLAIMS");
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }
     public String getUsername(String token) {
-        log.info("=============================");
-        log.info("JWT TOKEN SERVICE - GET USERNAME");
         Claims claims = getClaims(token);
         String username = (String) claims.get("userName");
         ThreadContext.put("username", "username");
         return username;
     }
     public boolean validate(String token) {
-        log.info("=============================");
-        log.info("JWT TOKEN SERVICE - VALIDATE");
         try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;

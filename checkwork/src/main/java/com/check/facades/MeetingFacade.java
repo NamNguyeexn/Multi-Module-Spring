@@ -1,7 +1,9 @@
 package com.check.facades;
 
 import com.check.DTO.AppointmentFormInput;
+import com.check.models.ENUM.Role;
 import com.check.models.User;
+import com.check.services.IEmailProxy;
 import com.check.services.IMeetingService;
 import com.check.services.IUserService;
 import com.check.services.impl.IEmailServiceImpl;
@@ -10,16 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 @Component
 @Slf4j
 public class MeetingFacade implements IMeetingService {
     @Autowired
     private IMeetingServiceImpl meetingService;
+//    @Autowired
+//    private IEmailServiceImpl emailService;
     @Autowired
-    private IEmailServiceImpl emailService;
+    private IEmailProxy emailProxy;
     @Autowired
     private IUserService userService;
 
@@ -27,15 +30,21 @@ public class MeetingFacade implements IMeetingService {
     public String createMeeting(AppointmentFormInput appointmentFormInput) {
         String host = appointmentFormInput.getHostMail();
         String info = meetingService.createMeeting(appointmentFormInput);
-        List<String> joins = new ArrayList<>();
+        Map<String, Role> joins = new HashMap<>();
+        List<String> listName = new ArrayList<>();
         for(String s : appointmentFormInput.getJoinid()){
             Optional<User> u = userService.getUserById(Integer.parseInt(s));
-            u.ifPresent(user -> joins.add(user.getEmail()));
+            if(u.isPresent()){
+                User user = u.get();
+                joins.put(user.getEmail(), user.getRole());
+                listName.add(user.getEmail());
+            }
         }
-        String[] joinsName = joins.toArray(new String[0]);
+        String[] joinsName = listName.toArray(new String[0]);
         appointmentFormInput.setJoinid(joinsName);
         String subject = appointmentFormInput.getName();
-        emailService.sendEmails(host, joinsName, subject, info);
+//        emailService.sendEmails(host, joins, subject, info);
+        emailProxy.sendEmails(host, joins, subject, info);
         return info;
     }
 }

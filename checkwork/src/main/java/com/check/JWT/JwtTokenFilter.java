@@ -38,8 +38,6 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        log.info("==================================");
-        log.info("JWT TOKEN FILTER - DO FILTER INTERNAL");
         // Get authorization header and validate
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         System.out.println(header);

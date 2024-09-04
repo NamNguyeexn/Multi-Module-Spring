@@ -2,9 +2,9 @@ package com.check.models;
 
 import com.check.models.ENUM.Department;
 import com.check.models.ENUM.Role;
-import com.common.validations.ValidEmailCharacter;
+import com.common.validations.login.ValidEmailCharacter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,10 +32,12 @@ public class User implements UserDetails {
     @Column(name = "humanid")
     private int humanid;
     @Column(name = "employee_code")
+    @JsonProperty(namespace = "employeeCode")
     private String employeeCode;
     @Column(name = "email", unique = true)
     @NotBlank(message = "Email cant be null")
     @ValidEmailCharacter
+    @JsonProperty(namespace = "email")
     private String email;
     @NotBlank(message = "Username cant be null")
     @Column(name = "username")
@@ -48,6 +50,7 @@ public class User implements UserDetails {
     private Role role;
     @Enumerated(EnumType.STRING)
     @Column(name = "department")
+    @JsonProperty(namespace = "department")
     private Department department;
 
     @Override

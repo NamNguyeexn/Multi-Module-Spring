@@ -36,11 +36,15 @@ public class IWorkHourServiceImpl implements IWorkHourService {
     @Override
     public Optional<CheckInOutput> checkin(User user) {
 //        Optional<WorkHour> workHour = customWorkHourRepository.getLastWorkHour(user.getId());
-        Optional<WorkHour> workHour = workHourRepository.findOne(byUserId(user.getId()));
+        List<WorkHour> workHours = workHourRepository.findAll(byUserId(user.getId()));
+        WorkHour workHour;
+        if(workHours.size() > 1) {
+            workHour = workHours.get(workHours.size() - 1);
+        } else workHour = workHours.get(workHours.size());
         LocalDateTime start = LocalDateTime.now();
-        if(workHour.isEmpty()){
+        if(workHours.isEmpty()){
             log.info("NULL WORK HOUR");
-        } else if(workHour.get().getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
+        } else if(workHour.getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
             log.info("CANT CHECK IN IN SAME DAY");
             return Optional.empty();
         }

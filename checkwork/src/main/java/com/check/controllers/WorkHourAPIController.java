@@ -32,7 +32,7 @@ public class WorkHourAPIController {
     @Autowired
     private JwtTokenService jwtTokenService;
 
-    @RequestMapping()
+    @RequestMapping("")
     public ResponseEntity<List<WorkHour>> getListWorkHourByUsername(HttpServletRequest request) {
         String username = jwtTokenService.getUsername(
                 request
@@ -45,9 +45,7 @@ public class WorkHourAPIController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             Optional<List<WorkHour>>workHours = workHourService.getAllWorkHourByUsername(user.get());
-            return workHours.map(hours -> ResponseEntity.ok().body(hours)).orElseGet(() ->{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            });
+            return workHours.map(hours -> ResponseEntity.ok().body(hours)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
         } catch (Exception e) {
             log.info("EXCEPTION " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
@@ -80,7 +78,7 @@ public class WorkHourAPIController {
                 return ResponseEntity.ok().body(response);
             }
         } catch (Exception e) {
-            log.info("EXCEPTION " + e.getMessage());
+            log.info("EXCEPTION CHECK IN : " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -101,7 +99,7 @@ public class WorkHourAPIController {
             }
             LocalDateTime end = LocalDateTime.now();
             Optional<CheckOutOutput> checkOut = workHourService.checkout(end, user.get());
-            log.info("CHECKED IN");
+//            log.info("CHECKED IN");
             if (checkOut.isEmpty()) {
                 log.info("CHECK OUT EMPTY");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -111,7 +109,7 @@ public class WorkHourAPIController {
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             }
         } catch (Exception e) {
-            log.info("EXCEPTION : " + e.getMessage());
+            log.info("EXCEPTION CHECK OUT : " + e.getMessage());
             return ResponseEntity.badRequest().body(null);
         }
     }
