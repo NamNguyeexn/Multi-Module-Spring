@@ -1,0 +1,8 @@
+id,name,hostid,joinid,start,end,detail,type,room,info
+1,Planning for A,1,"[3, 4]","2024-08-21T14:00:00.0","2024-08-21T16:00:00.0",Planning for A to have a plan,OFFLINE,Sandy Shore,"15"
+2,Planning for A,1,"[3, 4]","2024-08-21T14:00:00.0","2024-08-21T16:00:00.0",Planning for A to have a plan,ONLINE,F6w,google ; https://meet.google.com/j7K-Yp6n-o1G-&PZPbEQn6KD
+52,Planning for A,3,"[3, 4, 5, 6, 7]","2024-08-21T14:00:00.0","2024-08-21T16:00:00.0",Planning for A to have a plan,ONLINE,RO6,microsoft ; https://meet.microsoft.com/hBL-7vrP-uJC-=Lbi1Azun3H
+53,Planning for B,3,"[1, 4, 5, 6, 7]","2024-08-22T14:00:00.0","2024-08-22T16:00:00.0",Planning for A to have a plan,OFFLINE,Sandy Shore,"15"
+102,Planning for B,3,"[1, 4, 5, 6, 7]","2024-08-22T14:00:00.0","2024-08-22T16:00:00.0",Planning for A to have a plan,OFFLINE,Sandy Shore,"15"
+202,Planning for B,3,"[1, 4, 5, 6, 7]","2024-08-22T14:00:00.0","2024-08-22T16:00:00.0",Planning for A to have a plan,ONLINE,wJl,google ; https://meet.google.com/DX5-PRzR-Yiu-=1EvzrdBDkg
+203,Planning for B,3,"[1, 4, 5, 6, 7]","2024-08-22T14:00:00.0","2024-08-22T16:00:00.0",Planning for A to have a plan,OFFLINE,Connection,"5"
