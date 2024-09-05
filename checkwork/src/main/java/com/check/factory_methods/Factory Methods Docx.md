@@ -11,8 +11,4 @@ instance trong bean**
 **Là 1 các phương thức tĩnh trong 1 class, được sử dụng để ghi đè, mở rộng các phương thức trong 1 class. Trong factory 
 bean cũng sử dụng factory methods để khởi tạo bean, ghi đè các hàm**
 
-***Lợi ích việc sử dụng Factory Methods:***
-- Tăng khả năng mở rộng cho không chỉ các hàm nghiệp vụ, các hàm config mà còn cả các hàm trong thư viện của spring.
-
-***Nhược điểm***
-- Khó kiểm soát code nếu như có quá nhiều hàm cần mở rộng (hiệu năng giảm) và code trở nên phức tạp hơn 
+***Tại sao sử dụng Factory method (1 interface) thay vì sử dụng abstract class***

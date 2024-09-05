@@ -1,9 +1,10 @@
 package com.check.configs;
 
-//import com.check.repositories.CustomUserRepository;
 import com.check.repositories.JPARepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -14,14 +15,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
 import static com.check.repositories.JPARepository.UserRepository.Specs.byUsername;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableJpaRepositories(basePackages = "com.check.repositories.JPARepository")
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class ApplicationConfig {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DataSource dataSource;
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -39,4 +45,5 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
