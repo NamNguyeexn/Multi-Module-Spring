@@ -44,7 +44,7 @@ CREATE TABLE room (
       capacity INT NOT NULL,
       status BOOLEAN NOT NULL
 );
-INSERT INTO room (name, capacity, status)
+INSERT INTO room (name, capacity, open)
 VALUES
     ('Connection', 5, true),
     ('Incubation', 10, true),

@@ -17,8 +17,6 @@ public class ValidStartValueVld implements ConstraintValidator<ValidStartValue, 
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime start = LocalDateTime.parse(s,formatter);
-        if(start.isBefore(LocalDateTime.now())) return false;
-
-        return true;
+        return !start.isBefore(LocalDateTime.now());
     }
 }

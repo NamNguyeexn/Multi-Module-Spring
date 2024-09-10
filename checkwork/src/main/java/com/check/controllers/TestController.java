@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 
 @RestController
 @RequestMapping("/api/test")
@@ -142,15 +141,15 @@ public class TestController {
                     +  " +"
                     + iBonus.getBonus(iBonus.getBonus());
             return ResponseEntity.ok().body(alert);
-        } else if(LocalDate.now().isEqual(LocalDate.now().with(firstDayOfYear()))){
-            BonusHoliday iBonus = rewardAbstractFactory.newChange(BonusHoliday.class, user.get().getUsername(), 5000);
-            alert = "Dear "
-                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
-                    + ", "
-                    + iBonus.getReason()
-                    + " +"
-                    + iBonus.getBonus(iBonus.getBonus());
-            return ResponseEntity.ok().body(alert);
+//        } else if(LocalDate.now().isEqual(LocalDate.now().with(firstDayOfYear()))){
+//            BonusHoliday iBonus = rewardAbstractFactory.newChange(BonusHoliday.class, user.get().getUsername(), 5000);
+//            alert = "Dear "
+//                    + humanService.getHumanById(user.get().getHumanid()).get().getName()
+//                    + ", "
+//                    + iBonus.getReason()
+//                    + " +"
+//                    + iBonus.getBonus(iBonus.getBonus());
+//            return ResponseEntity.ok().body(alert);
         } else {
             BonusReward iBonus = rewardAbstractFactory.newChange(BonusReward.class, user.get().getUsername(), 5000);
             alert = "Dear "

@@ -1,14 +1,14 @@
-package com.check.services;
+package com.check.services.impl;
 
 import com.check.models.ENUM.Role;
-import com.check.services.impl.IEmailServiceImpl;
+import com.check.services.IEmailService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class IEmailProxy implements IEmailService{
+public class IEmailProxy implements IEmailService {
     private final IEmailServiceImpl emailService;
     public IEmailProxy(IEmailServiceImpl iEmailService){
         this.emailService = iEmailService;
