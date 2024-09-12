@@ -7,3 +7,5 @@ và lớp bé cùng cấp bậc, thứ tự từ 4, tới 3 1 2, tới 1 1 1
 VD:    4
     3      1      2
   1    1             1
+- Khi gọi một phương thức trên một đối tượng cha, gồm nhiều lớp con, thì nó sẽ tự động thực hiện phương thức đó cho tất 
+cả các lớp con của nó. 
