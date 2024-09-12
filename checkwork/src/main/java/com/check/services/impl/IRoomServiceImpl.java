@@ -47,4 +47,13 @@ public class IRoomServiceImpl implements IRoomService {
             }
         }
     }
+
+    @Override
+    public void cleanRoomByName(String name) {
+        Optional<Room> room = roomRepository.getRoomByName(name);
+        if(room.isPresent()){
+            room.get().setOpen(true);
+            saveRoom(room.get());
+        }
+    }
 }

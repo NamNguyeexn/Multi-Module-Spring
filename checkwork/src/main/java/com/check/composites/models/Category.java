@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category extends ProductComponent{
-    private String name;
-    private List<ProductComponent> productComponents = new ArrayList<>();
+    private final String name;
+    private final List<ProductComponent> productComponents = new ArrayList<>();
 
     public Category(String name) {
         this.name = name;
@@ -18,7 +18,7 @@ public class Category extends ProductComponent{
     }
     @Override
     public void display() {
-        System.out.println("Category : " + name);
+        System.out.println("Big Category : " + name);
         for (ProductComponent component : productComponents){
             component.display();
         }
