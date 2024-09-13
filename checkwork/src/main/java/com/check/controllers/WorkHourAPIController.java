@@ -73,7 +73,7 @@ public class WorkHourAPIController {
                 response.put(message.toString(), null);
                 return ResponseEntity.badRequest().body(response);
             } else {
-                message.append("CHECKED IN");
+                message.append("HAVE A GOOD DAY");
                 response.put(message.toString(), checkIn.get());
                 return ResponseEntity.ok().body(response);
             }
@@ -104,7 +104,7 @@ public class WorkHourAPIController {
                 log.info("CHECK OUT EMPTY");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             } else {
-                message.append("SUCCESS CHECK OUT");
+                message.append("YOU MADE IT GOOD");
                 response.put(message.toString(), checkOut.get());
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             }

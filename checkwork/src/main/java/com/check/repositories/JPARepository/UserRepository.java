@@ -29,6 +29,10 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
             return (root, query, criteriaBuilder) ->
                     criteriaBuilder.equal(root.get("department"), department);
         }
+        static Specification<User> byEmployeeCode(String employeeCode){
+            return (root, query, criteriaBuilder) ->
+                    criteriaBuilder.equal(root.get("employeeCode"), employeeCode);
+        }
 
     }
 }

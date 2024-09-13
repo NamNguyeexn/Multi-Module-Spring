@@ -92,5 +92,10 @@ public class IUserServiceImpl implements IUserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findOne(byEmail(email));
     }
+
+    @Override
+    public Optional<User> getUserByEmployeeCode(String employeeCode) {
+        return userRepository.findOne(byEmployeeCode(employeeCode));
+    }
 }
 

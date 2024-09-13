@@ -114,6 +114,20 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         }
     }
 
+    @Override
+    public int getDayWorkedByUser(User user) {
+        Optional<List<WorkHour>> days = getAllWorkHourByUsername(user);
+        if(days.isEmpty()) return 0;
+        int count = 0;
+        for (WorkHour w : days.get()){
+            assert w.getNote() != null;
+            if(w.getNote().toLowerCase().compareTo("done") == 0){
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     private Optional<WorkHour> updateCheckIn(LocalDateTime start, User user){
         LocalDateTime end = LocalDateTime.now();
         String note = GenerateWorkHourCode.generateWorkHourCode(start, user.getId());
