@@ -12,3 +12,4 @@ instance trong bean**
 bean cũng sử dụng factory methods để khởi tạo bean, ghi đè các hàm**
 
 ***Tại sao sử dụng Factory method (1 interface) thay vì sử dụng abstract class***
+- Vì Factory method là định nghĩa các phương thức, mở rộng các phương thức, trong khi abstract class là khởi tạo các lớp

@@ -1,5 +1,10 @@
 # Composite Docx 
 
+***Composite sử dụng khi nào ?***
+- Khi ta cần xử lý một phương thức 1 cách đồng bộ thì sử dụng composite sẽ tự động thực hiện các phương thức có cùng tên 
+với phương thức được định nghĩa ở lớp bọc bên ngoài.
+
+***Đặc trưng của composite là gì ?***
 - Composite ứng dụng phần lớn yếu tố đa hình của hướng đối tượng, mấu chốt là dùng 1 hàm để thực hiện bóc tách các tệp 
 mà không cần quan tâm thứ tự tệp đó như thế nào 
 - Cho phép xử lý các đối tượng theo hình cây một cách đồng nhất, khi thực hiện hàm, chương trình sẽ quét từ các lớp lớn 
