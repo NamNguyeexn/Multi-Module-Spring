@@ -5,6 +5,7 @@ import com.check.models.Room;
 //import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
+import com.check.services.handlers.offline.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -63,4 +64,13 @@ public class IOfflineRoomService{
         }
         return res;
     }
+//    public String prepareMeetingHandlers(List<String> data){
+//        CanCleanRoomHandler cleanRoomHandler = new CanCleanRoomHandler(roomService);
+//        CheckRoomAvailabilityHandler roomAvailHandler = new CheckRoomAvailabilityHandler(roomService);
+//        CheckAppointmentScheduleHandler appointHandler = new CheckAppointmentScheduleHandler(appointmentService);
+//        UpdateRoomStatusHandler updateRoomHandler = new UpdateRoomStatusHandler(roomService);
+//        RoomPrepareChain roomPrepareChain = new RoomPrepareChain()
+//                .setHandle(cleanRoomHandler.cleanRoom())
+//                .setHandle();
+//    }
 }

@@ -64,7 +64,7 @@ public class LoginAPIController {
                 } else {
                     String JWT = this.jwtTokenService.generateAccessToken(user.get());
                     TokenJWT token = new TokenJWT(JWT, new Date(System.currentTimeMillis() + (1000*60*8)), human.get().getName());
-                    log.info("OUTPUT TOKEN : {} USER : {}", token, user.get().getEmployeeCode());
+//                    log.info("OUTPUT TOKEN : {} USER : {}", token, user.get().getEmployeeCode());
                     response.put(JWT, user.get());
                     return ResponseEntity.status(HttpStatus.OK).body(JWT);
                 }
