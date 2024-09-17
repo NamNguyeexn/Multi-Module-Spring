@@ -54,11 +54,7 @@ public class AppointmentAPIController {
     ResponseEntity<AppointmentFormOutput> createAppointment(
             HttpServletRequest request, @Valid @RequestBody AppointmentFormInput appointmentFormInput
     ) {
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         if (user.isPresent()) {
             User u = user.get();

@@ -1,7 +1,6 @@
-package com.check.validations;
+package com.check.validations.meeting;
 
-import com.check.validations.vldt.ValidStartAndEndVld;
-import com.common.validations.appointment.vldt.ValidMeetingTypeVld;
+import com.check.validations.meeting.vldt.ValidStartAndEndVld;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

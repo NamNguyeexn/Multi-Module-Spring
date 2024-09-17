@@ -1,6 +1,6 @@
 package com.check.DTO;
 
-import com.check.validations.ValidStartAndEnd;
+import com.check.validations.meeting.ValidStartAndEnd;
 import com.common.validations.appointment.ValidMeetingType;
 import com.common.validations.appointment.ValidTimeCharacter;
 import com.common.validations.appointment.ValidStartValue;

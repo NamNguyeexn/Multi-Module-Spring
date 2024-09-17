@@ -1,11 +1,14 @@
 package com.check.services.handlers.offline;
 
+import com.check.DTO.handlers.RequestHandlerDTO;
+import com.check.DTO.handlers.ResponseHandlerDTO;
 import com.check.models.Room;
 import com.check.services.IRoomService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
+@Slf4j
 public class CanCleanRoomHandler implements RoomPrepareHandler{
     private final IRoomService roomService;
 
@@ -15,12 +18,9 @@ public class CanCleanRoomHandler implements RoomPrepareHandler{
     }
 
     @Override
-    public String handleRequest(List<String> data, RoomPrepareChain roomChain, Room room) {
+    public RoomPrepareChain handleRequest(RequestHandlerDTO request, ResponseHandlerDTO response) {
         roomService.cleanRoom();
-        return "";
-    }
-    public CanCleanRoomHandler cleanRoom(){
-        roomService.cleanRoom();
-        return this;
+        log.info("CLEANED ROOM");
+        return new RoomPrepareChain(this);
     }
 }

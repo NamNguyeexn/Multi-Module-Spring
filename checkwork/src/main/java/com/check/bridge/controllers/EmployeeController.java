@@ -35,10 +35,7 @@ public class EmployeeController {
     private IHumanService humanService;
     @GetMapping("/month")
     public ResponseEntity<DetailEmployee> getMonthSalary(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request.getHeader(HttpHeaders.AUTHORIZATION)
-                .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Employee employee;
         if (user.isEmpty()) return ResponseEntity.badRequest().body(null);
@@ -75,10 +72,7 @@ public class EmployeeController {
     }
     @GetMapping("")
     public ResponseEntity<?> getHourSalary(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request.getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Employee employee;
         if (user.isEmpty()) return ResponseEntity.badRequest().body(null);

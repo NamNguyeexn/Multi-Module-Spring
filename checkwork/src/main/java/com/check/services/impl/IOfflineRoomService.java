@@ -1,11 +1,14 @@
 package com.check.services.impl;
 
+import com.check.DTO.handlers.RequestHandlerDTO;
+import com.check.DTO.handlers.ResponseHandlerDTO;
 import com.check.models.Appointment;
 import com.check.models.Room;
 //import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import com.check.services.handlers.offline.*;
+import com.common.utils.ConvertStrTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -64,13 +67,18 @@ public class IOfflineRoomService{
         }
         return res;
     }
-//    public String prepareMeetingHandlers(List<String> data){
-//        CanCleanRoomHandler cleanRoomHandler = new CanCleanRoomHandler(roomService);
-//        CheckRoomAvailabilityHandler roomAvailHandler = new CheckRoomAvailabilityHandler(roomService);
-//        CheckAppointmentScheduleHandler appointHandler = new CheckAppointmentScheduleHandler(appointmentService);
-//        UpdateRoomStatusHandler updateRoomHandler = new UpdateRoomStatusHandler(roomService);
-//        RoomPrepareChain roomPrepareChain = new RoomPrepareChain()
-//                .setHandle(cleanRoomHandler.cleanRoom())
-//                .setHandle();
-//    }
+    public String prepareMeetingHandlers(List<String> data){
+        RequestHandlerDTO request = RequestHandlerDTO.builder()
+                .capacity(Integer.parseInt(data.get(1)))
+                .start(ConvertStrTime.convertStringToLocalDateTime(data.get(2)))
+                .end(ConvertStrTime.convertStringToLocalDateTime(data.get(3)))
+                .build();
+        ResponseHandlerDTO response = ResponseHandlerDTO.builder().build();
+        RoomPrepareChain chain = new RoomPrepareChain()
+                .setHandle(new CanCleanRoomHandler(roomService))
+                .setHandle(new CheckRoomAvailabilityHandler(roomService, appointmentService))
+                .setHandle(new UpdateRoomStatusHandler(roomService));
+        chain.handle(request, response);
+        return response.getResString();
+    }
 }

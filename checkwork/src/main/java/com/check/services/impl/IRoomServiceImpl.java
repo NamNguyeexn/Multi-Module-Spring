@@ -35,25 +35,21 @@ public class IRoomServiceImpl implements IRoomService {
     @Override
     public void cleanRoom() {
         Optional<List<Appointment>> appointments = appointmentService.getAppointments();
-        if (appointments.isPresent()){
-            for(Appointment a : appointments.get()){
-                if (a.getEnd().isBefore(LocalDateTime.now())){
-                    Optional<Room> room = getRoomByName(a.getRoom());
-                    if(room.isPresent()){
-                        room.get().setOpen(true);
-                        saveRoom(room.get());
-                    }
-                }
-            }
-        }
+        appointments.ifPresent(appointmentList -> appointmentList.stream()
+                .filter(a -> a.getEnd().isBefore(LocalDateTime.now()))
+                .forEach(a -> getRoomByName(a.getRoom())
+                        .ifPresent(room -> {
+                            room.setOpen(true);
+                            roomRepository.save(room);
+                        })));
     }
 
     @Override
     public void cleanRoomByName(String name) {
         Optional<Room> room = roomRepository.getRoomByName(name);
-        if(room.isPresent()){
-            room.get().setOpen(true);
-            saveRoom(room.get());
-        }
+        room.ifPresent(r -> {
+            r.setOpen(true);
+            saveRoom(r);
+        });
     }
 }

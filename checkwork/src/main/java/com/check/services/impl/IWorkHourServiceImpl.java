@@ -44,15 +44,13 @@ public class IWorkHourServiceImpl implements IWorkHourService {
             workHour = workHours.get(workHours.size());
         }
         LocalDateTime start = LocalDateTime.now();
-        if(workHours.isEmpty()){
-            log.info("NULL WORK HOUR");
-        } else if(workHour != null && workHour.getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
-            log.info("CANT CHECK IN IN SAME DAY");
-            return Optional.empty();
+        if(!workHours.isEmpty()) {
+            if (workHour != null && workHour.getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
+                return Optional.empty();
+            }
         }
         Optional<WorkHour> workHourOut = updateCheckIn(start, user);
         if (workHourOut.isEmpty()){
-            log.info("WORK HOUR UPDATE NULL");
             return Optional.empty();
         }
         String employeeCode = user.getEmployeeCode();
@@ -64,21 +62,16 @@ public class IWorkHourServiceImpl implements IWorkHourService {
     }
     @Override
     public Optional<CheckOutOutput> checkout(LocalDateTime localDateTime, User user) {
-//        Optional<WorkHour> workHour = customWorkHourRepository.getLastWorkHour(user.getId());
         List<WorkHour> workHours = workHourRepository.findAll(byUserId(user.getId()));
         if(workHours.isEmpty()){
-            log.info("NULL WORK HOUR");
             return Optional.empty();
         } else {
             WorkHour workHour = workHours.get(workHours.size() - 1);
             if (!workHour.getStart().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
-                log.info("WRONG DATE");
                 return Optional.empty();
             } else if (Duration.between(workHour.getStart(), LocalDateTime.now()).toHours() < 8) {
-                log.info("NOT ENOUGH HOUR");
                 return Optional.empty();
             } else {
-                log.info("GOT CHECKED IN");
                 int id = workHour.getId();
                 workHour.setId(id);
                 workHour.setStatus(Status.DONE);
@@ -98,7 +91,6 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         List<WorkHour> workHours = workHourRepository.findAll(byUserId(user.getId()));
         WorkHour workHour = workHours.get(workHours.size() - 1);
         if (workHour == null){
-            log.info("NULL CHECKED IN");
             return Optional.empty();
         } else return Optional.of(workHour);
     }
@@ -106,12 +98,11 @@ public class IWorkHourServiceImpl implements IWorkHourService {
     @Override
     public String deleteWorkHourById(int id) {
         Optional<WorkHour> workHour = workHourRepository.findOne(byId(id));
-        if(workHour.isEmpty()) {
-            return "CANT FIND WORK HOUR";
-        } else {
+        if(workHour.isPresent()) {
             workHourRepository.delete(workHour.get());
             return "SUCCESS";
         }
+        return "FAIL";
     }
 
     @Override
@@ -137,8 +128,6 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         workHour.setEnd(end);
         workHour.setNote(note);
         workHourRepository.save(workHour);
-//        customWorkHourRepository.saveCheckIn(workHour);
-//        return customWorkHourRepository.getCheckInByNote(start, user.getId());
         return workHourRepository.findOne(byNote(note));
     }
 }

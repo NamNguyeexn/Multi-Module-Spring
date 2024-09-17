@@ -33,11 +33,7 @@ public class RollbackController {
     }
     @DeleteMapping("/deleteAllWorkHour")
     public ResponseEntity<String> deleteAllWorkHour(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT FOUND USER");

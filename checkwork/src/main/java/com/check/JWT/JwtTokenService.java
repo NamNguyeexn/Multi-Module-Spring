@@ -2,13 +2,16 @@ package com.check.JWT;
 
 import com.check.models.User;
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.ThreadContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 @Log4j2
 @Component
 public class JwtTokenService {
@@ -40,11 +43,18 @@ public class JwtTokenService {
                 .parseClaimsJws(token)
                 .getBody();
     }
-    public String getUsername(String token) {
+    private String getUsernameByToken(String token) {
         Claims claims = getClaims(token);
         String username = (String) claims.get("userName");
         ThreadContext.put("username", "username");
         return username;
+    }
+    public String getUsername(HttpServletRequest request){
+        return getUsernameByToken(
+                request
+                        .getHeader(HttpHeaders.AUTHORIZATION)
+                        .split(" ")[1].trim()
+        );
     }
     public boolean validate(String token) {
         try {

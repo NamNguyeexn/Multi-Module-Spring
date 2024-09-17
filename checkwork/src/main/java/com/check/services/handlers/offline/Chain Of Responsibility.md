@@ -24,3 +24,10 @@ strategy.
 - Trong các lớp filter của spring security
 - Trong các lớp tiền xử lý, hậu xử lý của spring aop 
 - Trong các lớp exception handle, ta có thể mở rộng và sử dụng các annotation 
+
+***Sự tương đồng giữa CoR và Composite***
+- Có 1 điểm chung giữa CoR và Comp, đó là đều sử dụng 1 hàm để thực hiện 1 loạt các hàm tự động có cùng tên và cùng kế 
+thừa từ 1 interface 
+- Khác nhau ở chỗ Comp là cấu trúc theo kiểu cây không phân thứ tự giữa các lớp kế thừa , chỉ phân biệt ra lá và gốc, 
+nên khi thực hiện sẽ thực hiện tuần tự từ lớp gốc tới lớp kế thừa, còn CoR thực hiện 1 loạt các handler có thứ tự được 
+sắp đặt.

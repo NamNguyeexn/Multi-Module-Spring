@@ -1,7 +1,7 @@
-package com.check.validations.vldt;
+package com.check.validations.meeting.vldt;
 
 import com.check.DTO.AppointmentFormInput;
-import com.check.validations.ValidStartAndEnd;
+import com.check.validations.meeting.ValidStartAndEnd;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

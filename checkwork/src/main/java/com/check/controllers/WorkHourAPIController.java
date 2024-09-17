@@ -34,11 +34,7 @@ public class WorkHourAPIController {
 
     @RequestMapping("")
     public ResponseEntity<List<WorkHour>> getListWorkHourByUsername(HttpServletRequest request) {
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         try {
             Optional<User> user = userService.getUserByUsername(username);
             if(user.isEmpty()) {
@@ -53,11 +49,7 @@ public class WorkHourAPIController {
     }
     @GetMapping("/checkin")
     public ResponseEntity<Map<String, CheckInOutput>> getCheckIn(HttpServletRequest request) {
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         StringBuilder message = new StringBuilder();
         Map<String, CheckInOutput> response = new HashMap<>();
         try {
@@ -84,11 +76,7 @@ public class WorkHourAPIController {
     }
     @GetMapping("/checkout")
     public ResponseEntity<Map<String, CheckOutOutput>> getCheckOut(HttpServletRequest request) {
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         StringBuilder message = new StringBuilder();
         Map<String, CheckOutOutput> response = new HashMap<>();
         try {

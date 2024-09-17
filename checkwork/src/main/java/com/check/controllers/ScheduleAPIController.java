@@ -33,11 +33,7 @@ public class ScheduleAPIController {
 
     @GetMapping("/byHost")
     public ResponseEntity<Map<String, List<ScheduleOutput>>> getAllSchedule(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Map<String, List<ScheduleOutput>> response = new HashMap<>();
         System.out.println("ID : " + user.get().getId());
@@ -55,11 +51,7 @@ public class ScheduleAPIController {
 
     @GetMapping("/byJoin")
     public ResponseEntity<Map<String, List<ScheduleOutput>>> getAllSchedulesByJoin(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Map<String, List<ScheduleOutput>> response = new HashMap<>();
         List<ScheduleOutput> schedules = scheduleService.getSchedulesByJoin(user.get().getId());

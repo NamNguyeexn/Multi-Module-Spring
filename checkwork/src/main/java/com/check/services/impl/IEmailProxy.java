@@ -4,8 +4,7 @@ import com.check.models.ENUM.Role;
 import com.check.services.IEmailService;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class IEmailProxy implements IEmailService {
@@ -15,22 +14,17 @@ public class IEmailProxy implements IEmailService {
     }
     @Override
     public void sendEmails(String from, Map<String, Role> to, String subject, String body) {
-        Map<Role, Boolean> listJoin = new HashMap<>();
-        int primary = 0;
-        for(Role r : to.values()){
-            listJoin.put(r, false);
-            if(r.compareTo(Role.ADMIN) == 0) primary ++;
-        }
-        for(Map.Entry<String, Role> m : to.entrySet()){
-            if(m.getValue().compareTo(Role.ADMIN) == 0){
-                emailService.sendEmail(from, m.getKey(), subject, "Dear " + body);
-                primary --;
-                to.remove(m.getKey(), m.getValue());
-            } else if (primary == 0){
-                for(Map.Entry<String, Role> map : to.entrySet()){
-                    emailService.sendEmail(from, m.getKey(), subject, body);
-                }
-                break;
+        List<Map.Entry<String, Role>> recipients = new ArrayList<>(to.entrySet());
+        recipients.sort(Comparator.comparing(entry -> entry.getValue().compareTo(Role.ADMIN)));
+        Set<String> adminMails = new HashSet<>();
+        for (Map.Entry<String, Role> entry : recipients){
+            String mail = entry.getKey();
+            Role role = entry.getValue();
+            if(role == Role.ADMIN && !adminMails.contains(mail)){
+                adminMails.add(mail);
+                sendEmail(from, mail, subject, "Dear " + body);
+            } else {
+                sendEmail(from, mail, subject, body);
             }
         }
     }

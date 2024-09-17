@@ -46,22 +46,14 @@ public class TestController {
     private ITestService testService2;
     @GetMapping()
     public ResponseEntity<?> localhost(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         UserInput userInput = new UserInput(username, "passs");
         UserOutput userOutput = new UserOutput(userInput.getUsername());
         return ResponseEntity.ok().body(userOutput);
     }
     @GetMapping("/getLastWorkHour")
     public ResponseEntity<WorkHour> testGetLastWorkHour(HttpServletRequest request) {
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if(user.isEmpty()) {
             log.info("NULL USER");
@@ -97,11 +89,7 @@ public class TestController {
     @GetMapping("/minus")
     public ResponseEntity<String> getMinus(HttpServletRequest request){
         String alert = "";
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if(LocalTime.now().isAfter(LocalTime.of(8, 0))){
             MinusLate iMinus = rewardAbstractFactory.newChange(MinusLate.class, user.get().getUsername(), 5000);
@@ -126,11 +114,7 @@ public class TestController {
     @GetMapping("/bonus")
     public ResponseEntity<String> getBonus(HttpServletRequest request){
         String alert = "";
-        String username = jwtTokenService.getUsername(
-                request
-                        .getHeader(HttpHeaders.AUTHORIZATION)
-                        .split(" ")[1].trim()
-        );
+        String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if(LocalDate.now().isEqual(humanService.getHumanById(user.get().getHumanid()).get().getDob().toLocalDate())){
             BonusBirthday iBonus = rewardAbstractFactory.newChange(BonusBirthday.class, user.get().getUsername(), 5000);

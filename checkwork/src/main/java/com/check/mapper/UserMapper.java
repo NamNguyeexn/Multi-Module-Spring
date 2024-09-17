@@ -1,6 +1,7 @@
 package com.check.mapper;
 
 import com.check.DTO.RegisterFormInput;
+import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,4 +19,13 @@ public interface UserMapper {
     @Mapping(source = "role", target = "role")
     @Mapping(source = "registerFormInput.department", target = "department")
     User inputRegisterToUser(RegisterFormInput registerFormInput, int idHuman, String role, String employeeCode);
+
+    @Mapping(source = "humanid", target = "humanid")
+    @Mapping(source = "employeeCode", target = "employeeCode")
+    @Mapping(source = "changeInfoInputDTO.email", target = "email")
+    @Mapping(source = "changeInfoInputDTO.username", target = "username")
+    @Mapping(source = "changeInfoInputDTO.password", target = "password")
+    @Mapping(source = "changeInfoInputDTO.role", target = "role")
+    @Mapping(source = "changeInfoInputDTO.department", target = "department")
+    User changeInfoToUser(Integer humanid, String employeeCode, ChangeInfoInputDTO changeInfoInputDTO);
 }

@@ -20,7 +20,7 @@ public class MeetingFactoryImpl implements MeetingFactory {
             case "ONLINE" :
                  yield onlineRoomService.prepareMeeting(meetingType);
             case "OFFLINE" :
-                yield offlineRoomService.prepareMeeting(meetingType);
+                yield offlineRoomService.prepareMeetingHandlers(meetingType);
             default :
                 throw new IllegalArgumentException("Invalid meeting type");
         };

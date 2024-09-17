@@ -1,33 +1,46 @@
 package com.check.services.handlers.offline;
 
+import com.check.DTO.handlers.RequestHandlerDTO;
+import com.check.DTO.handlers.ResponseHandlerDTO;
+import com.check.models.Appointment;
 import com.check.models.Room;
+import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 public class CheckRoomAvailabilityHandler implements RoomPrepareHandler{
     private final IRoomService roomService;
-
-    public CheckRoomAvailabilityHandler(IRoomService roomService) {
+    private final IAppointmentService appointmentService;
+    public CheckRoomAvailabilityHandler(IRoomService roomService, IAppointmentService appointmentService) {
         this.roomService = roomService;
+        this.appointmentService = appointmentService;
     }
 
     @Override
-    public String handleRequest(List<String> data, RoomPrepareChain roomChain, Room room) {
-        return "";
-    }
-    public List<Room> getOpenRooms(List<String> data) {
+    public RoomPrepareChain handleRequest(RequestHandlerDTO request, ResponseHandlerDTO response) {
         Optional<List<Room>> rooms = roomService.getRooms();
-        List<Room> res = new ArrayList<>();
-        if(rooms.isEmpty()) return null;
-        for(Room r : rooms.get()){
-            if(r.isOpen()){
-                res.add(r);
+        if(rooms.isPresent()){
+            Optional<Room> room = rooms.get().stream()
+                    .filter(Room::isOpen)
+                    .filter(r -> r.getCapacity() >= request.getCapacity())
+                    .filter(r -> appointmentService.getAppointmentsByRoomName(r.getName()).stream()
+                            .noneMatch(a -> overlaps(a, request)))
+                    .findFirst();
+            if (room.isPresent()){
+                response.setCapacity(room.get().getCapacity());
+                response.setName(room.get().getName());
+                response.setOpen(true);
             }
         }
-        return res;
+        log.info("CHECK ROOM AVAILABLE");
+        return new RoomPrepareChain(this);
+    }
+    private boolean overlaps(Appointment a, RequestHandlerDTO request){
+        return request.getStart().isBefore(a.getEnd()) && request.getEnd().isAfter(a.getStart());
     }
 }
