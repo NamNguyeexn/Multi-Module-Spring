@@ -24,6 +24,7 @@ import static com.check.repositories.JPARepository.UserRepository.Specs.*;
 @Service
 @Slf4j
 public class IUserServiceImpl implements IUserService {
+    @Autowired
     private Command command;
     @Autowired
     private UserRepository userRepository;

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,7 +27,8 @@ public class UserAPIController {
     @Autowired
     private JwtTokenService jwtTokenService;
     private final UpdateUserInfoCommand updateUserInfoCommand;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public UserAPIController(UpdateUserInfoCommand updateUserInfoCommand) {
         this.updateUserInfoCommand = updateUserInfoCommand;
     }
@@ -76,6 +78,7 @@ public class UserAPIController {
         Map<String, User> response = new HashMap<>();
         if(userService.undoCommand(user.get())) {
             User oldUser = userService.getUserById(user.get().getId()).get();
+            oldUser.setPassword(passwordEncoder.encode(oldUser.getPassword()));
             response.put("Undo change user info success", oldUser);
             return ResponseEntity.ok().body(response);
         } else {

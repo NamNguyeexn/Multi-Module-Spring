@@ -21,7 +21,7 @@ public class UpdateRoomStatusHandler implements RoomPrepareHandler{
         r.ifPresent(
             room -> {
                 r.get().setOpen(false);
-                String res = "";
+                String res = r.get().getName();
                 res += "@" + r.get().getCapacity();
                 response.setResString(res);
                 roomService.saveRoom(r.get());

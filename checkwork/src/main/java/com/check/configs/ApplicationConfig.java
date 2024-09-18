@@ -1,5 +1,7 @@
 package com.check.configs;
 
+import com.check.command.Command;
+import com.check.command.UpdateUserInfoCommand;
 import com.check.repositories.JPARepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,10 @@ public class ApplicationConfig {
         return username -> userRepository.findOne(byUsername(username))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
-
+    @Bean
+    public UpdateUserInfoCommand updateUserInfoCommand(){
+        return new UpdateUserInfoCommand(userRepository);
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
