@@ -17,11 +17,12 @@ public class ValidatorChain {
     }
 
     public void doHandle(ChangeInfoInputDTO changeInfoInputDTO) {
-        for (ValidatorHandler v : list) {
-            if (!v.doValidator(changeInfoInputDTO)) {
-                break;
-            }
-        }
+//        for (ValidatorHandler v : list) {
+//            if (!v.doValidator(changeInfoInputDTO)) {
+//                break;
+//            }
+//        }
+        list.forEach(l -> l.doValidator(changeInfoInputDTO));
     }
 
     public ValidatorChain setHandle(ValidatorHandler validatorHandler) {

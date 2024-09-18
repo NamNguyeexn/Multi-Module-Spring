@@ -33,4 +33,9 @@ public class IEmailProxy implements IEmailService {
     public void sendEmail(String from, String to, String subject, String body) {
         emailService.sendEmail(from, to, subject, body);
     }
+
+    @Override
+    public void sendEmails(String from, String[] to, String subject, String body) {
+        emailService.sendEmails(from, to, subject, body);
+    }
 }

@@ -11,4 +11,5 @@ import java.util.Map;
 public interface IEmailService {
     void sendEmails(String from, Map<String, Role> to, String subject, String body);
     void sendEmail(String from, String to, String subject, String body);
+    void sendEmails(String from, String[] to, String subject, String body);
 }
