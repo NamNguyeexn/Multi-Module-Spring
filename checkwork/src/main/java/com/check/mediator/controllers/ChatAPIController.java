@@ -4,10 +4,12 @@ import com.check.JWT.JwtTokenService;
 import com.check.mediator.DTO.RegisterChatDTO;
 import com.check.mediator.models.GroupChat;
 import com.check.mediator.services.ChatMed;
+import com.check.mediator.services.ChatService;
 import com.check.mediator.services.GroupChatService;
 import com.check.mediator.services.impl.ChatMedImpl;
 import com.check.models.User;
 import com.check.services.IUserService;
+import com.check.services.impl.IEmailProxy;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,10 @@ public class ChatAPIController {
     private JwtTokenService jwtTokenService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IEmailProxy emailProxy;
+    @Autowired
+    private ChatService chatService;
     @GetMapping()
     public ResponseEntity<Map<String, List<GroupChat>>> getGroupChatsByUser(HttpServletRequest request){
         Map<String, List<GroupChat>> response = new HashMap<>();
@@ -33,10 +39,10 @@ public class ChatAPIController {
         Optional<User> user = userService.getUserByUsername(username);
         List<GroupChat> chatList = groupChatService.getGroupChatJoined(user.get().getEmail());
         if (chatList.isEmpty()){
-            response.put("User didn't join any chats", null);
+            response.put(user.get().getEmail() + " didn't join any chats", null);
             return ResponseEntity.badRequest().body(response);
         } else {
-            response.put("Found chats", chatList);
+            response.put("Found chats joined by " + user.get().getEmail(), chatList);
             return ResponseEntity.ok().body(response);
         }
     }
@@ -46,7 +52,12 @@ public class ChatAPIController {
         Map<String, GroupChat> response = new HashMap<>();
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        GroupChat groupChat = groupChatService.createGroupChat(Arrays.asList(registerChatDTO.getEmail()), user.get().getEmail());
+        Map<String, String> emails = new HashMap<>();
+        for(String s : registerChatDTO.getEmails()){
+            emails.put(s, s);
+        }
+        emails.put(user.get().getEmail(), user.get().getEmail());
+        GroupChat groupChat = groupChatService.createGroupChat(emails.values().stream().toList(), user.get().getEmail());
         if(groupChat != null){
             response.put("Created group", groupChat);
             return ResponseEntity.ok().body(response);
@@ -57,7 +68,7 @@ public class ChatAPIController {
     }
     @PostMapping("/send/{id}")
     public ResponseEntity<String> sendMessage(@RequestParam(name = "id") int id,
-                                              @RequestAttribute(name = "message") String message,
+                                              @RequestBody String message,
                                               HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
@@ -65,13 +76,8 @@ public class ChatAPIController {
         if (groupChat.isEmpty()){
             return ResponseEntity.badRequest().body("Not Found Group");
         }
-        ChatMed chatMed = new ChatMedImpl(
-                User.builder()
-                        .email(user.get().getEmail())
-                        .build(),
-                groupChatService,
-                groupChat.get());
-        if(chatMed.send(message)){
+        ChatMed chatMed = new ChatMedImpl(groupChatService, emailProxy);
+        if(chatService.sendMessage(message, user.get(), groupChat.get(), chatMed)){
             return ResponseEntity.ok().body("Send message to everyone in " + groupChat.get().getName());
         } else {
             return ResponseEntity.badRequest().body("Found group but here's nobody in group");

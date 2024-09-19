@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface GroupChatRepository extends JpaRepository<GroupChat, Integer>, JpaSpecificationExecutor<GroupChat> {
     interface Specs{
-        static Specification<GroupChat> byEmail(String email){
+        static Specification<GroupChat> byName(String name){
             return (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("emails"), email);
+                    criteriaBuilder.equal(root.get("name"),name);
         }
     }
 }

@@ -8,11 +8,11 @@ import com.check.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static com.check.repositories.JPARepository.GroupChatRepository.Specs.byEmail;
 
 @Service
 public class GroupChatServiceImpl implements GroupChatService {
@@ -28,7 +28,11 @@ public class GroupChatServiceImpl implements GroupChatService {
 
     @Override
     public List<GroupChat> getGroupChatJoined(String email) {
-        return groupChatRepository.findAll(byEmail(email));
+        List<GroupChat> res = new ArrayList<>();
+        groupChatRepository.findAll().stream()
+                .filter(gc -> Arrays.stream(gc.getEmails()).toList().contains(email))
+                .forEach(res::add);
+        return res;
     }
 
     @Override
@@ -36,8 +40,9 @@ public class GroupChatServiceImpl implements GroupChatService {
         Optional<User> user = userService.getUserByEmail(email);
         if(user.isPresent()){
             GroupChat groupChat = GroupChat.builder()
-                    .name(user.get().getRole().toString() + " Group")
+                    .name(user.get().getDepartment().toString() + " Group")
                     .emails(emails.toArray(new String[0]))
+                    .createAt(LocalDateTime.now())
                     .build();
             groupChatRepository.save(groupChat);
             return groupChat;
