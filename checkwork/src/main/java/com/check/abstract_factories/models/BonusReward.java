@@ -1,8 +1,15 @@
 package com.check.abstract_factories.models;
 
 import lombok.Builder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BonusReward extends IBonus {
+    public BonusReward(String name, long money) {
+        this.setName(name);
+        this.setBonus(money);
+    }
+
     @Override
     public String getReason() {
         return "Congrats! Its your reward";

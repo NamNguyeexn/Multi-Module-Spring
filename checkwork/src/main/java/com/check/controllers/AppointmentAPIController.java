@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,7 +53,8 @@ public class AppointmentAPIController {
     private ScheduleAdapter scheduleAdapter;
     @RequestMapping("/create")
     ResponseEntity<AppointmentFormOutput> createAppointment(
-            HttpServletRequest request, @Valid @RequestBody AppointmentFormInput appointmentFormInput
+            HttpServletRequest request,
+            @Valid @RequestBody AppointmentFormInput appointmentFormInput
     ) {
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);

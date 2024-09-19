@@ -1,7 +1,7 @@
 package com.check.composites.models;
 
 public class Product extends ProductComponent{
-    private String name;
+    private final String name;
     public Product(String name) {
         this.name = name;
     }

@@ -1,9 +1,12 @@
 package com.check.abstract_factories.models;
 
+import org.springframework.stereotype.Component;
 
+@Component
 public class MinusPunish extends IMinus {
-//    private String name;
-//    private long minus;
+    public MinusPunish() {
+    }
+
     @Override
     public String getReason() {
         return "You made a mistake!";
@@ -21,5 +24,8 @@ public class MinusPunish extends IMinus {
         return name;
     }
 
-    public MinusPunish(){}
+    public MinusPunish(String name, long minus){
+        this.setName(name);
+        this.setMinus(minus);
+    }
 }

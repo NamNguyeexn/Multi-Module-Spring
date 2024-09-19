@@ -38,12 +38,8 @@ public class LoginAPIController {
     private JwtTokenService jwtTokenService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-//    @Autowired
-    private final HumanMapper humanMapper;
-
-    public LoginAPIController(HumanMapper humanMapper) {
-        this.humanMapper = humanMapper;
-    }
+    @Autowired
+    private HumanMapper humanMapper;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserInput userInput){
@@ -64,7 +60,6 @@ public class LoginAPIController {
                 } else {
                     String JWT = this.jwtTokenService.generateAccessToken(user.get());
                     TokenJWT token = new TokenJWT(JWT, new Date(System.currentTimeMillis() + (1000*60*8)), human.get().getName());
-//                    log.info("OUTPUT TOKEN : {} USER : {}", token, user.get().getEmployeeCode());
                     response.put(JWT, user.get());
                     return ResponseEntity.status(HttpStatus.OK).body(JWT);
                 }

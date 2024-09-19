@@ -16,7 +16,7 @@ public class ScheduleProcessor implements ItemProcessor<AppointmentBatch, Schedu
     public Schedule process(AppointmentBatch item) throws Exception {
         final String hostname = scheduleAdapter.toHostname(item.getHostid());
         final String joinname = scheduleAdapter.toJoinsname(item.getJoinid());
-        System.out.println(String.format("Converted from [%s] to [%s]", item.getHostid(), hostname));
+        System.out.printf("Converted from [%s] to [%s]%n", item.getHostid(), hostname);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S");
         return Schedule.builder()
                 .hostname(hostname)

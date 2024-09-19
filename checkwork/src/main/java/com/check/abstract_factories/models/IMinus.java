@@ -9,7 +9,7 @@ public abstract class IMinus {
     private String name;
     private long minus;
 
-    abstract String getReason();
-    abstract String getValue(long minus);
-    abstract String getName(String name);
+    public abstract String getReason();
+    public abstract String getValue(long minus);
+    public abstract String getName(String name);
 }

@@ -15,6 +15,7 @@ import com.common.utils.ConvertData;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import static com.check.repositories.JPARepository.UserRepository.Specs.*;
 
 @Service
 @Slf4j
+@Primary
 public class IUserServiceImpl implements IUserService {
     @Autowired
     private Command command;

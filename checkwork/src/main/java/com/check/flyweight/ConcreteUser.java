@@ -1,8 +1,8 @@
 package com.check.flyweight;
 
 public class ConcreteUser implements User {
-    private String name;
-    private String email;
+    private final String name;
+    private final String email;
 
     public ConcreteUser(String name, String email) {
         this.name = name;

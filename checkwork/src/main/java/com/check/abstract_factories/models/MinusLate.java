@@ -1,8 +1,15 @@
 package com.check.abstract_factories.models;
 
 import lombok.Builder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MinusLate extends IMinus {
+    public MinusLate(String name, long money) {
+        this.setName(name);
+        this.setMinus(money);
+    }
+
     @Override
     public String getReason() {
         return "You have been late!";
