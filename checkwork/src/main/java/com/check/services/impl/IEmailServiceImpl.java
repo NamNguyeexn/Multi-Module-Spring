@@ -5,6 +5,8 @@ import com.check.services.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -14,11 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@EnableAsync(proxyTargetClass = true)
 public class IEmailServiceImpl implements IEmailService {
     @Autowired
     private JavaMailSender mailSender;
 
     @Override
+    @Async("threadPoolTaskExecutor")
     public void sendEmails(String from, Map<String, Role> listEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         List<String> toList = new ArrayList<>(listEmail.keySet());
@@ -30,7 +34,7 @@ public class IEmailServiceImpl implements IEmailService {
         message.setSentDate(Date.valueOf(LocalDate.now()));
         mailSender.send(message);
     }
-
+    @Async("threadPoolTaskExecutor")
     @Override
     public void sendEmail(String from, String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -42,6 +46,7 @@ public class IEmailServiceImpl implements IEmailService {
     }
 
     @Override
+    @Async("threadPoolTaskExecutor")
     public void sendEmails(String from, String[] to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);

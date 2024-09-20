@@ -1,5 +1,6 @@
 package com.check.controllers;
 
+import com.check.DTO.ENUM.LOGIN_STATUS;
 import com.check.DTO.RegisterFormInput;
 import com.check.DTO.RegisterFormOutput;
 import com.check.JWT.TokenJWT;
@@ -8,6 +9,9 @@ import com.check.JWT.JwtTokenService;
 import com.check.mapper.HumanMapper;
 import com.check.models.Human;
 import com.check.models.User;
+import com.check.observe.AlertService;
+import com.check.observe.LogObserver;
+import com.check.observe.MailObserver;
 import com.check.services.IHumanService;
 import com.check.services.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,31 +44,46 @@ public class LoginAPIController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private HumanMapper humanMapper;
+    @Autowired
+    private AlertService alertService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserInput userInput){
         Map<String, User> response = new HashMap<>();
+        MailObserver mailObserver = new MailObserver();
+        LogObserver logObserver = new LogObserver();
+        alertService.freeUpObservers();
         try {
             Optional<User> user = userService.getUserByUsername(userInput.getUsername());
             if(user.isEmpty()) {
-                log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND USER");
+                alertService.addObserver(mailObserver);
+                alertService.addObserver(logObserver);
+                alertService.notifyObservers(user.get(), LOGIN_STATUS.FAILURE);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             else if (passwordEncoder.matches(userInput.getPassword(), user.get().getPassword())){
                 log.info("LOGIN API CONTROLLER - LOGIN - FOUND USER");
                 Optional<Human> human = humanService.getHumanById(user.get().getHumanid());
                 if(human.isEmpty()){
+                    alertService.addObserver(mailObserver);
+                    alertService.addObserver(logObserver);
                     log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN");
                     response.put("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN", null);
+                    alertService.notifyObservers(user.get(), LOGIN_STATUS.FAILURE);
                     return ResponseEntity.badRequest().body(response);
                 } else {
+                    alertService.addObserver(mailObserver);
+                    alertService.addObserver(logObserver);
                     String JWT = this.jwtTokenService.generateAccessToken(user.get());
                     TokenJWT token = new TokenJWT(JWT, new Date(System.currentTimeMillis() + (1000*60*8)), human.get().getName());
                     response.put(JWT, user.get());
+                    alertService.notifyObservers(user.get(), LOGIN_STATUS.SUCCESS);
                     return ResponseEntity.status(HttpStatus.OK).body(JWT);
                 }
             } else {
-                log.info("LOGIN API CONTROLLER - LOGIN - WRONG PASSWORD");
+                alertService.removeObserver(mailObserver);
+                alertService.removeObserver(logObserver);
+                alertService.notifyObservers(user.get(), LOGIN_STATUS.FAILURE);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (Exception e) {

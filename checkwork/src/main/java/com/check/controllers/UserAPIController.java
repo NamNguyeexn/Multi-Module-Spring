@@ -26,12 +26,10 @@ public class UserAPIController {
     private IUserService userService;
     @Autowired
     private JwtTokenService jwtTokenService;
-    private final UpdateUserInfoCommand updateUserInfoCommand;
+    @Autowired
+    private UpdateUserInfoCommand updateUserInfoCommand;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public UserAPIController(UpdateUserInfoCommand updateUserInfoCommand) {
-        this.updateUserInfoCommand = updateUserInfoCommand;
-    }
 
     @GetMapping()
     public ResponseEntity<Map<String, User>> getHomepage(HttpServletRequest request) {

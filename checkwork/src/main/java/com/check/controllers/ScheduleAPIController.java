@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,8 @@ public class ScheduleAPIController {
     private JwtTokenService jwtTokenService;
     @Autowired
     private IScheduleService scheduleService;
+//    @Autowired
+//    private
 
     @GetMapping("/byHost")
     public ResponseEntity<Map<String, List<ScheduleOutput>>> getAllSchedule(HttpServletRequest request){
@@ -65,16 +68,10 @@ public class ScheduleAPIController {
             return ResponseEntity.ok().body(response);
         }
     }
-
-////Ham dong bo du lieu. Cac cuoc hop trong vong 1 nam tro lai se duoc luu vao trong lich hop (Schedule).
-//    @GetMapping("/syncData")
-//    public ResponseEntity<Map<String, List<ScheduleOutput>>> syncSchedule(HttpServletRequest request){
-//        String username = jwtTokenService.getUsername(
-//                request
-//                        .getHeader(HttpHeaders.AUTHORIZATION)
-//                        .split(" ")[1].trim()
-//        );
-//        Optional<User> user = userService.getUserByUsername(username);
-//
-//    }
+    @GetMapping("/byType/{type}")
+    public ResponseEntity<String> getSchedulesByType(HttpServletRequest request, @PathVariable String type){
+        String username = jwtTokenService.getUsername(request);
+        Optional<User> user = userService.getUserByUsername(username);
+        return ResponseEntity.ok().body(null);
+    }
 }

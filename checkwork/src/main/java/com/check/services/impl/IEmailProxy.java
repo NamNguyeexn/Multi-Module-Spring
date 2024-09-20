@@ -2,17 +2,25 @@ package com.check.services.impl;
 
 import com.check.models.ENUM.Role;
 import com.check.services.IEmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
+@Primary
+@EnableAsync
 public class IEmailProxy implements IEmailService {
-    private final IEmailServiceImpl emailService;
-    public IEmailProxy(IEmailServiceImpl iEmailService){
-        this.emailService = iEmailService;
-    }
+    @Autowired
+    private IEmailServiceImpl emailService;
+//    public IEmailProxy(IEmailServiceImpl iEmailService){
+//        this.emailService = iEmailService;
+//    }
     @Override
+    @Async("threadPoolTaskExecutor")
     public void sendEmails(String from, Map<String, Role> to, String subject, String body) {
         List<Map.Entry<String, Role>> recipients = new ArrayList<>(to.entrySet());
         recipients.sort(Comparator.comparing(entry -> entry.getValue().compareTo(Role.ADMIN)));
@@ -30,11 +38,14 @@ public class IEmailProxy implements IEmailService {
     }
 
     @Override
+    @Async("threadPoolTaskExecutor")
+//    @Async
     public void sendEmail(String from, String to, String subject, String body) {
         emailService.sendEmail(from, to, subject, body);
     }
 
     @Override
+    @Async("threadPoolTaskExecutor")
     public void sendEmails(String from, String[] to, String subject, String body) {
         emailService.sendEmails(from, to, subject, body);
     }

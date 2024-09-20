@@ -1,5 +1,6 @@
 package com.check.DTO;
 
+import com.check.DTO.ENUM.LOGIN_STATUS;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,4 +20,9 @@ public class UserInput {
 //    @ValidPasswordCharacter
 //    @ValidPasswordLength
     private String password;
+    private LOGIN_STATUS status;
+    public UserInput(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
