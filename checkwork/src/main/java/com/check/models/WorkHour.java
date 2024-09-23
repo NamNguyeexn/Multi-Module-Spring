@@ -27,7 +27,6 @@ public class WorkHour {
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     @NotNull(message = "Check out cant be null")
     @Column(name = "end")
-//    @ValidCheckOutTime
     private LocalDateTime end;
     @NotNull(message = "User Id cant be null")
     @Column(name = "userid")

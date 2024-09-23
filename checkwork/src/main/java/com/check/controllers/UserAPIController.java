@@ -4,7 +4,10 @@ import com.check.JWT.JwtTokenService;
 import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.command.UpdateUserInfoCommand;
 import com.check.models.User;
+import com.check.models.UserState;
 import com.check.services.IUserService;
+import com.check.services.IUserStateService;
+import com.check.state_dp.IUserState;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,8 @@ public class UserAPIController {
     private UpdateUserInfoCommand updateUserInfoCommand;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IUserStateService userStateService;
 
     @GetMapping()
     public ResponseEntity<Map<String, User>> getHomepage(HttpServletRequest request) {
@@ -55,8 +60,7 @@ public class UserAPIController {
         }
     }
     @PostMapping("/change")
-    public ResponseEntity<Map<String, User>> changeInfo(@Valid @RequestBody ChangeInfoInputDTO changeInfoInputDTO,
-                                                        HttpServletRequest request){
+    public ResponseEntity<Map<String, User>> changeInfo(@Valid @RequestBody ChangeInfoInputDTO changeInfoInputDTO, HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Map<String, User> response = new HashMap<>();
@@ -84,4 +88,36 @@ public class UserAPIController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+    @GetMapping("/state")
+    public ResponseEntity<Map<String, User>> getUserState(HttpServletRequest request){
+        String username = jwtTokenService.getUsername(request);
+        Optional<User> user = userService.getUserByUsername(username);
+        Map<String, User> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateById(user.get().getId());
+        map.put(userState.getState().toString(), user.get());
+        return ResponseEntity.ok().body(map);
+    }
+    @GetMapping("/promote")
+    public ResponseEntity<Map<String, User>> promote(HttpServletRequest request){
+        String username = jwtTokenService.getUsername(request);
+        Optional<User> user = userService.getUserByUsername(username);
+        Map<String, User> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateById(user.get().getId());
+        IUserState iUserState = userStateService.handle(userState);
+        iUserState.promote(userState);
+        map.put(userState.getState().toString(), user.get());
+        return ResponseEntity.ok().body(map);
+    }
+    @GetMapping("/demote")
+    public ResponseEntity<Map<String, User>> demote(HttpServletRequest request){
+        String username = jwtTokenService.getUsername(request);
+        Optional<User> user = userService.getUserByUsername(username);
+        Map<String, User> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateById(user.get().getId());
+        IUserState iUserState = userStateService.handle(userState);
+        iUserState.demote(userState);
+        map.put(userState.getState().toString(), user.get());
+        return ResponseEntity.ok().body(map);
+    }
+
 }
