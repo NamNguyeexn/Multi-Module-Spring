@@ -42,16 +42,16 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         System.out.println(header);
         if (isEmpty(header) || !header.startsWith("Bearer ")) {
-            log.info("-----------------------------------------------");
-            log.info("JWT TOKEN FILTER - DO FILTER INTERNAL - WRONG HEADER");
+//            log.info("-----------------------------------------------");
+//            log.info("JWT TOKEN FILTER - DO FILTER INTERNAL - WRONG HEADER");
             chain.doFilter(request, response);
             return;
         }
         // Get jwt token and validate
         final String token = header.split(" ")[1].trim();
         if (!jwtTokenService.validate(token)) {
-            log.info("-----------------------------------------------");
-            log.info("JWT TOKEN FILTER - DO FILTER INTERNAL - INVALIDATE");
+//            log.info("-----------------------------------------------");
+//            log.info("JWT TOKEN FILTER - DO FILTER INTERNAL - INVALIDATE");
             chain.doFilter(request, response);
             return;
         }

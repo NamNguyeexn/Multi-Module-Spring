@@ -1,7 +1,14 @@
 package com.check.composites.models;
 
+import com.check.composites.visitor.Visitor;
+import lombok.Setter;
+
+
 public class Product extends ProductComponent{
-    private final String name;
+    private String name;
+    public void productSetName() {
+        name = name.toLowerCase();
+    }
     public Product(String name) {
         this.name = name;
     }
@@ -12,5 +19,8 @@ public class Product extends ProductComponent{
     @Override
     public void display() {
         System.out.println("Product : " + name);
+    }
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

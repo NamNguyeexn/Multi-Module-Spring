@@ -7,9 +7,9 @@ import org.springframework.context.annotation.*;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "com.check.*",
         "com.common.*",
-//        "com.logger.*",
-        "com.check.*"
+//        "com.logger.*"
 })
 public class CheckWorkApplication {
     @Autowired

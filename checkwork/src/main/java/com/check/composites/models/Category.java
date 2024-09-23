@@ -1,14 +1,20 @@
 package com.check.composites.models;
 
+import com.check.composites.visitor.Visitor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Category extends ProductComponent{
-    private final String name;
+    private String name;
     private final List<ProductComponent> productComponents = new ArrayList<>();
 
     public Category(String name) {
         this.name = name;
+    }
+    public void categorySetName() {
+        name = name.toUpperCase();
     }
     public void add(ProductComponent component){
         productComponents.add(component);
@@ -22,5 +28,8 @@ public class Category extends ProductComponent{
         for (ProductComponent component : productComponents){
             component.display();
         }
+    }
+    public void accept(Visitor visitor){
+        visitor.visit(this);
     }
 }
