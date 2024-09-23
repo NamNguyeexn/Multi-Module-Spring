@@ -11,3 +11,6 @@ lớp dịch vụ
 - Visitor là cách sử dụng tính đa hình để mở rộng 1 module, sử dụng trong cả các lớp đối tượng và các hàm 
 - Facade là cách sử dụng 1 interface mở rộng 1 module bằng cách mở rộng các lớp dịch vụ và cung cấp hàm qua interface để
 sử dụng.
+
+***- Trong các thư viện mở rộng của Spring, ít khi sử dụng Visitor***
+- Lý do bởi Spring cung cấp các interface cho phép ta mở rộng thay vì phải sử dụng các hàm mở rộng của visitor 
