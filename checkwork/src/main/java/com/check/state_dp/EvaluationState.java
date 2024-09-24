@@ -22,6 +22,7 @@ public class EvaluationState implements IUserState{
     @Override
     public Map<String, User> getState(UserState userState) {
         Optional<User> user = userService.getUserById(userState.getUserid());
+        getSalaryByHour(userState);
         return user.map(value -> Map.of(userState.getState().toString(), value)).orElse(null);
     }
 

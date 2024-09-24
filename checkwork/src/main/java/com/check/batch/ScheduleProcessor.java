@@ -13,7 +13,7 @@ public class ScheduleProcessor implements ItemProcessor<AppointmentBatch, Schedu
     @Autowired
     private ScheduleAdapter scheduleAdapter;
     @Override
-    public Schedule process(AppointmentBatch item) throws Exception {
+    public Schedule process(AppointmentBatch item) {
         final String hostname = scheduleAdapter.toHostname(item.getHostid());
         final String joinname = scheduleAdapter.toJoinsname(item.getJoinid());
         System.out.printf("Converted from [%s] to [%s]%n", item.getHostid(), hostname);

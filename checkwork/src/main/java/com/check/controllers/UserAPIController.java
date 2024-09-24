@@ -89,12 +89,12 @@ public class UserAPIController {
         }
     }
     @GetMapping("/state")
-    public ResponseEntity<Map<String, User>> getUserState(HttpServletRequest request){
+    public ResponseEntity<Map<UserState, User>> getUserState(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        Map<String, User> map = new HashMap<>();
+        Map<UserState, User> map = new HashMap<>();
         UserState userState = userStateService.getUserStateById(user.get().getId());
-        map.put(userState.getState().toString(), user.get());
+        map.put(userState, user.get());
         return ResponseEntity.ok().body(map);
     }
     @GetMapping("/promote")
@@ -105,6 +105,7 @@ public class UserAPIController {
         UserState userState = userStateService.getUserStateById(user.get().getId());
         IUserState iUserState = userStateService.handle(userState);
         iUserState.promote(userState);
+        userStateService.saveUserState(userState);
         map.put(userState.getState().toString(), user.get());
         return ResponseEntity.ok().body(map);
     }
@@ -116,6 +117,7 @@ public class UserAPIController {
         UserState userState = userStateService.getUserStateById(user.get().getId());
         IUserState iUserState = userStateService.handle(userState);
         iUserState.demote(userState);
+        userStateService.saveUserState(userState);
         map.put(userState.getState().toString(), user.get());
         return ResponseEntity.ok().body(map);
     }

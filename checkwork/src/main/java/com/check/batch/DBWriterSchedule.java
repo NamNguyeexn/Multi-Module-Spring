@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DBWriter implements ItemWriter<Schedule> {
+public class DBWriterSchedule implements ItemWriter<Schedule> {
 
     @Autowired
     private ScheduleRepository scheduleRepository;

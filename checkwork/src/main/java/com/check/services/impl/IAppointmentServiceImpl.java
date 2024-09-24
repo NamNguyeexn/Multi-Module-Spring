@@ -4,6 +4,7 @@ import com.check.models.Appointment;
 import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static com.check.repositories.JPARepository.AppointmentRepository.Specs.*;
 
 @Service
+@Primary
 public class IAppointmentServiceImpl implements IAppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;

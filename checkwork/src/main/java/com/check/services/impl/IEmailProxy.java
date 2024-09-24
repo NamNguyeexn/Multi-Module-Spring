@@ -20,7 +20,7 @@ public class IEmailProxy implements IEmailService {
 //        this.emailService = iEmailService;
 //    }
     @Override
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
     public void sendEmails(String from, Map<String, Role> to, String subject, String body) {
         List<Map.Entry<String, Role>> recipients = new ArrayList<>(to.entrySet());
         recipients.sort(Comparator.comparing(entry -> entry.getValue().compareTo(Role.ADMIN)));
@@ -38,14 +38,14 @@ public class IEmailProxy implements IEmailService {
     }
 
     @Override
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
 //    @Async
     public void sendEmail(String from, String to, String subject, String body) {
         emailService.sendEmail(from, to, subject, body);
     }
 
     @Override
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
     public void sendEmails(String from, String[] to, String subject, String body) {
         emailService.sendEmails(from, to, subject, body);
     }

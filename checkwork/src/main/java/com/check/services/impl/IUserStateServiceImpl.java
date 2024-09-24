@@ -36,4 +36,9 @@ public class IUserStateServiceImpl implements IUserStateService {
     public UserState getUserStateById(int id) {
         return userStateRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void saveUserState(UserState userState) {
+        userStateRepository.save(userState);
+    }
 }
