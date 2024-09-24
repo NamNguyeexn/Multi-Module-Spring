@@ -5,12 +5,11 @@ import com.check.models.User;
 import com.check.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Component
-public class MailObserver implements Observer{
+public class MailObserver implements IObserver {
     @Autowired
     private IUserService userService;
 

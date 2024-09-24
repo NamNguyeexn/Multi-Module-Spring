@@ -14,9 +14,8 @@ public class EvaluationState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public long getSalaryByHour(UserState userState) {
+    public void getSalaryByHour(UserState userState) {
         userState.setSalaryByHour(userState.getSalaryByHour() + 20000);
-        return userState.getSalaryByHour();
     }
 
     @Override

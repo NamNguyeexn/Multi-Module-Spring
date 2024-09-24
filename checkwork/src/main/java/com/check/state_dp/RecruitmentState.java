@@ -15,8 +15,7 @@ public class RecruitmentState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public long getSalaryByHour(UserState userState) {
-        return userState.getSalaryByHour();
+    public void getSalaryByHour(UserState userState) {
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.check.services;
 
 import com.check.DTO.RegisterFormInput;
-import com.check.command.Command;
+import com.check.command.ICommand;
 import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.models.Human;
 import com.check.models.User;
@@ -24,7 +24,7 @@ public interface IUserService {
     /**
      * Su dung trong command, de luu thong tin user khi cap nhat thong tin user
      * */
-    void setCommand(Command command);
+    void setCommand(ICommand command);
     boolean executeCommand(ChangeInfoInputDTO changeInfoInputDTO, User user);
     boolean undoCommand(User user);
 }

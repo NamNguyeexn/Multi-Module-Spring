@@ -43,7 +43,7 @@ public class ScheduleAPIController {
         System.out.println("ID : " + user.get().getId());
         List<ScheduleOutput> schedules = scheduleService.getSchedulesByHost(user.get().getId());
         if (schedules.isEmpty()) {
-            String message = "User didn't host any appointment";
+            String message = "IUser didn't host any appointment";
             response.put(message, null);
             return ResponseEntity.badRequest().body(response);
         } else {
@@ -60,7 +60,7 @@ public class ScheduleAPIController {
         Map<String, List<ScheduleOutput>> response = new HashMap<>();
         List<ScheduleOutput> schedules = scheduleService.getSchedulesByJoin(user.get().getId());
         if (schedules.isEmpty()) {
-            String message = "User didn't join any appointment";
+            String message = "IUser didn't join any appointment";
             response.put(message, null);
             return ResponseEntity.badRequest().body(response);
         } else {
@@ -77,7 +77,7 @@ public class ScheduleAPIController {
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Map<String, ScheduleList> response = new HashMap<>();
-        ScheduleListFactory factory;
+        IScheduleListFactory factory;
         if (type.contains("day")) {
             factory = new ScheduleByDay(scheduleRepository);
             ScheduleList schedules = factory.createScheduleList();

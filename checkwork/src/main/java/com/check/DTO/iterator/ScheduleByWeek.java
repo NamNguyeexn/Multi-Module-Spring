@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScheduleByWeek implements ScheduleListFactory{
+public class ScheduleByWeek implements IScheduleListFactory{
 
     private final ScheduleRepository scheduleRepository;
 

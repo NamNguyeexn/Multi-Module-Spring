@@ -17,3 +17,7 @@ write a custom TypeAdapter for its declaring type :***
 - Đặt debug ở cuối của hàm service 
 - Nhận thấy hàm service có thể hoàn thành 
 - Thường xảy ra khi cố in ra object định dạng kiểu Optional< > 
+
+***Lỗi GOT GLOBAL EXCEPTION :Could not resolve attribute '#' of 'com.check.models.#'***
+- Xảy ra khi truyền biến vào query bị sai 
+- Kiểm tra lại tên biến ở trong repository 

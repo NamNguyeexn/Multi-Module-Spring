@@ -17,4 +17,6 @@ public interface IWorkHourService {
     Optional<WorkHour> testGetLastWorkHour(User user);
     String deleteWorkHourById(int id);
     int getDayWorkedByUser(User user);
+    Optional<WorkHour> getWorkHourById(int id);
+    Optional<List<WorkHour>> getWHsByUserId(int userid);
 }

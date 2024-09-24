@@ -2,9 +2,9 @@ package com.check.mediator.services.impl;
 
 import com.check.mediator.models.GroupChat;
 import com.check.mediator.services.ChatMed;
-import com.check.mediator.services.GroupChatService;
+import com.check.mediator.services.IGroupChatService;
 import com.check.models.User;
-import com.check.services.impl.IEmailProxy;
+import com.check.services.proxy.IEmailProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,8 @@ import java.util.List;
 public class ChatMedImpl extends ChatMed {
     @Autowired
     private final IEmailProxy emailService;
-    public ChatMedImpl(GroupChatService groupChatService, IEmailProxy emailService) {
-        super(groupChatService);
+    public ChatMedImpl(IGroupChatService IGroupChatService, IEmailProxy emailService) {
+        super(IGroupChatService);
         this.emailService = emailService;
     }
     @Override

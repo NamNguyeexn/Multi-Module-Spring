@@ -2,7 +2,7 @@ package com.check.observe;
 
 import com.check.DTO.ENUM.LOGIN_STATUS;
 import com.check.models.User;
-import com.check.services.impl.IEmailProxy;
+import com.check.services.proxy.IEmailProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,24 +12,24 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class AlertService implements Subject {
+public class AlertService implements ISubject {
     @Autowired
     private IEmailProxy emailProxy;
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<IObserver> observers = new ArrayList<>();
 
     @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public void addObserver(IObserver IObserver) {
+        observers.add(IObserver);
     }
 
     @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
+    public void removeObserver(IObserver IObserver) {
+        observers.remove(IObserver);
     }
 
     @Override
     public void notifyObservers(User user, LOGIN_STATUS status) {
-        for (Observer o : observers) {
+        for (IObserver o : observers) {
             switch (o.getClass().getSimpleName()) {
                 case "MailObserver":
                     String body = o.update(user, status);

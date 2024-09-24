@@ -12,7 +12,7 @@ import org.springframework.context.annotation.*;
 //        "com.logger.*"
 })
 public class CheckWorkApplication {
-    @Autowired
+//    @Autowired
 //    private static ServerProperties serverProperties;
     public static void main(String[] args) {
 //        System.out.println("PORT : " + serverProperties.getPort());

@@ -1,10 +1,10 @@
 package com.check.services.impl;
 
 import com.check.DTO.RegisterFormInput;
-import com.check.command.Command;
+import com.check.command.ICommand;
 import com.check.command.DTO.ChangeInfoInputDTO;
-import com.check.mapper.HumanMapper;
-import com.check.mapper.UserMapper;
+import com.check.mapper.IHumanMapper;
+import com.check.mapper.IUserMapper;
 import com.check.models.Human;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
@@ -27,15 +27,15 @@ import static com.check.repositories.JPARepository.UserRepository.Specs.*;
 @Primary
 public class IUserServiceImpl implements IUserService {
     @Autowired
-    private Command command;
+    private ICommand command;
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserMapper userMapper;
+    private IUserMapper userMapper;
     @Autowired
     private CustomHumanRepository humanRepository;
     @Autowired
-    private HumanMapper humanMapper;
+    private IHumanMapper humanMapper;
     @Override
     public Optional<Human> getHumanByUsername(String username) {
         Optional<User> user = userRepository.findOne(byUsername(username));
@@ -92,7 +92,7 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
-    public void setCommand(Command command) {
+    public void setCommand(ICommand command) {
         this.command = command;
     }
 

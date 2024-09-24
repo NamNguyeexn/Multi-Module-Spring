@@ -6,7 +6,7 @@ import com.check.DTO.RegisterFormOutput;
 import com.check.JWT.TokenJWT;
 import com.check.DTO.UserInput;
 import com.check.JWT.JwtTokenService;
-import com.check.mapper.HumanMapper;
+import com.check.mapper.IHumanMapper;
 import com.check.models.Human;
 import com.check.models.User;
 import com.check.observe.AlertService;
@@ -43,7 +43,7 @@ public class LoginAPIController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private HumanMapper humanMapper;
+    private IHumanMapper humanMapper;
     @Autowired
     private AlertService alertService;
 
@@ -122,7 +122,7 @@ public class LoginAPIController {
                 log.info("LOGIN API CONTROLLER - REGISTER - SUCCESS");
                 User u = user.get();
                 RegisterFormOutput registerFormOutput =
-                        HumanMapper.INSTANCE.userToRegisterFormOutput(u, registerFormInput, password);
+                        IHumanMapper.INSTANCE.userToRegisterFormOutput(u, registerFormInput, password);
                 //
                 response.put("LOGIN API CONTROLLER - REGISTER - SUCCESS ", registerFormOutput);
                 return ResponseEntity.ok().body(response);

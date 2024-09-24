@@ -2,7 +2,7 @@ package com.check.services.impl;
 
 import com.check.DTO.CheckInOutput;
 import com.check.DTO.CheckOutOutput;
-import com.check.mapper.WorkHourMapper;
+import com.check.mapper.IWorkHourMapper;
 import com.check.models.ENUM.Status;
 import com.check.models.User;
 import com.check.models.WorkHour;
@@ -26,7 +26,7 @@ import static com.check.repositories.JPARepository.WorkHourRepository.Specs.*;
 @Primary
 public class IWorkHourServiceImpl implements IWorkHourService {
     @Autowired
-    private WorkHourMapper workHourMapper;
+    private IWorkHourMapper workHourMapper;
     @Autowired
     private WorkHourRepository workHourRepository;
     @Override
@@ -119,6 +119,16 @@ public class IWorkHourServiceImpl implements IWorkHourService {
             }
         }
         return count;
+    }
+
+    @Override
+    public Optional<WorkHour> getWorkHourById(int id) {
+        return workHourRepository.findById(id);
+    }
+
+    @Override
+    public Optional<List<WorkHour>> getWHsByUserId(int userid) {
+        return Optional.of(workHourRepository.findAll(byUserId(userid)));
     }
 
     private Optional<WorkHour> updateCheckIn(LocalDateTime start, User user){

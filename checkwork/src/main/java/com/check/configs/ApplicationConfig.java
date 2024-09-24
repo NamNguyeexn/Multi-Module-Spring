@@ -1,6 +1,5 @@
 package com.check.configs;
 
-import com.check.command.Command;
 import com.check.command.UpdateUserInfoCommand;
 import com.check.repositories.JPARepository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findOne(byUsername(username))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("IUser not found"));
     }
     @Bean
     public UpdateUserInfoCommand updateUserInfoCommand(){

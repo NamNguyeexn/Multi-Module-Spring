@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class ScheduleByMonth implements ScheduleListFactory{
+public class ScheduleByMonth implements IScheduleListFactory{
     private final ScheduleRepository scheduleRepository;
 
     public ScheduleByMonth(ScheduleRepository scheduleRepository) {

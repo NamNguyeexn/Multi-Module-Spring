@@ -1,10 +1,11 @@
 package com.check.adapters.impl;
 
-import com.check.adapters.ScheduleAdapter;
+import com.check.adapters.IScheduleAdapter;
 import com.check.models.Human;
 import com.check.services.IAppointmentService;
 import com.check.services.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.Optional;
 
 
 @Component
-public class ScheduleAdapterImpl implements ScheduleAdapter {
+@Primary
+public class ScheduleAdapterImpl implements IScheduleAdapter {
     @Autowired
     private IHumanService humanService;
     @Override

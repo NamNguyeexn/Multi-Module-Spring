@@ -3,22 +3,24 @@ package com.check.controllers;
 import com.check.JWT.JwtTokenService;
 import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.command.UpdateUserInfoCommand;
+import com.check.models.PerEvaluation;
 import com.check.models.User;
 import com.check.models.UserState;
+import com.check.services.IPerEvaluationService;
 import com.check.services.IUserService;
-import com.check.services.IUserStateService;
+import com.check.services.state.IUserStateService;
 import com.check.state_dp.IUserState;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @Slf4j
@@ -35,7 +37,8 @@ public class UserAPIController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private IUserStateService userStateService;
-
+    @Autowired
+    private IPerEvaluationService evaService;
     @GetMapping()
     public ResponseEntity<Map<String, User>> getHomepage(HttpServletRequest request) {
         Map<String, User> response = new HashMap<>();
@@ -119,6 +122,20 @@ public class UserAPIController {
         iUserState.demote(userState);
         userStateService.saveUserState(userState);
         map.put(userState.getState().toString(), user.get());
+        return ResponseEntity.ok().body(map);
+    }
+    @GetMapping("/salary")
+    public ResponseEntity<Map<String, User>> getSalary(HttpServletRequest request){
+        String username = jwtTokenService.getUsername(request);
+        Optional<User> user = userService.getUserByUsername(username);
+        Map<String, User> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateById(user.get().getId());
+        List<PerEvaluation> perEvaluations = evaService.getPEsByUserStateId(userState.getId());
+        if(perEvaluations.isEmpty()) {
+            map.put("Work Hour null", null);
+            return ResponseEntity.badRequest().body(map);
+        }
+        map.put(evaService.getSalary(perEvaluations).toString(), user.get());
         return ResponseEntity.ok().body(map);
     }
 

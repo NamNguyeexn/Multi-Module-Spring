@@ -2,8 +2,10 @@ package com.check.composites;
 
 import com.check.composites.models.Category;
 import com.check.composites.models.Product;
-import com.check.composites.visitor.Visitor;
-import com.check.composites.visitor.VisitorImpl;
+import com.check.composites.visitor.IVisitor;
+import com.check.composites.visitor.IVisitorImpl;
+import com.check.composites.visitor.IVisitor;
+import com.check.composites.visitor.IVisitorImpl;
 
 public class CompositeMain {
     public static void main(String[] args) {
@@ -20,7 +22,7 @@ public class CompositeMain {
 
         Category mainCategory = new Category("Main Category");
         mainCategory.add(category1);
-        Visitor visitor = new VisitorImpl();
+        IVisitor visitor = new IVisitorImpl();
         mainCategory.add(category2);
         category1.accept(visitor);
         category2.accept(visitor);

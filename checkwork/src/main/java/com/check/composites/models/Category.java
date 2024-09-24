@@ -1,6 +1,6 @@
 package com.check.composites.models;
 
-import com.check.composites.visitor.Visitor;
+import com.check.composites.visitor.IVisitor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Category extends ProductComponent{
             component.display();
         }
     }
-    public void accept(Visitor visitor){
+    public void accept(IVisitor visitor){
         visitor.visit(this);
     }
 }

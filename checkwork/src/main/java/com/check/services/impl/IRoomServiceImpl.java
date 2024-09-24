@@ -6,12 +6,14 @@ import com.check.repositories.CustomRoomRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Service
+@Primary
 public class IRoomServiceImpl implements IRoomService {
     @Autowired
     private CustomRoomRepository roomRepository;

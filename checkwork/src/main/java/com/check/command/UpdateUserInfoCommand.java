@@ -4,12 +4,12 @@ import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.command.handlers.ValidateEmail;
 import com.check.command.handlers.ValidateUsername;
 import com.check.command.handlers.ValidatorChain;
-import com.check.mapper.UserMapper;
 import com.check.models.ENUM.Department;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
 import com.check.repositories.JPARepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,8 @@ import java.util.*;
 import static com.check.repositories.JPARepository.UserRepository.Specs.byUsername;
 
 @Component
-public class UpdateUserInfoCommand implements Command {
+@Primary
+public class UpdateUserInfoCommand implements ICommand {
     private final Map<Integer, User> userChangeInfo = new HashMap<>();
     private final UserRepository userRepository;
     @Autowired

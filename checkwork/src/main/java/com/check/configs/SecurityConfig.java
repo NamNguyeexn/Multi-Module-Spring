@@ -22,7 +22,6 @@ public class SecurityConfig {
 //    private final AuthenticationProvider authenticationProvider;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.info("SECURITY CONFIG - SECURITY FILTER CHAIN - FILTER");
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(

@@ -1,7 +1,7 @@
 package com.check.services.impl;
 
 import com.check.models.ENUM.Role;
-import com.check.services.IEmailService;
+import com.check.services.proxy.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,7 +22,7 @@ public class IEmailServiceImpl implements IEmailService {
     private JavaMailSender mailSender;
 
     @Override
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
     public void sendEmails(String from, Map<String, Role> listEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         List<String> toList = new ArrayList<>(listEmail.keySet());
@@ -34,7 +34,7 @@ public class IEmailServiceImpl implements IEmailService {
         message.setSentDate(Date.valueOf(LocalDate.now()));
         mailSender.send(message);
     }
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
     @Override
     public void sendEmail(String from, String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -46,7 +46,7 @@ public class IEmailServiceImpl implements IEmailService {
     }
 
     @Override
-    @Async("threadPoolTaskExecutor")
+    @Async("MailExecutor")
     public void sendEmails(String from, String[] to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);

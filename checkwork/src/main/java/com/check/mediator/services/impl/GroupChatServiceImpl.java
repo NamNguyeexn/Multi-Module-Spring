@@ -2,7 +2,7 @@ package com.check.mediator.services.impl;
 
 import com.check.mediator.models.GroupChat;
 import com.check.repositories.JPARepository.GroupChatRepository;
-import com.check.mediator.services.GroupChatService;
+import com.check.mediator.services.IGroupChatService;
 import com.check.models.User;
 import com.check.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupChatServiceImpl implements GroupChatService {
+public class GroupChatServiceImpl implements IGroupChatService {
     @Autowired
     private GroupChatRepository groupChatRepository;
     @Autowired

@@ -2,7 +2,7 @@ package com.check.controllers;
 
 import com.check.DTO.*;
 import com.check.JWT.JwtTokenService;
-import com.check.abstract_factories.RewardAbstractFactory;
+import com.check.abstract_factories.IRewardAbstractFactory;
 import com.check.abstract_factories.models.*;
 import com.check.models.User;
 import com.check.models.WorkHour;
@@ -31,7 +31,7 @@ public class TestController {
     @Autowired
     private IWorkHourService IWorkHourService;
     @Autowired
-    private RewardAbstractFactory rewardAbstractFactory;
+    private IRewardAbstractFactory IRewardAbstractFactory;
     @Autowired
     private IUserService IUserService;
     @Autowired
@@ -90,7 +90,7 @@ public class TestController {
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if(LocalTime.now().isAfter(LocalTime.of(8, 0))){
-            MinusLate iMinus = rewardAbstractFactory.newChange(MinusLate.class, user.get().getUsername(), 5000);
+            MinusLate iMinus = IRewardAbstractFactory.newChange(MinusLate.class, user.get().getUsername(), 5000);
             alert = "Dear "
                     + humanService.getHumanById(user.get().getHumanid()).get().getName()
                     + " "
@@ -99,7 +99,7 @@ public class TestController {
                     + iMinus.getValue(iMinus.getMinus());
             return ResponseEntity.ok().body(alert);
         } else {
-            MinusPunish iMinus = rewardAbstractFactory.newChange(MinusPunish.class, user.get().getUsername(), 5000);
+            MinusPunish iMinus = IRewardAbstractFactory.newChange(MinusPunish.class, user.get().getUsername(), 5000);
             alert = "Dear "
                     + humanService.getHumanById(user.get().getHumanid()).get().getName()
                     + ", "
@@ -115,7 +115,7 @@ public class TestController {
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = IUserService.getUserByUsername(username);
         if(LocalDate.now().isEqual(humanService.getHumanById(user.get().getHumanid()).get().getDob().toLocalDate())){
-            BonusBirthday iBonus = rewardAbstractFactory.newChange(BonusBirthday.class, user.get().getUsername(), 5000);
+            BonusBirthday iBonus = IRewardAbstractFactory.newChange(BonusBirthday.class, user.get().getUsername(), 5000);
             alert = "Dear "
                     + humanService.getHumanById(user.get().getHumanid()).get().getName()
                     + " "
@@ -124,7 +124,7 @@ public class TestController {
                     + iBonus.getBonus(iBonus.getBonus());
             return ResponseEntity.ok().body(alert);
         } else {
-            BonusReward iBonus = rewardAbstractFactory.newChange(BonusReward.class, user.get().getUsername(), 5000);
+            BonusReward iBonus = IRewardAbstractFactory.newChange(BonusReward.class, user.get().getUsername(), 5000);
             alert = "Dear "
                     + humanService.getHumanById(user.get().getHumanid()).get().getName()
                     + ", "

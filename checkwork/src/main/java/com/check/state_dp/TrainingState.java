@@ -15,9 +15,8 @@ public class TrainingState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public long getSalaryByHour(UserState userState) {
+    public void getSalaryByHour(UserState userState) {
         userState.setSalaryByHour(userState.getSalaryByHour() + 10000);
-        return userState.getSalaryByHour();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class WorkHour {
     @NotNull(message = "Check out cant be null")
     @Column(name = "end")
     private LocalDateTime end;
-    @NotNull(message = "User Id cant be null")
+    @NotNull(message = "IUser Id cant be null")
     @Column(name = "userid")
     private int userid;
     @Enumerated(EnumType.STRING)

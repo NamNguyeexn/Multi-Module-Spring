@@ -1,8 +1,8 @@
 package com.check.services.impl;
 
 import com.check.DTO.ScheduleOutput;
-import com.check.adapters.ScheduleAdapter;
-import com.check.mapper.ScheduleMapper;
+import com.check.adapters.IScheduleAdapter;
+import com.check.mapper.IScheduleMapper;
 import com.check.models.Appointment;
 import com.check.models.Schedule;
 import com.check.repositories.JPARepository.ScheduleRepository;
@@ -22,9 +22,9 @@ public class IScheduleServiceImpl implements IScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
     @Autowired
-    private ScheduleAdapter scheduleAdapter;
+    private IScheduleAdapter scheduleAdapter;
     @Autowired
-    private ScheduleMapper scheduleMapper;
+    private IScheduleMapper scheduleMapper;
     @Autowired
     private IAppointmentService appointmentService;
     @Override

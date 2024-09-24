@@ -3,10 +3,10 @@ package com.check.controllers;
 import com.check.DTO.AppointmentFormInput;
 import com.check.DTO.AppointmentFormOutput;
 import com.check.JWT.JwtTokenService;
-import com.check.adapters.ScheduleAdapter;
+import com.check.adapters.IScheduleAdapter;
 import com.check.facades.MeetingFacade;
-import com.check.mapper.AppointmentMapper;
-import com.check.mapper.ScheduleMapper;
+import com.check.mapper.IAppointmentMapper;
+import com.check.mapper.IScheduleMapper;
 import com.check.models.Appointment;
 import com.check.models.User;
 import com.check.services.IAppointmentService;
@@ -17,8 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +34,7 @@ public class AppointmentAPIController {
     @Autowired
     private IAppointmentService appointmentService;
     @Autowired
-    private AppointmentMapper appointmentMapper;
+    private IAppointmentMapper appointmentMapper;
     @Autowired
     private JwtTokenService jwtTokenService;
     @Autowired
@@ -48,9 +46,9 @@ public class AppointmentAPIController {
     @Autowired
     private IScheduleService scheduleService;
     @Autowired
-    private ScheduleMapper scheduleMapper;
+    private IScheduleMapper scheduleMapper;
     @Autowired
-    private ScheduleAdapter scheduleAdapter;
+    private IScheduleAdapter scheduleAdapter;
     @RequestMapping("/create")
     ResponseEntity<AppointmentFormOutput> createAppointment(
             HttpServletRequest request,

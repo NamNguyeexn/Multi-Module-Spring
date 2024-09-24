@@ -5,7 +5,7 @@ import com.check.repositories.JPARepository.UserRepository;
 
 import static com.check.repositories.JPARepository.UserRepository.Specs.byEmail;
 
-public class ValidateEmail implements ValidatorHandler{
+public class ValidateEmail implements IValidatorHandler {
     private final UserRepository userRepository;
 
     public ValidateEmail(UserRepository userRepository) {

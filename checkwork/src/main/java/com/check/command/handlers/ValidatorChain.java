@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidatorChain {
-    private ValidatorHandler validatorHandler;
-    private final List<ValidatorHandler> list = new ArrayList<>();
+    private IValidatorHandler IValidatorHandler;
+    private final List<IValidatorHandler> list = new ArrayList<>();
 
     public ValidatorChain() {
     }
 
-    public ValidatorChain(ValidatorHandler validatorHandler) {
-        this.validatorHandler = validatorHandler;
+    public ValidatorChain(IValidatorHandler IValidatorHandler) {
+        this.IValidatorHandler = IValidatorHandler;
     }
 
     public void doHandle(ChangeInfoInputDTO changeInfoInputDTO) {
-//        for (ValidatorHandler v : list) {
+//        for (IValidatorHandler v : list) {
 //            if (!v.doValidator(changeInfoInputDTO)) {
 //                break;
 //            }
@@ -25,9 +25,9 @@ public class ValidatorChain {
         list.forEach(l -> l.doValidator(changeInfoInputDTO));
     }
 
-    public ValidatorChain setHandle(ValidatorHandler validatorHandler) {
-        this.validatorHandler = validatorHandler;
-        list.add(validatorHandler);
+    public ValidatorChain setHandle(IValidatorHandler IValidatorHandler) {
+        this.IValidatorHandler = IValidatorHandler;
+        list.add(IValidatorHandler);
         return this;
     }
 }

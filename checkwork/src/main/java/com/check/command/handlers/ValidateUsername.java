@@ -5,7 +5,7 @@ import com.check.repositories.JPARepository.UserRepository;
 
 import static com.check.repositories.JPARepository.UserRepository.Specs.*;
 
-public class ValidateUsername implements ValidatorHandler{
+public class ValidateUsername implements IValidatorHandler {
     private final UserRepository userRepository;
 
     public ValidateUsername(UserRepository userRepository) {

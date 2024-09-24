@@ -9,8 +9,8 @@ public class FlyweightMain {
         UserFactory userFactory = new UserFactory();
         for(int i = 0; i < 3; i++){
             String name = users.get(i);
-            User user = userFactory.getConcreteUser(name, xulyEmail(name));
-            System.out.println(user.getName() + " " + user.getEmail());
+            IUser IUser = userFactory.getConcreteUser(name, xulyEmail(name));
+            System.out.println(IUser.getName() + " " + IUser.getEmail());
         }
     }
     public static String xulyEmail(String input){
