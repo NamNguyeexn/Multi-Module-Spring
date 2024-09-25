@@ -9,6 +9,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class WorkHourProcessor implements ItemProcessor<WorkHour, PerEvaluation> {
     @Autowired
@@ -18,11 +20,11 @@ public class WorkHourProcessor implements ItemProcessor<WorkHour, PerEvaluation>
 
     @Override
     public PerEvaluation process(WorkHour item) {
-        UserState userState = userStateService.getUserStateByUserId(item.getUserid());
+        Optional<UserState> userState = userStateService.getUserStateByUserId(item.getUserid());
         if (perEvaluationService.checkIfWorkHourExists(item.getId())) return null;
-        return PerEvaluation.builder()
+        return userState.map(state -> PerEvaluation.builder()
                 .workhourid(item.getId())
-                .userstateid(userState.getId())
-                .build();
+                .userstateid(state.getId())
+                .build()).orElse(null);
     }
 }

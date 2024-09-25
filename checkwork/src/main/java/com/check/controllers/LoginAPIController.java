@@ -62,12 +62,10 @@ public class LoginAPIController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             else if (passwordEncoder.matches(userInput.getPassword(), user.get().getPassword())){
-                log.info("LOGIN API CONTROLLER - LOGIN - FOUND USER");
                 Optional<Human> human = humanService.getHumanById(user.get().getHumanid());
                 if(human.isEmpty()){
                     alertService.addObserver(mailObserver);
                     alertService.addObserver(logObserver);
-                    log.info("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN");
                     response.put("LOGIN API CONTROLLER - LOGIN - NOT FOUND HUMAN", null);
                     alertService.notifyObservers(user.get(), LOGIN_STATUS.FAILURE);
                     return ResponseEntity.badRequest().body(response);
@@ -87,7 +85,6 @@ public class LoginAPIController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (Exception e) {
-            log.info("-----------------------------------");
             log.info("LOGIN API CONTROLLER - LOGIN - EXCEPTION {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

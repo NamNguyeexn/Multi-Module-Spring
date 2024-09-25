@@ -79,6 +79,6 @@ public class IPerEvaluationServiceImpl implements IPerEvaluationService {
 
     @Override
     public boolean checkIfWorkHourExists(int workhourId) {
-        return evaRepository.findOne(byWorkHourId(workhourId)).isPresent();
+        return evaRepository.exists(byWorkHourId(workhourId));
     }
 }

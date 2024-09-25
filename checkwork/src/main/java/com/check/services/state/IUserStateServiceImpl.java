@@ -6,12 +6,15 @@ import com.check.state_dp.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.check.repositories.JPARepository.UserStateRepository.Specs.*;
 
 @Service
 public class IUserStateServiceImpl implements IUserStateService {
     @Autowired
     private UserStateRepository userStateRepository;
+
     @Override
     public IUserState handle(UserState userState) {
         IUserState iUserState;
@@ -36,8 +39,8 @@ public class IUserStateServiceImpl implements IUserStateService {
     }
 
     @Override
-    public UserState getUserStateByUserId(int userid) {
-        return userStateRepository.findOne(byUserId(userid)).orElse(null);
+    public Optional<UserState> getUserStateByUserId(int userid) {
+        return Optional.ofNullable(userStateRepository.findOne(byUserId(userid)).orElse(null));
     }
 
 

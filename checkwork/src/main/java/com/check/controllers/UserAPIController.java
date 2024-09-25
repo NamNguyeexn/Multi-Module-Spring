@@ -10,6 +10,9 @@ import com.check.services.IPerEvaluationService;
 import com.check.services.IUserService;
 import com.check.services.state.IUserStateService;
 import com.check.state_dp.IUserState;
+import com.check.template_methods.DTO.ENUM.RequestType;
+import com.check.template_methods.DTO.RequestDTO;
+import com.check.template_methods.UserStateTemplateService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +42,8 @@ public class UserAPIController {
     private IUserStateService userStateService;
     @Autowired
     private IPerEvaluationService evaService;
+    @Autowired
+    private UserStateTemplateService userStateTemplateService;
     @GetMapping()
     public ResponseEntity<Map<String, User>> getHomepage(HttpServletRequest request) {
         Map<String, User> response = new HashMap<>();
@@ -63,7 +68,8 @@ public class UserAPIController {
         }
     }
     @PostMapping("/change")
-    public ResponseEntity<Map<String, User>> changeInfo(@Valid @RequestBody ChangeInfoInputDTO changeInfoInputDTO, HttpServletRequest request){
+    public ResponseEntity<Map<String, User>> changeInfo(@Valid @RequestBody ChangeInfoInputDTO changeInfoInputDTO,
+                                                        HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
         Map<String, User> response = new HashMap<>();
@@ -92,20 +98,34 @@ public class UserAPIController {
         }
     }
     @GetMapping("/state")
-    public ResponseEntity<Map<User, UserState>> getUserState(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(request);
-        Optional<User> user = userService.getUserByUsername(username);
-        Map<User, UserState> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
-        map.put(user.get(), userState);
+    public ResponseEntity<Map<String, UserState>> getUserState(HttpServletRequest request){
+        RequestDTO requestDTO = RequestDTO.builder()
+                .request(request)
+                .requestType(RequestType.GetUserState)
+                .message(userService.getUserByUsername(
+                        jwtTokenService.getUsername(request)).get().getEmployeeCode()
+                )
+                .build();
+        Map<String, UserState> map = requestDTO.getMap();
+        userStateTemplateService.processes(requestDTO);
+        if(map.isEmpty()) return ResponseEntity.badRequest().body(null);
         return ResponseEntity.ok().body(map);
     }
     @GetMapping("/promote")
     public ResponseEntity<Map<String, UserState>> promote(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(request);
-        Optional<User> user = userService.getUserByUsername(username);
-        Map<String, UserState> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
+        RequestDTO requestDTO = RequestDTO.builder()
+                .request(request)
+                .requestType(RequestType.GetUserState)
+                .message(userService.getUserByUsername(
+                        jwtTokenService.getUsername(request)).get().getEmployeeCode()
+                )
+                .build();
+        Map<String, UserState> map = requestDTO.getMap();
+        userStateTemplateService.processes(requestDTO);
+        UserState userState = new UserState();
+        if(!map.isEmpty()){
+            userState = map.values().stream().findFirst().get();
+        }
         IUserState iUserState = userStateService.handle(userState);
         iUserState.promote(userState);
         userStateService.saveUserState(userState);
@@ -114,10 +134,19 @@ public class UserAPIController {
     }
     @GetMapping("/demote")
     public ResponseEntity<Map<String, UserState>> demote(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(request);
-        Optional<User> user = userService.getUserByUsername(username);
-        Map<String, UserState> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
+        RequestDTO requestDTO = RequestDTO.builder()
+                .request(request)
+                .requestType(RequestType.GetUserState)
+                .message(userService.getUserByUsername(
+                        jwtTokenService.getUsername(request)).get().getEmployeeCode()
+                )
+                .build();
+        Map<String, UserState> map = requestDTO.getMap();
+        userStateTemplateService.processes(requestDTO);
+        UserState userState = new UserState();
+        if(!map.isEmpty()){
+            userState = map.values().stream().findFirst().get();
+        }
         IUserState iUserState = userStateService.handle(userState);
         iUserState.demote(userState);
         userStateService.saveUserState(userState);
@@ -126,10 +155,19 @@ public class UserAPIController {
     }
     @GetMapping("/salary")
     public ResponseEntity<Map<String, UserState>> getSalary(HttpServletRequest request){
-        String username = jwtTokenService.getUsername(request);
-        Optional<User> user = userService.getUserByUsername(username);
-        Map<String, UserState> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
+        RequestDTO requestDTO = RequestDTO.builder()
+                .request(request)
+                .requestType(RequestType.GetUserState)
+                .message(userService.getUserByUsername(
+                        jwtTokenService.getUsername(request)).get().getEmployeeCode()
+                )
+                .build();
+        Map<String, UserState> map = requestDTO.getMap();
+        userStateTemplateService.processes(requestDTO);
+        UserState userState = new UserState();
+        if(!map.isEmpty()){
+            userState = map.values().stream().findFirst().get();
+        }
         List<PerEvaluation> perEvaluations = evaService.getPEsByUserStateId(userState.getId());
         if(perEvaluations.isEmpty()) {
             map.put("Work Hour null", null);
@@ -138,5 +176,4 @@ public class UserAPIController {
         map.put(evaService.getSalary(perEvaluations).toString(), userState);
         return ResponseEntity.ok().body(map);
     }
-
 }
