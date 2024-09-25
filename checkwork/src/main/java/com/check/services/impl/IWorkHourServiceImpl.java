@@ -131,6 +131,11 @@ public class IWorkHourServiceImpl implements IWorkHourService {
         return Optional.of(workHourRepository.findAll(byUserId(userid)));
     }
 
+    @Override
+    public boolean checkIfWorkHourExist(int id) {
+        return workHourRepository.existsById(id);
+    }
+
     private Optional<WorkHour> updateCheckIn(LocalDateTime start, User user){
         LocalDateTime end = LocalDateTime.now();
         String note = GenerateWorkHourCode.generateWorkHourCode(start, user.getId());

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Documented
 @Constraint(validatedBy = ValidDataTypeBatchVld.class)
 @Target({ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
+//@Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDataTypeBatch {
     String message() default "Data type not available";
     Class<?>[] groups() default {};

@@ -18,7 +18,7 @@ public interface PerEvaluationRepository extends JpaRepository<PerEvaluation, In
         }
         static Specification<PerEvaluation> byWorkHourId(int workHourId){
             return (root, query, criteriaBuilder) ->
-                    criteriaBuilder.equal(root.get("workHourid"), workHourId);
+                    criteriaBuilder.equal(root.get("workhourid"), workHourId);
         }
     }
 }

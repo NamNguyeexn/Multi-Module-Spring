@@ -5,6 +5,7 @@ import com.check.batch.steps.processors.WorkHourProcessor;
 import com.check.batch.steps.readers.WorkHourReader;
 import com.check.batch.steps.writers.PerEvaluationWriter;
 import com.check.models.PerEvaluation;
+import com.check.models.WorkHour;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -30,7 +31,7 @@ public class WorkHourToPerEvaluationStep {
     @Bean
     public Step getStep() throws Exception {
         return new StepBuilder("userState", jobRepository)
-                .<WorkHourBatch, PerEvaluation>chunk(1000, platformTransactionManager)
+                .<WorkHour, PerEvaluation>chunk(1000, platformTransactionManager)
                 .reader(workHourReader.getReader())
                 .processor(workHourProcessor)
                 .writer(perEvaluationWriter.getWriter())

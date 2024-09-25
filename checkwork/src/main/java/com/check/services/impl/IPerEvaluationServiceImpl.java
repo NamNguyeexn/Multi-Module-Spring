@@ -60,20 +60,25 @@ public class IPerEvaluationServiceImpl implements IPerEvaluationService {
                 case RECRUITMENT -> isRecruitment = true;
                 case TRAINING -> {
                     salaryStrategy.setSalaryStrategy(new TrainingSalary());
-                    res = salaryStrategy.executeSalary(perEvaluation);
+                    res = salaryStrategy.executeSalary(perEvaluation, userState);
                 }
                 case EVALUATION -> {
                     salaryStrategy.setSalaryStrategy(new EvaluationSalary());
-                    res = salaryStrategy.executeSalary(perEvaluation);
+                    res = salaryStrategy.executeSalary(perEvaluation, userState);
                 }
                 case PROMOTION -> {
                     salaryStrategy.setSalaryStrategy(new PromotionSalary());
-                    res = salaryStrategy.executeSalary(perEvaluation);
+                    res = salaryStrategy.executeSalary(perEvaluation, userState);
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + userState.getState());
             }
             if(isRecruitment) res = 200000;
             return res;
 //        }
+    }
+
+    @Override
+    public boolean checkIfWorkHourExists(int workhourId) {
+        return evaRepository.findOne(byWorkHourId(workhourId)).isPresent();
     }
 }

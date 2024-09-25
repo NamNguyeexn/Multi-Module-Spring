@@ -19,4 +19,5 @@ public interface IWorkHourService {
     int getDayWorkedByUser(User user);
     Optional<WorkHour> getWorkHourById(int id);
     Optional<List<WorkHour>> getWHsByUserId(int userid);
+    boolean checkIfWorkHourExist(int id);
 }

@@ -21,3 +21,7 @@ write a custom TypeAdapter for its declaring type :***
 ***Lỗi GOT GLOBAL EXCEPTION :Could not resolve attribute '#' of 'com.check.models.#'***
 - Xảy ra khi truyền biến vào query bị sai 
 - Kiểm tra lại tên biến ở trong repository 
+
+***Khi 1 object in ra output dạng proxy ?***
+- Xảy ra khi ta cố gắng in ra 1 object nằm trong key field của 1 map nào đó 
+- Ta cần kiểm tra lại kiểu dữ liệu đầu ra, thay đổi thứ tự hoặc đổi kiểu 

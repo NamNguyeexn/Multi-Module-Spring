@@ -9,4 +9,5 @@ public interface IPerEvaluationService {
     Optional<PerEvaluation> getPerEvaluationById(int id);
     List<PerEvaluation> getPEsByUserStateId(int userStateId);
     Long getSalary(List<PerEvaluation> perEvaluation);
+    boolean checkIfWorkHourExists(int workhourId);
 }

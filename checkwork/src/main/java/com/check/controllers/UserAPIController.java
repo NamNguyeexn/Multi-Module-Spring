@@ -92,50 +92,50 @@ public class UserAPIController {
         }
     }
     @GetMapping("/state")
-    public ResponseEntity<Map<UserState, User>> getUserState(HttpServletRequest request){
+    public ResponseEntity<Map<User, UserState>> getUserState(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        Map<UserState, User> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateById(user.get().getId());
-        map.put(userState, user.get());
+        Map<User, UserState> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
+        map.put(user.get(), userState);
         return ResponseEntity.ok().body(map);
     }
     @GetMapping("/promote")
-    public ResponseEntity<Map<String, User>> promote(HttpServletRequest request){
+    public ResponseEntity<Map<String, UserState>> promote(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        Map<String, User> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateById(user.get().getId());
+        Map<String, UserState> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
         IUserState iUserState = userStateService.handle(userState);
         iUserState.promote(userState);
         userStateService.saveUserState(userState);
-        map.put(userState.getState().toString(), user.get());
+        map.put(userState.getState().toString(), userState);
         return ResponseEntity.ok().body(map);
     }
     @GetMapping("/demote")
-    public ResponseEntity<Map<String, User>> demote(HttpServletRequest request){
+    public ResponseEntity<Map<String, UserState>> demote(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        Map<String, User> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateById(user.get().getId());
+        Map<String, UserState> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
         IUserState iUserState = userStateService.handle(userState);
         iUserState.demote(userState);
         userStateService.saveUserState(userState);
-        map.put(userState.getState().toString(), user.get());
+        map.put(userState.getState().toString(), userState);
         return ResponseEntity.ok().body(map);
     }
     @GetMapping("/salary")
-    public ResponseEntity<Map<String, User>> getSalary(HttpServletRequest request){
+    public ResponseEntity<Map<String, UserState>> getSalary(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
         Optional<User> user = userService.getUserByUsername(username);
-        Map<String, User> map = new HashMap<>();
-        UserState userState = userStateService.getUserStateById(user.get().getId());
+        Map<String, UserState> map = new HashMap<>();
+        UserState userState = userStateService.getUserStateByUserId(user.get().getId());
         List<PerEvaluation> perEvaluations = evaService.getPEsByUserStateId(userState.getId());
         if(perEvaluations.isEmpty()) {
             map.put("Work Hour null", null);
             return ResponseEntity.badRequest().body(map);
         }
-        map.put(evaService.getSalary(perEvaluations).toString(), user.get());
+        map.put(evaService.getSalary(perEvaluations).toString(), userState);
         return ResponseEntity.ok().body(map);
     }
 

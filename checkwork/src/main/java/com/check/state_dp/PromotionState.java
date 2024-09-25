@@ -14,15 +14,14 @@ public class PromotionState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public void getSalaryByHour(UserState userState) {
-        userState.setSalaryByHour(userState.getSalaryByHour() *2);
+    public void incrSalaryByHour(UserState userState) {
     }
 
     @Override
-    public Map<String, User> getState(UserState userState) {
-        Optional<User> user = userService.getUserById(userState.getUserid());
-        return user.map(value -> Map.of(userState.getState().toString(), value)).orElse(null);
+    public void decrSalaryByHour(UserState userState) {
+        userState.setSalaryByHour(userState.getSalaryByHour()/2);
     }
+
 
     @Override
     public void promote(UserState userState) {
@@ -31,6 +30,7 @@ public class PromotionState implements IUserState{
 
     @Override
     public void demote(UserState userState) {
+        decrSalaryByHour(userState);
         userState.setState(State.EVALUATION);
     }
 }

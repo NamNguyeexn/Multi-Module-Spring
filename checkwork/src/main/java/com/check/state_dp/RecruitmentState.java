@@ -15,17 +15,19 @@ public class RecruitmentState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public void getSalaryByHour(UserState userState) {
+    public void incrSalaryByHour(UserState userState) {
+        userState.setSalaryByHour(userState.getSalaryByHour() + 10000);
     }
 
     @Override
-    public Map<String, User> getState(UserState userState) {
-        Optional<User> user = userService.getUserById(userState.getUserid());
-        return user.map(value -> Map.of(userState.getState().toString(), value)).orElse(null);
+    public void decrSalaryByHour(UserState userState) {
+
     }
+
 
     @Override
     public void promote(UserState userState) {
+        incrSalaryByHour(userState);
         userState.setState(State.TRAINING);
     }
 

@@ -14,24 +14,24 @@ public class EvaluationState implements IUserState{
     @Autowired
     private IUserService userService;
     @Override
-    public void getSalaryByHour(UserState userState) {
-        userState.setSalaryByHour(userState.getSalaryByHour() + 20000);
+    public void incrSalaryByHour(UserState userState) {
+        userState.setSalaryByHour(userState.getSalaryByHour() *2);
     }
 
     @Override
-    public Map<String, User> getState(UserState userState) {
-        Optional<User> user = userService.getUserById(userState.getUserid());
-        getSalaryByHour(userState);
-        return user.map(value -> Map.of(userState.getState().toString(), value)).orElse(null);
+    public void decrSalaryByHour(UserState userState) {
+        userState.setSalaryByHour(userState.getSalaryByHour() - 20000);
     }
 
     @Override
     public void promote(UserState userState) {
+        incrSalaryByHour(userState);
         userState.setState(State.PROMOTION);
     }
 
     @Override
     public void demote(UserState userState) {
+        decrSalaryByHour(userState);
         userState.setState(State.TRAINING);
     }
 }

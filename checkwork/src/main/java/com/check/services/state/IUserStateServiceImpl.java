@@ -39,4 +39,6 @@ public class IUserStateServiceImpl implements IUserStateService {
     public UserState getUserStateByUserId(int userid) {
         return userStateRepository.findOne(byUserId(userid)).orElse(null);
     }
+
+
 }

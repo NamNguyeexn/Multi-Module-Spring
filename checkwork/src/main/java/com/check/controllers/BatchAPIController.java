@@ -9,6 +9,7 @@ import com.check.batch.steps.WorkHourToPerEvaluationStep;
 import com.check.validations.batch.ValidDataTypeBatch;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -17,6 +18,8 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/batch")
+@EnableAsync(proxyTargetClass = true)
+@Slf4j
 public class BatchAPIController {
     @Autowired
     private JobLauncher jobLauncher;
@@ -37,7 +42,8 @@ public class BatchAPIController {
     @Autowired
     private JobPerEvaluation jobPerEvaluation;
     @GetMapping("")
-    public BatchStatus loadAppointment(@ValidDataTypeBatch @RequestParam("data") String data) throws Exception {
+    @Async("BatchExecutor")
+    public void loadAppointment(@ValidDataTypeBatch @RequestParam("data") String data) throws Exception {
         Map<String, JobParameter<?>> maps = new HashMap<>();
         maps.put("time", new JobParameter(System.currentTimeMillis(), JobParameter.class));
         JobParameters parameters = new JobParameters(maps);
@@ -46,12 +52,11 @@ public class BatchAPIController {
             case "userstate" -> jobLauncher.run(jobUserState.getJob(), parameters);
             case "perevaluation" -> jobLauncher.run(jobPerEvaluation.getJob(), parameters);
             default -> null;
-//            default:
-//                jobExecution.setStatus(BatchStatus.UNKNOWN);
         };
-//        System.out.println("JobExecution: " + jobExecution.getStatus());
-        if (jobExecution == null) return BatchStatus.UNKNOWN;
-        return jobExecution.getStatus();
+        String message = "Batch Status : ";
+        if (jobExecution == null) message += "No job execution found";
+        else message += jobExecution.getStatus();
+        log.info(message);
     }
 
 }
