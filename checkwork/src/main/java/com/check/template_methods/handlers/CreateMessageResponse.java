@@ -1,7 +1,5 @@
 package com.check.template_methods.handlers;
 
-import com.check.JWT.JwtTokenService;
-import com.check.services.IUserService;
 import com.check.template_methods.DTO.RequestDTO;
 import com.check.template_methods.UserTemplateMethod;
 import org.springframework.stereotype.Component;
@@ -10,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class CreateMessageResponse extends UserTemplateMethod implements UserStateHandler{
 
     @Override
-    protected void getUserState(RequestDTO request) {}
+    public void getUserState(RequestDTO request) {}
 
     @Override
-    protected void createMessageResponse(RequestDTO request) {
-        if(!request.getMessage().contains("USER") || !request.getMap().isEmpty()) {
+    public void createMessageResponse(RequestDTO request) {
+        if(!request.getMessage().contains("USER") || (request.getUserState() == null)) {
             request.setMessage("Got error");
         }
         else {

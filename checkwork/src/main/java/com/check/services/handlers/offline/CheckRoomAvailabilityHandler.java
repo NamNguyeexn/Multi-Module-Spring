@@ -1,15 +1,13 @@
 package com.check.services.handlers.offline;
 
-import com.check.DTO.handlers.RequestHandlerDTO;
-import com.check.DTO.handlers.ResponseHandlerDTO;
+import com.check.dto.handlers.RequestHandlerDTO;
+import com.check.dto.handlers.ResponseHandlerDTO;
 import com.check.models.Appointment;
 import com.check.models.Room;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Slf4j

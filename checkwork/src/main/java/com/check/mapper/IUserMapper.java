@@ -1,6 +1,6 @@
 package com.check.mapper;
 
-import com.check.DTO.RegisterFormInput;
+import com.check.dto.RegisterFormInput;
 import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.models.User;
 import org.mapstruct.Mapper;

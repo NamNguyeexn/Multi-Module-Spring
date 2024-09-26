@@ -1,6 +1,6 @@
 package com.check.observe;
 
-import com.check.DTO.ENUM.LOGIN_STATUS;
+import com.check.dto.ENUM.LOGIN_STATUS;
 import com.check.models.User;
 import com.check.services.proxy.IEmailProxy;
 import lombok.extern.slf4j.Slf4j;

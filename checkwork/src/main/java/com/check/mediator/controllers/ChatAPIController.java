@@ -1,7 +1,7 @@
 package com.check.mediator.controllers;
 
-import com.check.JWT.JwtTokenService;
-import com.check.mediator.DTO.RegisterChatDTO;
+import com.check.jwt.JwtTokenService;
+import com.check.mediator.dto.RegisterChatDTO;
 import com.check.mediator.models.GroupChat;
 import com.check.mediator.services.ChatMed;
 import com.check.mediator.services.IChatService;

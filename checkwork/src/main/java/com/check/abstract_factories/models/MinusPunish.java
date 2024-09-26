@@ -3,7 +3,7 @@ package com.check.abstract_factories.models;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MinusPunish extends IMinus {
+public class MinusPunish extends Minus {
     public MinusPunish() {
     }
 

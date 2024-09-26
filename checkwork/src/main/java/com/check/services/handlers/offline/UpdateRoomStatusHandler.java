@@ -1,12 +1,11 @@
 package com.check.services.handlers.offline;
 
-import com.check.DTO.handlers.RequestHandlerDTO;
-import com.check.DTO.handlers.ResponseHandlerDTO;
+import com.check.dto.handlers.RequestHandlerDTO;
+import com.check.dto.handlers.ResponseHandlerDTO;
 import com.check.models.Room;
 import com.check.services.IRoomService;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.file.LinkOption;
 import java.util.Optional;
 @Slf4j
 public class UpdateRoomStatusHandler implements RoomPrepareHandler{

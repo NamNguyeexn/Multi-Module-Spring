@@ -1,6 +1,6 @@
 package com.check.observe;
 
-import com.check.DTO.ENUM.LOGIN_STATUS;
+import com.check.dto.ENUM.LOGIN_STATUS;
 import com.check.models.User;
 import com.check.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

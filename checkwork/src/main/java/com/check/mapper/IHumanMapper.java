@@ -1,7 +1,7 @@
 package com.check.mapper;
 
-import com.check.DTO.RegisterFormInput;
-import com.check.DTO.RegisterFormOutput;
+import com.check.dto.RegisterFormInput;
+import com.check.dto.RegisterFormOutput;
 import com.check.models.Human;
 import com.check.models.User;
 import org.mapstruct.Mapper;

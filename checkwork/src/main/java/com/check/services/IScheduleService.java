@@ -1,6 +1,6 @@
 package com.check.services;
 
-import com.check.DTO.ScheduleOutput;
+import com.check.dto.ScheduleOutput;
 import com.check.models.Schedule;
 import org.springframework.stereotype.Service;
 

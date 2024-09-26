@@ -1,6 +1,6 @@
 package com.check.facades;
 
-import com.check.DTO.AppointmentFormInput;
+import com.check.dto.AppointmentFormInput;
 import com.check.models.ENUM.Role;
 import com.check.models.User;
 import com.check.services.proxy.IEmailProxy;

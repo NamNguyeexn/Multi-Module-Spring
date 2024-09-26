@@ -1,33 +1,34 @@
 package com.check.template_methods;
 
-import com.check.JWT.JwtTokenService;
-import com.check.services.IUserService;
+import com.check.models.UserState;
+import com.check.services.state.IUserStateService;
 import com.check.template_methods.DTO.RequestDTO;
 import com.check.template_methods.handlers.UserStateChain;
-import com.check.template_methods.handlers.UserStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.Optional;
+
+@Service
 public class UserStateTemplateService extends UserTemplateMethod {
     @Autowired
-    private IUserService userService;
-    @Autowired
-    private JwtTokenService jwtTokenService;
-
+    private IUserStateService userStateService;
     @Autowired
     private UserStateChain chain;
 
     public void processes(RequestDTO request) {
         UserTemplateMethod userTemplateMethod = new UserStateTemplateService();
+        Optional<UserState> userState = userStateService.getUserStateByUserId(request.getUserId());
+        if (userState.isEmpty()) {request.setMessage("User State not found");}
+        request.setUserState(userState.get());
         userTemplateMethod.process(request, chain);
     }
 
     @Override
-    protected void getUserState(RequestDTO request) {
+    public void getUserState(RequestDTO request) {
     }
 
     @Override
-    protected void createMessageResponse(RequestDTO request) {
+    public void createMessageResponse(RequestDTO request) {
     }
 }

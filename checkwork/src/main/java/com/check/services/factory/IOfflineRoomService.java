@@ -1,7 +1,7 @@
 package com.check.services.factory;
 
-import com.check.DTO.handlers.RequestHandlerDTO;
-import com.check.DTO.handlers.ResponseHandlerDTO;
+import com.check.dto.handlers.RequestHandlerDTO;
+import com.check.dto.handlers.ResponseHandlerDTO;
 //import com.check.repositories.JPARepository.AppointmentRepository;
 import com.check.services.IAppointmentService;
 import com.check.services.IRoomService;

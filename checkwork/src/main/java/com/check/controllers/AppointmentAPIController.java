@@ -1,8 +1,8 @@
 package com.check.controllers;
 
-import com.check.DTO.AppointmentFormInput;
-import com.check.DTO.AppointmentFormOutput;
-import com.check.JWT.JwtTokenService;
+import com.check.dto.AppointmentFormInput;
+import com.check.dto.AppointmentFormOutput;
+import com.check.jwt.JwtTokenService;
 import com.check.adapters.IScheduleAdapter;
 import com.check.facades.MeetingFacade;
 import com.check.mapper.IAppointmentMapper;

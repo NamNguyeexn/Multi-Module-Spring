@@ -1,6 +1,6 @@
 package com.check.mapper;
 
-import com.check.DTO.ScheduleOutput;
+import com.check.dto.ScheduleOutput;
 import com.check.adapters.IScheduleAdapter;
 import com.check.models.Appointment;
 import com.check.models.Schedule;

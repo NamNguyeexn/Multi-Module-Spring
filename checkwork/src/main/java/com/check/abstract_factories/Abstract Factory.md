@@ -11,3 +11,4 @@ sẽ khó quản lý
 (method)**, còn **Abstract Factory sử dụng để khởi tạo các lớp**
 
 - Khi sử dụng Abstract Factory cần phải chỉ định ra lớp cần khởi tạo 
+![abstract_factory.png](abstract_factory.png)

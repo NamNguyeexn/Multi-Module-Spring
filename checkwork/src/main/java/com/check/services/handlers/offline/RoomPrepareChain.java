@@ -1,7 +1,7 @@
 package com.check.services.handlers.offline;
 
-import com.check.DTO.handlers.RequestHandlerDTO;
-import com.check.DTO.handlers.ResponseHandlerDTO;
+import com.check.dto.handlers.RequestHandlerDTO;
+import com.check.dto.handlers.ResponseHandlerDTO;
 
 import java.util.ArrayList;
 import java.util.List;

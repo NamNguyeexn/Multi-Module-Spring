@@ -4,6 +4,7 @@ import com.check.models.UserState;
 import com.check.repositories.JPARepository.UserStateRepository;
 import com.check.state_dp.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import static com.check.repositories.JPARepository.UserStateRepository.Specs.*;
 
 @Service
+@Primary
 public class IUserStateServiceImpl implements IUserStateService {
     @Autowired
     private UserStateRepository userStateRepository;

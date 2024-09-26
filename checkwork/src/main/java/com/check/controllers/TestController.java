@@ -1,7 +1,7 @@
 package com.check.controllers;
 
-import com.check.DTO.*;
-import com.check.JWT.JwtTokenService;
+import com.check.dto.*;
+import com.check.jwt.JwtTokenService;
 import com.check.abstract_factories.IRewardAbstractFactory;
 import com.check.abstract_factories.models.*;
 import com.check.models.User;

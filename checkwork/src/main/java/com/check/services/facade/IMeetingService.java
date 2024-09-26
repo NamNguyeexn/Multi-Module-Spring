@@ -1,6 +1,6 @@
 package com.check.services.facade;
 
-import com.check.DTO.AppointmentFormInput;
+import com.check.dto.AppointmentFormInput;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

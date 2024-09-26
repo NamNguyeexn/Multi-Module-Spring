@@ -1,8 +1,8 @@
 package com.check.controllers;
 
-import com.check.DTO.iterator.*;
-import com.check.DTO.ScheduleOutput;
-import com.check.JWT.JwtTokenService;
+import com.check.dto.iterator.*;
+import com.check.dto.ScheduleOutput;
+import com.check.jwt.JwtTokenService;
 import com.check.models.User;
 import com.check.repositories.JPARepository.ScheduleRepository;
 import com.check.services.IHumanService;

@@ -14,9 +14,9 @@ import java.util.Map;
 @Setter
 public class RequestDTO {
     private HttpServletRequest request;
-    private Map<String, UserState> map;
     private int userId;
     @Builder.Default
     private String message = null;
     private RequestType requestType;
+    private UserState userState;
 }

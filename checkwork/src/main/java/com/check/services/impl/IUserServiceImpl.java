@@ -1,6 +1,6 @@
 package com.check.services.impl;
 
-import com.check.DTO.RegisterFormInput;
+import com.check.dto.RegisterFormInput;
 import com.check.command.ICommand;
 import com.check.command.DTO.ChangeInfoInputDTO;
 import com.check.mapper.IHumanMapper;

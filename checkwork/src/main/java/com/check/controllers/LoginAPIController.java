@@ -1,11 +1,11 @@
 package com.check.controllers;
 
-import com.check.DTO.ENUM.LOGIN_STATUS;
-import com.check.DTO.RegisterFormInput;
-import com.check.DTO.RegisterFormOutput;
-import com.check.JWT.TokenJWT;
-import com.check.DTO.UserInput;
-import com.check.JWT.JwtTokenService;
+import com.check.dto.ENUM.LOGIN_STATUS;
+import com.check.dto.RegisterFormInput;
+import com.check.dto.RegisterFormOutput;
+import com.check.jwt.TokenJWT;
+import com.check.dto.UserInput;
+import com.check.jwt.JwtTokenService;
 import com.check.mapper.IHumanMapper;
 import com.check.models.Human;
 import com.check.models.User;

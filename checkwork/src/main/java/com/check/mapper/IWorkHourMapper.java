@@ -1,7 +1,7 @@
 package com.check.mapper;
 
-import com.check.DTO.CheckInOutput;
-import com.check.DTO.CheckOutOutput;
+import com.check.dto.CheckInOutput;
+import com.check.dto.CheckOutOutput;
 import com.check.models.ENUM.Status;
 import com.check.models.User;
 import com.check.models.WorkHour;

@@ -1,7 +1,7 @@
 package com.check.mapper;
 
-import com.check.DTO.AppointmentFormInput;
-import com.check.DTO.AppointmentFormOutput;
+import com.check.dto.AppointmentFormInput;
+import com.check.dto.AppointmentFormOutput;
 import com.check.models.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

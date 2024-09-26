@@ -1,6 +1,6 @@
 package com.check.bridge.controllers;
 
-import com.check.JWT.JwtTokenService;
+import com.check.jwt.JwtTokenService;
 import com.check.bridge.DTO.DetailEmployee;
 import com.check.bridge.factory.EmployeeFactory;
 import com.check.bridge.factory.EmployeeFactoryProducer;
@@ -14,8 +14,6 @@ import com.check.services.IUserService;
 import com.check.services.IWorkHourService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
