@@ -19,9 +19,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.4.2.Final/mapstruct-processor-1.4.2.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.4.2.Final/mapstruct-processor-1.4.2.Final.jar" />
         </processorPath>
         <module name="checkwork" />
       </profile>
@@ -29,6 +26,7 @@
     <bytecodeTargetLevel>
       <module name="Abstract_Factory" target="17" />
       <module name="adapter" target="17" />
+      <module name="afactory" target="20" />
       <module name="afDesign" target="17" />
       <module name="builder" target="17" />
       <module name="sync" target="17" />
@@ -40,6 +38,7 @@
       <module name="adapter" options="-parameters" />
       <module name="afDesign" options="-parameters" />
       <module name="afactory" options="" />
+      <module name="api_gateway" options="-parameters" />
       <module name="builder" options="-parameters" />
       <module name="checkwork" options="-parameters" />
       <module name="common" options="-parameters" />

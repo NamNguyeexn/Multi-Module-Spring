@@ -26,8 +26,8 @@
 		<module>checkwork</module>
         <module>connect</module>
         <module>logger</module>
-		<module>afactory</module>
-    </modules>
+		<module>api_gateway</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
