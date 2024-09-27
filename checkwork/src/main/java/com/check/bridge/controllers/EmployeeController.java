@@ -2,7 +2,7 @@ package com.check.bridge.controllers;
 
 import com.check.jwt.JwtTokenService;
 import com.check.bridge.DTO.DetailEmployee;
-import com.check.bridge.factory.EmployeeFactory;
+import com.check.bridge.factory.IEmployeeFactory;
 import com.check.bridge.factory.EmployeeFactoryProducer;
 import com.check.bridge.models.Employee;
 import com.check.bridge.services.impl.HourSalary;
@@ -32,6 +32,8 @@ public class EmployeeController {
     private IWorkHourService workHourService;
     @Autowired
     private IHumanService humanService;
+    @Autowired
+    private EmployeeFactoryProducer employeeFactoryProducer;
     @GetMapping("/month")
     public ResponseEntity<DetailEmployee> getMonthSalary(HttpServletRequest request){
         String username = jwtTokenService.getUsername(request);
@@ -41,7 +43,7 @@ public class EmployeeController {
         int day = workHourService.getDayWorkedByUser(user.get());
         User u = user.get();
         if(user.get().getRole().compareTo(Role.ADMIN) == 0) {
-            EmployeeFactory employeeFactory = EmployeeFactoryProducer.getFactory("ADMIN");
+            IEmployeeFactory employeeFactory = employeeFactoryProducer.getFactory("ADMIN");
             assert employeeFactory != null;
             employee = employeeFactory.getEmployeeFactory(
                     new MonthSalary(day + 1),
@@ -50,7 +52,7 @@ public class EmployeeController {
                     u.getEmployeeCode()
             );
         } else {
-            EmployeeFactory employeeFactory = EmployeeFactoryProducer.getFactory("USER");
+            IEmployeeFactory employeeFactory = employeeFactoryProducer.getFactory("USER");
             assert employeeFactory != null;
             employee = employeeFactory.getEmployeeFactory(
                     new MonthSalary(day),
@@ -75,10 +77,9 @@ public class EmployeeController {
         Optional<User> user = userService.getUserByUsername(username);
         Employee employee;
         if (user.isEmpty()) return ResponseEntity.badRequest().body(null);
-        int day = workHourService.getDayWorkedByUser(user.get());
         User u = user.get();
         if(user.get().getRole().compareTo(Role.ADMIN) == 0) {
-            EmployeeFactory employeeFactory = EmployeeFactoryProducer.getFactory("ADMIN");
+            IEmployeeFactory employeeFactory = employeeFactoryProducer.getFactory("ADMIN");
             assert employeeFactory != null;
             employee = employeeFactory.getEmployeeFactory(
                     new HourSalary(),
@@ -87,7 +88,7 @@ public class EmployeeController {
                     u.getEmployeeCode()
             );
         } else {
-            EmployeeFactory employeeFactory = EmployeeFactoryProducer.getFactory("USER");
+            IEmployeeFactory employeeFactory = employeeFactoryProducer.getFactory("USER");
             assert employeeFactory != null;
             employee = employeeFactory.getEmployeeFactory(
                     new HourSalary(),
