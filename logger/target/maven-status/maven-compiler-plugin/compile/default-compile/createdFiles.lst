@@ -1,6 +1,0 @@
-com\logger\adapters\CustomResponseBodyAdviceAdapter.class
-com\logger\utils\GsonParserUtils.class
-com\logger\adapters\CustomRequestBodyAdviceAdapter.class
-com\logger\filters\CustomURLFilter.class
-com\logger\services\LoggingService.class
-com\logger\configs\RequestLoggingFilterConfig.class

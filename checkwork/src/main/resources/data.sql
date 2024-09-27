@@ -5,7 +5,7 @@ CREATE TABLE human (
     address TEXT,
     phone TEXT
 );
-CREATE TABLE user (
+CREATE TABLE IUser (
       id INT PRIMARY KEY AUTO_INCREMENT,
       humanid INT NOT NULL,
       employeeCode VARCHAR(255),
@@ -23,7 +23,7 @@ CREATE TABLE workhour (
       userid INT NOT NULL,
       status ENUM('DONE', 'NOTDONE'),
       note VARCHAR(255),
-      FOREIGN KEY (userid) REFERENCES user(id)
+      FOREIGN KEY (userid) REFERENCES IUser(id)
 );
 CREATE TABLE appointment (
          id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +37,7 @@ CREATE TABLE appointment (
         room VARCHAR(255),
          info TEXT NOT NULL
 );
-ALTER
+# ALTER
 CREATE TABLE room (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
