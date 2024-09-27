@@ -23,8 +23,3 @@ bin-release/
 # information for Eclipse / Flash Builder.
 
 *.class
-common/target/classes/com/common/configs/DatabaseConfig.class
-common/target/classes/com/common/exceptions/ExceptionHandlers.class
-common/target/classes/com/common/utils/ConvertData.class
-common/target/classes/com/common/utils/GenerateWorkHourCode.class
-common/target/classes/com/common/validations/ValidDateOfBirth.class

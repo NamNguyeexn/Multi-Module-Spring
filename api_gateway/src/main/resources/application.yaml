@@ -1,0 +1,15 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+        - id: example_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/example/**
+          filters:
+            - AddRequestHeader=X-Request-Example, Gateway-Request
+            - AddResponseHeader=X-Response-Example, Gateway-Response

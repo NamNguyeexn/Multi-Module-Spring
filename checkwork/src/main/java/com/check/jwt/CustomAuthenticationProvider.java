@@ -24,29 +24,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider, Ser
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         try {
-            log.info("=============================================");
-            log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE");
             String name = authentication.getName();
             String password = authentication.getCredentials().toString();
             Optional<User> user = IUserService.getUserByUsername(name);
             if(user.isEmpty()){
-                log.info("------------------------------------------------");
-                log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE - NULL USER");
                 return null;
             }
             if (passwordEncoder.matches(password, user.get().getPassword())) {
-                log.info("------------------------------------------------");
-                log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE - FOUND USER");
                 return new PreAuthenticatedAuthenticationToken(
                         user, password, new ArrayList<>());
             } else {
-                log.info("------------------------------------------------");
-                log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE - WRONG PASSWORD");
                 return null;
             }
         } catch (Exception e) {
-            log.info("------------------------------------------------");
-            log.info("CUSTOM AUTHENTICATION PROVIDER - AUTHENTICATE - SERVER ERROR");
             return null;
         }
 
